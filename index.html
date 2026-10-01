@@ -599,7 +599,7 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
 
   /* ---------- 01 Start ---------- */
   .hero{ display:grid; grid-template-columns:1.2fr .8fr; align-items:center; gap:40px; max-width:1340px; margin:0 auto;
-    padding:56px 48px 190px; min-height:calc(100vh - 72px); }
+    padding:56px 48px 190px; min-height:calc(100vh - 72px); position:relative; z-index:1; }
   .badge{ position:relative; width:104px; height:104px; margin-left:6px; }
   .badge svg{ width:100%; height:100%; }
   .badge text{ font-family:var(--display); font-size:10.5px; font-weight:500; letter-spacing:3.2px; fill:var(--cream); }
@@ -631,7 +631,9 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
   .rib .track{ display:inline-flex; align-items:center; gap:30px; padding-left:30px; }
   .rib i{ font-style:normal; font-size:.45em; opacity:.55; }
   .rib.r1{ top:6px; z-index:2; background:var(--teal); color:#05201b; font-size:34px; padding:14px 0; transform:rotate(-2.4deg); box-shadow:0 24px 50px rgba(0,0,0,.4); }
-  .rib.r2{ top:72px; z-index:1; background:var(--cream); color:var(--bg); font-size:19px; padding:11px 0; transform:rotate(1.8deg); }
+  .arcrib{ position:absolute; right:0; bottom:0; width:clamp(220px, 24vw, 360px); height:auto; aspect-ratio:1; z-index:0; pointer-events:none; overflow:visible; }
+  .arcband{ fill:none; stroke:var(--cream); stroke-width:54; filter:drop-shadow(0 -10px 24px rgba(0,0,0,.35)); }
+  .arctxt{ font-family:var(--display); font-weight:900; font-size:24px; text-transform:uppercase; fill:var(--bg); letter-spacing:.5px; }
 
   /* ---------- 02 Methode ---------- */
   .mwrap{ max-width:1300px; margin:0 auto; padding:48px 48px 70px; }
@@ -752,7 +754,7 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
     .swrap{ grid-template-columns:1fr; gap:34px; }
     .preview{ position:static; }
     .side{ grid-template-columns:1fr; }
-    .rib.r1{ font-size:24px; } .rib.r2{ font-size:15px; }
+    .rib.r1{ font-size:24px; } .arcrib{ width:52vw; }
   }
 }
 
@@ -764,7 +766,6 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
   @keyframes panelIn{ from{ opacity:0; transform:translateY(14px); } }
   .panel.active .rv{ animation:rise .8s cubic-bezier(.2,.8,.2,1) backwards; animation-delay:calc(var(--d,0) * 85ms + 60ms); }
   .rib .track{ animation:marq 32s linear infinite; }
-  .rib.r2 .track{ animation-duration:40s; animation-direction:reverse; }
   @keyframes marq{ to{ transform:translateX(-50%); } }
   .badge svg{ animation:spin 16s linear infinite; }
   @keyframes spin{ to{ transform:rotate(360deg); } }
@@ -1495,7 +1496,11 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
   .waitbox .wx{ flex:1; min-width:0; }
   .waitbox .wx b{ display:block; font-family:"Inter"; font-size:17px; }
   .waitbox .wx span{ font-size:13px; color:var(--txt-soft); }
-  .wtag{ flex:none; font-size:13px; font-weight:700; border-radius:999px; padding:5px 11px; background:rgba(255,255,255,.1); color:var(--txt); }
+  .wtag{ flex:none; font-size:12.5px; font-weight:700; color:var(--txt-soft); background:none !important; padding:0; cursor:default; }
+  .wtag::before{ content:"→ "; opacity:.6; }
+  .wdel{ flex:none; font:inherit; font-size:12.5px; font-weight:600; color:var(--txt-soft); background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14); border-radius:10px; padding:7px 11px; cursor:pointer; transition:background .2s, color .2s; }
+  .wdel:hover{ background:rgba(229,72,77,.22); color:#ffb0b2; border-color:rgba(229,72,77,.4); }
+  .toast .tundo{ margin-left:12px; font:inherit; color:var(--mint); background:none; border:1px solid currentColor; border-radius:8px; padding:3px 10px; cursor:pointer; }
   .wtag.frog{ background:var(--teal); color:#05201b; } .wtag.k11{ background:rgba(229,72,77,.25); color:#ffb0b2; }
   .wtag.k10{ background:rgba(15,157,140,.28); color:var(--mint); } .wtag.k01{ background:rgba(224,145,42,.28); color:#ffc57a; }
   .up-btns{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:18px; }
@@ -1599,11 +1604,13 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
       <span>Aufgaben</span><i>●</i><span>Länge</span><i>●</i><span>Puffer</span><i>●</i><span>Entscheiden</span><i>●</i><span>Nachkontrolle</span><i>●</i>
       <span>Aufgaben</span><i>●</i><span>Länge</span><i>●</i><span>Puffer</span><i>●</i><span>Entscheiden</span><i>●</i><span>Nachkontrolle</span><i>●</i>
     </div></div>
-    <div class="rib r2"><div class="track">
-      <span>Eat the frog 🐸</span><i>●</i><span>80/20 ⚡</span><i>●</i><span>Eisenhower</span><i>●</i><span>60 % planen</span><i>●</i><span>Pausen sind erlaubt</span><i>●</i>
-      <span>Eat the frog 🐸</span><i>●</i><span>80/20 ⚡</span><i>●</i><span>Eisenhower</span><i>●</i><span>60 % planen</span><i>●</i><span>Pausen sind erlaubt</span><i>●</i>
-    </div></div>
   </div>
+  <!-- weisses Band als Viertelkreis unten rechts, die Schrift läuft im Bogen -->
+  <svg class="arcrib" id="arcRib" viewBox="0 0 400 400" aria-hidden="true">
+    <defs><path id="arcPath" d="M 40 400 A 360 360 0 0 1 400 40"/><path id="arcText" d="M 45.5 462.5 A 360 360 0 0 1 462.5 45.5"/></defs>
+    <use href="#arcPath" class="arcband"/>
+    <text class="arctxt" dy="8.5"><textPath href="#arcText" id="arcTp"></textPath></text>
+  </svg>
 </section>
 
 <!-- ================= 02 METHODE ================= -->
@@ -2019,6 +2026,26 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
 </main>
 
 <script>
+// ---------- Weisses Band im Viertelkreis: die Schrift dreht im Bogen ----------
+(function(){
+  const tp = document.getElementById('arcTp'); if(!tp) return;
+  const ITEM = 'Eat the frog  ●  80/20 ⚡  ●  Eisenhower  ●  60 % planen  ●  Pausen sind erlaubt  ●  ';
+  tp.textContent = ITEM.repeat(4);
+  const one = ()=> tp.getSubStringLength ? tp.getComputedTextLength() / 4 : 600;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let len = 0, off = 0, last = performance.now();
+  (function step(now){
+    if(!len) len = one() || 0;
+    const dt = Math.min(now - last, 100); last = now;
+    if(len && document.getElementById('p-start').classList.contains('active')){
+      off = (off + dt * 0.035) % len;              // gemütlich, wie das gerade Band
+      tp.setAttribute('startOffset', (off - len).toFixed(1));
+    }
+    requestAnimationFrame(step);
+  })(last);
+  document.fonts && document.fonts.ready.then(()=>{ len = 0; });
+})();
+
 // ---------- Fredi statt Emoji: jedes 🐸 auf der Seite wird zum echten Fredi ----------
 (function(){
   const SRC = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xNzcgLTE1NSAzNjAgMzIwIiB3aWR0aD0iMzYwIiBoZWlnaHQ9IjMyMCI+IDxkZWZzPiA8bGluZWFyR3JhZGllbnQgaWQ9InNraW4iIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4gPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjN2VlMDdhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzZhODQ1Ii8+IDwvbGluZWFyR3JhZGllbnQ+IDwvZGVmcz4gPGVsbGlwc2UgY3g9IjAiIGN5PSIxOCIgcng9IjE2OCIgcnk9IjEyMiIgZmlsbD0iIzFmN2EyYyIgb3BhY2l0eT0iLjM1IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2IDEwKSIvPiA8Y2lyY2xlIGN4PSItODgiIGN5PSItNzQiIHI9IjY2IiBmaWxsPSJ1cmwoI3NraW4pIi8+IDxjaXJjbGUgY3g9Ijg4IiBjeT0iLTc0IiByPSI2NiIgZmlsbD0idXJsKCNza2luKSIvPiA8ZWxsaXBzZSBjeD0iMCIgY3k9IjE4IiByeD0iMTY4IiByeT0iMTIyIiBmaWxsPSJ1cmwoI3NraW4pIi8+IDxjaXJjbGUgY3g9Ii04OCIgY3k9Ii03OCIgcj0iNDYiIGZpbGw9IiNmZmYiLz4gPGNpcmNsZSBjeD0iODgiIGN5PSItNzgiIHI9IjQ2IiBmaWxsPSIjZmZmIi8+IDxjaXJjbGUgY3g9Ii04MCIgY3k9Ii03MiIgcj0iMjQiIGZpbGw9IiMxYjJhMjQiLz4gPGNpcmNsZSBjeD0iOTYiIGN5PSItNzIiIHI9IjI0IiBmaWxsPSIjMWIyYTI0Ii8+IDxjaXJjbGUgY3g9Ii03MiIgY3k9Ii04MiIgcj0iOCIgZmlsbD0iI2ZmZiIvPiA8Y2lyY2xlIGN4PSIxMDQiIGN5PSItODIiIHI9IjgiIGZpbGw9IiNmZmYiLz4gPGVsbGlwc2UgY3g9Ii0xMTIiIGN5PSIzOCIgcng9IjI2IiByeT0iMTYiIGZpbGw9IiNmZjhmYTMiIG9wYWNpdHk9Ii43NSIvPiA8ZWxsaXBzZSBjeD0iMTEyIiBjeT0iMzgiIHJ4PSIyNiIgcnk9IjE2IiBmaWxsPSIjZmY4ZmEzIiBvcGFjaXR5PSIuNzUiLz4gPHBhdGggZD0iTSAtOTYgMjIgUSAwIDExMiA5NiAyMiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMWIyYTI0IiBzdHJva2Utd2lkdGg9IjE2IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4gPGNpcmNsZSBjeD0iLTE2IiBjeT0iLTYiIHI9IjUiIGZpbGw9IiMxZjZiMmEiLz48Y2lyY2xlIGN4PSIxNiIgY3k9Ii02IiByPSI1IiBmaWxsPSIjMWY2YjJhIi8+IDwvc3ZnPg==';
@@ -2503,6 +2530,14 @@ FIELDS.forEach(id=> document.getElementById(id).addEventListener('input', ()=>{
 }));
 
 // ============ Konfetti & Toast ============
+// Meldung mit «Rückgängig»-Knopf (bleibt etwas länger stehen)
+function undoToast(msg, undo){
+  toast(msg);
+  const el = document.querySelector('.toast'), b = document.createElement('button');
+  b.className = 'tundo'; b.textContent = 'Rückgängig'; el.appendChild(b); el.style.pointerEvents = 'auto';
+  b.onclick = ()=>{ el.classList.remove('show'); el.style.pointerEvents = ''; b.remove(); undo(); };
+  clearTimeout(el._t); el._t = setTimeout(()=>{ el.classList.remove('show'); el.style.pointerEvents = ''; }, 6000);
+}
 function toast(msg){
   let el = document.querySelector('.toast');
   if(!el){ el = document.createElement('div'); el.className = 'toast'; document.body.appendChild(el); }
@@ -3553,9 +3588,18 @@ function renderUnplanned(r){
     <span>${roll ? '☀️ Neuer Tag! Gestern ist im Verlauf gespeichert. ' : ''}Plane deinen Tag mit Fredi, das dauert nur ein paar Minuten.</span>
     ${r.length ? `<div class="waitbox" id="hWait"><div class="wb-h"><span class="wb-n">${r.length}</span> Aufgabe${r.length>1?'n':''} von gestern ${r.length>1?'warten':'wartet'} auf dich</div>
       <ul>${r.map(t2=> `<li class="k${t2.decided ? keyOf(t2) : 'xx'}"><div class="wx"><b>${escapeHtml(t2.text)}</b>
-        <span>${t2.min ? minLabel(t2.min) : ''}${t2.moved>1 ? ` · schon ${t2.moved}× verschoben` : ''}</span></div>${tag(t2)}</li>`).join('')}</ul></div>` : ''}
+        <span>${t2.min ? minLabel(t2.min) : ''}${t2.moved>1 ? ` · schon ${t2.moved}× verschoben` : ''}</span></div>${tag(t2)}<button class="wdel" data-wdel="${t2.id}" title="Diese Aufgabe streichen, sie wird nicht mehr gebraucht">🗑 Streichen</button></li>`).join('')}</ul></div>` : ''}
     <div class="up-btns"><button class="btn lg" data-go="planen">Jetzt planen →</button>
       ${r.length ? '<button class="btn dark lg" id="hTakeOver" title="Ohne Planen: die wartenden Aufgaben direkt als heutigen Plan nehmen">So übernehmen</button>' : ''}</div>`;
+  $id('hWait')?.querySelectorAll('[data-wdel]').forEach(b=> b.addEventListener('click', ()=>{
+    const t2 = tasks.find(x=> x.id === +b.dataset.wdel); if(!t2) return;
+    const keep = { text:t2.text, min:t2.min, w:t2.w, d:t2.d, lever:t2.lever, snail:t2.snail, decided:t2.decided, moved:t2.moved, at:t2.at, tomorrow:t2.tomorrow };
+    const li = b.closest('li'); if(li && MOTION){ li.style.transition = 'opacity .25s, transform .25s'; li.style.opacity = '0'; li.style.transform = 'translateX(30px)'; }
+    setTimeout(()=>{
+      removeRow(t2.id);
+      undoToast(`🗑 «${keep.text}» gestrichen`, ()=>{ addRow(false, keep); renderAll(); toast('↩ Wieder da!'); });
+    }, MOTION ? 220 : 0);
+  }));
   $id('hTakeOver')?.addEventListener('click', ()=>{
     if(!real().every(x=> x.decided)){ toast('Ein paar Aufgaben müssen noch sortiert werden. Fredi hilft dir.'); wzGo(5); return; }
     planned = true; renderAll(); toast('✓ Übernommen. Los geht\'s!');
