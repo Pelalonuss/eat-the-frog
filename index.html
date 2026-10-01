@@ -600,7 +600,10 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
   .badge svg{ width:100%; height:100%; }
   .badge text{ font-family:var(--display); font-size:10.5px; font-weight:500; letter-spacing:3.2px; fill:var(--cream); }
   .badge span{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:30px; }
-  .facts{ display:flex; gap:22px; margin-top:34px; font-size:13px; color:var(--txt-soft); flex-wrap:wrap; }
+  .facts{ display:flex; gap:22px; margin-top:34px; font-size:13px; color:var(--txt-soft); flex-wrap:wrap; align-items:center; }
+  .replay{ font:inherit; font-weight:600; color:var(--mint); background:none; border:1px solid currentColor; border-radius:99px; padding:5px 12px; cursor:pointer; opacity:.85; }
+  .replay:hover{ opacity:1; }
+  .replay[hidden]{ display:none; }
   .hvis{ position:relative; height:500px; perspective:1300px; }
   .hboard{ position:absolute; inset:50px 30px 60px; display:grid; grid-template:1fr 1fr / 1fr 1fr; gap:18px;
     transform:rotateX(26deg) rotateY(10deg) rotateZ(-9deg); transform-style:preserve-3d; transition:transform .5s cubic-bezier(.2,.8,.2,1); }
@@ -1572,7 +1575,7 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
           <span>🐸</span>
         </div>
       </div>
-      <div class="facts rv" style="--d:4"><span>⏱ 10 Minuten</span><span>🖨 1 A4-Seite</span><span>🔒 bleibt auf deinem Gerät</span></div>
+      <div class="facts rv" style="--d:4"><span>⏱ 10 Minuten</span><span>🖨 1 A4-Seite</span><span>🔒 bleibt auf deinem Gerät</span><button class="replay" id="replayBtn" data-tour="practice" hidden>🎓 Übungsrunde nochmal</button></div>
       <div class="installtip" id="installTip" hidden><img src="icon-192.png" alt=""><div><b>Eat the Frog als App</b><span>Mit Fredi-Symbol auf deinem Desktop, öffnet sich wie ein Programm.</span></div><button class="btn sm" data-install>📲 Installieren</button></div>
     </div>
     <div class="hvis rv" style="--d:2" aria-hidden="true">
@@ -4665,7 +4668,19 @@ function updateHero(){
   const label = !prologDone() ? ["🐸 Los geht's", 'Fredi zeigt dir alles an einem Übungstag']
               : planReady() ? ['Mein Tag →', 'Weiter mit deinem Plan'] : ['Jetzt planen →', 'Fredi hilft dir Schritt für Schritt'];
   document.querySelectorAll('.startgo').forEach(b=>{ b.querySelector('.hg1').textContent = label[0]; b.querySelector('.hg2').textContent = label[1]; });
+  const rp = $id('replayBtn'); if(rp) rp.hidden = !prologDone() || VIEW;
 }
+
+// Zum Testen: Strg + Shift + Entf setzt auf diesem Computer alles zurück (wie neu installiert)
+addEventListener('keydown', async e=>{
+  if(!(e.ctrlKey && e.shiftKey && (e.key==='Delete' || e.key==='Backspace')) || PRACTICE || VIEW) return;
+  e.preventDefault();
+  if(!confirm('🧪 Alles zurücksetzen?\n\nPlan, Verlauf, Übungsrunde und Tipps werden auf diesem Computer gelöscht, wie frisch installiert.\n\nDie Speicherkarten-Datei in «Dokumente» bleibt liegen.')) return;
+  HOLD = true; clearTimeout(cardTimer); cardHandle = null; cardState = 'none';   // ab jetzt nichts mehr speichern
+  try{ localStorage.clear(); }catch(_){}
+  try{ await idbDel('card'); }catch(_){}
+  location.hash = ''; location.reload();
+});
 function startApp(){ if(!prologDone()) startPractice(); else goTab(planReady() ? 'heute' : 'planen'); }
 
 // ===================================================================
