@@ -19,6 +19,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* Fredi der Frosch (dasselbe Bild wie im App-Symbol, ersetzt überall das Frosch-Emoji) */
+:root{ --fredi:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xNzcgLTE1NSAzNjAgMzIwIiB3aWR0aD0iMzYwIiBoZWlnaHQ9IjMyMCI+IDxkZWZzPiA8bGluZWFyR3JhZGllbnQgaWQ9InNraW4iIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4gPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjN2VlMDdhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzZhODQ1Ii8+IDwvbGluZWFyR3JhZGllbnQ+IDwvZGVmcz4gPGVsbGlwc2UgY3g9IjAiIGN5PSIxOCIgcng9IjE2OCIgcnk9IjEyMiIgZmlsbD0iIzFmN2EyYyIgb3BhY2l0eT0iLjM1IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2IDEwKSIvPiA8Y2lyY2xlIGN4PSItODgiIGN5PSItNzQiIHI9IjY2IiBmaWxsPSJ1cmwoI3NraW4pIi8+IDxjaXJjbGUgY3g9Ijg4IiBjeT0iLTc0IiByPSI2NiIgZmlsbD0idXJsKCNza2luKSIvPiA8ZWxsaXBzZSBjeD0iMCIgY3k9IjE4IiByeD0iMTY4IiByeT0iMTIyIiBmaWxsPSJ1cmwoI3NraW4pIi8+IDxjaXJjbGUgY3g9Ii04OCIgY3k9Ii03OCIgcj0iNDYiIGZpbGw9IiNmZmYiLz4gPGNpcmNsZSBjeD0iODgiIGN5PSItNzgiIHI9IjQ2IiBmaWxsPSIjZmZmIi8+IDxjaXJjbGUgY3g9Ii04MCIgY3k9Ii03MiIgcj0iMjQiIGZpbGw9IiMxYjJhMjQiLz4gPGNpcmNsZSBjeD0iOTYiIGN5PSItNzIiIHI9IjI0IiBmaWxsPSIjMWIyYTI0Ii8+IDxjaXJjbGUgY3g9Ii03MiIgY3k9Ii04MiIgcj0iOCIgZmlsbD0iI2ZmZiIvPiA8Y2lyY2xlIGN4PSIxMDQiIGN5PSItODIiIHI9IjgiIGZpbGw9IiNmZmYiLz4gPGVsbGlwc2UgY3g9Ii0xMTIiIGN5PSIzOCIgcng9IjI2IiByeT0iMTYiIGZpbGw9IiNmZjhmYTMiIG9wYWNpdHk9Ii43NSIvPiA8ZWxsaXBzZSBjeD0iMTEyIiBjeT0iMzgiIHJ4PSIyNiIgcnk9IjE2IiBmaWxsPSIjZmY4ZmEzIiBvcGFjaXR5PSIuNzUiLz4gPHBhdGggZD0iTSAtOTYgMjIgUSAwIDExMiA5NiAyMiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMWIyYTI0IiBzdHJva2Utd2lkdGg9IjE2IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4gPGNpcmNsZSBjeD0iLTE2IiBjeT0iLTYiIHI9IjUiIGZpbGw9IiMxZjZiMmEiLz48Y2lyY2xlIGN4PSIxNiIgY3k9Ii02IiByPSI1IiBmaWxsPSIjMWY2YjJhIi8+IDwvc3ZnPg=="); }
+img.fredi{ display:inline-block; width:1.2em; height:1.07em; vertical-align:-.2em; object-fit:contain; margin:0 .02em; }
+
 :root{
   --ink:#161d1b;
   --ink-soft:#616b66;
@@ -311,7 +315,7 @@ input[type=checkbox]{ width:16px; height:16px; cursor:pointer; accent-color:var(
 .pstatus.warn{ color:var(--q1-side); font-weight:600; }
 .pstatus.good{ color:var(--q2-side); font-weight:600; }
 tbody tr.frog td.num{ color:var(--q2); }
-tbody tr.frog td.num::after{ content:"🐸"; font-size:10px; margin-left:1px; }
+tbody tr.frog td.num::after{ content:""; display:inline-block; width:12px; height:11px; margin-left:2px; vertical-align:-1px; background:var(--fredi) center/contain no-repeat; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
 
 /* Konfetti */
 #confetti{ position:fixed; inset:0; pointer-events:none; z-index:50; }
@@ -904,7 +908,7 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
   .fcard:hover{ border-color:var(--mint); transform:translateY(-3px); }
   .fcard b{ display:block; font-size:16px; margin-top:8px; }
   .fcard.on{ background:linear-gradient(135deg,#13b3a0,#0a6e62); border-color:#8de0d3; box-shadow:0 12px 30px rgba(19,179,160,.35); }
-  .fcard.on::after{ content:"🐸"; position:absolute; top:-14px; right:-10px; font-size:34px; }
+  .fcard.on::after{ content:""; position:absolute; top:-14px; right:-12px; width:44px; height:39px; background:var(--fredi) center/contain no-repeat; }
   .fcard .sug{ position:absolute; top:-10px; left:14px; font-size:10.5px; font-weight:700; background:#f4b23c; color:#3d2700; border-radius:999px; padding:2px 9px; }
   .olist{ list-style:none; margin-top:18px; display:flex; flex-direction:column; gap:7px; }
   .olist li{ display:flex; align-items:center; gap:12px; background:rgba(255,255,255,.05); border-radius:12px; padding:10px 14px; font-size:15px; }
@@ -2014,6 +2018,35 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
 
 </main>
 
+<script>
+// ---------- Fredi statt Emoji: jedes 🐸 auf der Seite wird zum echten Fredi ----------
+(function(){
+  const SRC = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xNzcgLTE1NSAzNjAgMzIwIiB3aWR0aD0iMzYwIiBoZWlnaHQ9IjMyMCI+IDxkZWZzPiA8bGluZWFyR3JhZGllbnQgaWQ9InNraW4iIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4gPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjN2VlMDdhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzZhODQ1Ii8+IDwvbGluZWFyR3JhZGllbnQ+IDwvZGVmcz4gPGVsbGlwc2UgY3g9IjAiIGN5PSIxOCIgcng9IjE2OCIgcnk9IjEyMiIgZmlsbD0iIzFmN2EyYyIgb3BhY2l0eT0iLjM1IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2IDEwKSIvPiA8Y2lyY2xlIGN4PSItODgiIGN5PSItNzQiIHI9IjY2IiBmaWxsPSJ1cmwoI3NraW4pIi8+IDxjaXJjbGUgY3g9Ijg4IiBjeT0iLTc0IiByPSI2NiIgZmlsbD0idXJsKCNza2luKSIvPiA8ZWxsaXBzZSBjeD0iMCIgY3k9IjE4IiByeD0iMTY4IiByeT0iMTIyIiBmaWxsPSJ1cmwoI3NraW4pIi8+IDxjaXJjbGUgY3g9Ii04OCIgY3k9Ii03OCIgcj0iNDYiIGZpbGw9IiNmZmYiLz4gPGNpcmNsZSBjeD0iODgiIGN5PSItNzgiIHI9IjQ2IiBmaWxsPSIjZmZmIi8+IDxjaXJjbGUgY3g9Ii04MCIgY3k9Ii03MiIgcj0iMjQiIGZpbGw9IiMxYjJhMjQiLz4gPGNpcmNsZSBjeD0iOTYiIGN5PSItNzIiIHI9IjI0IiBmaWxsPSIjMWIyYTI0Ii8+IDxjaXJjbGUgY3g9Ii03MiIgY3k9Ii04MiIgcj0iOCIgZmlsbD0iI2ZmZiIvPiA8Y2lyY2xlIGN4PSIxMDQiIGN5PSItODIiIHI9IjgiIGZpbGw9IiNmZmYiLz4gPGVsbGlwc2UgY3g9Ii0xMTIiIGN5PSIzOCIgcng9IjI2IiByeT0iMTYiIGZpbGw9IiNmZjhmYTMiIG9wYWNpdHk9Ii43NSIvPiA8ZWxsaXBzZSBjeD0iMTEyIiBjeT0iMzgiIHJ4PSIyNiIgcnk9IjE2IiBmaWxsPSIjZmY4ZmEzIiBvcGFjaXR5PSIuNzUiLz4gPHBhdGggZD0iTSAtOTYgMjIgUSAwIDExMiA5NiAyMiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMWIyYTI0IiBzdHJva2Utd2lkdGg9IjE2IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4gPGNpcmNsZSBjeD0iLTE2IiBjeT0iLTYiIHI9IjUiIGZpbGw9IiMxZjZiMmEiLz48Y2lyY2xlIGN4PSIxNiIgY3k9Ii02IiByPSI1IiBmaWxsPSIjMWY2YjJhIi8+IDwvc3ZnPg==';
+  const SKIP = /^(SCRIPT|STYLE|TEXTAREA|INPUT|OPTION|TITLE|NOSCRIPT)$/;
+  function swap(t){
+    const p = t.parentNode;
+    if(!p || SKIP.test(p.nodeName) || p.closest && p.closest('svg')) return;
+    const parts = t.nodeValue.split('🐸'); if(parts.length < 2) return;
+    const frag = document.createDocumentFragment();
+    parts.forEach((x,i)=>{
+      if(i){ const im = document.createElement('img'); im.className = 'fredi'; im.src = SRC; im.alt = '🐸'; im.draggable = false; frag.appendChild(im); }
+      if(x) frag.appendChild(document.createTextNode(x));
+    });
+    p.replaceChild(frag, t);
+  }
+  function walk(root){
+    if(root.nodeType === 3){ if(root.nodeValue.includes('🐸')) swap(root); return; }
+    if(root.nodeType !== 1 || SKIP.test(root.nodeName)) return;
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: n=> n.nodeValue.includes('🐸') ? 1 : 3 });
+    const list = []; while(w.nextNode()) list.push(w.currentNode); list.forEach(swap);
+  }
+  window.frediSwap = walk;
+  walk(document.body);
+  new MutationObserver(ms=> ms.forEach(m=>{
+    if(m.type === 'characterData') walk(m.target); else m.addedNodes.forEach(walk);
+  })).observe(document.body, { childList:true, subtree:true, characterData:true });
+})();
+</script>
 <script>
 // Die Seite so, wie sie geladen wurde – daraus wird die Datei zum Versenden gebaut.
 const PRISTINE = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
