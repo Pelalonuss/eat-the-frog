@@ -5,18 +5,18 @@ const fs = require('fs');
 
 if (!app.requestSingleInstanceLock()) app.quit();
 
-let win;
+let win, splash;
 const PRELOAD = path.join(__dirname, 'preload.js');
 const ICON = path.join(__dirname, 'app', 'icon-512.png');
 
-function makeWindow(url) {
+function makeWindow(url, hold) {
   const w = new BrowserWindow({
     width: 1360, height: 900, minWidth: 900, minHeight: 600,
     backgroundColor: '#0a1311', icon: ICON, title: 'Eat the Frog',
     autoHideMenuBar: true, show: false,
     webPreferences: { preload: PRELOAD, contextIsolation: true, nodeIntegration: false, spellcheck: true }
   });
-  w.once('ready-to-show', () => w.show());
+  if (!hold) w.once('ready-to-show', () => w.show());
   const wc = w.webContents;
   // Links nach aussen (Mail, Websites) im normalen Programm öffnen
   wc.setWindowOpenHandler(({ url }) => {
@@ -97,23 +97,67 @@ app.whenReady().then(() => {
     fs.renameSync(tmp, p);
   });
 
-  win = makeWindow();
-
-  // Neue Version auf GitHub? Im Hintergrund holen und beim nächsten Start installieren
-  if (app.isPackaged) {
-    const { autoUpdater } = require('electron-updater');
-    autoUpdater.on('update-downloaded', async (info) => {
-      const { response } = await dialog.showMessageBox(win, {
-        type: 'info', title: 'Update bereit 🐸',
-        message: `Eine neue Version von Eat the Frog (${info.version}) ist da.`,
-        detail: 'Jetzt neu starten? Deine Daten bleiben alle erhalten.',
-        buttons: ['Jetzt neu starten', 'Später'], defaultId: 0, cancelId: 1, noLink: true
-      });
-      if (response === 0) autoUpdater.quitAndInstall(true, true);
-    });
-    autoUpdater.checkForUpdates().catch(() => {});
-  }
+  startUp();
 });
 
-app.on('second-instance', () => { if (win) { if (win.isMinimized()) win.restore(); win.focus(); } });
+// ---------- Start: Ladebalken mit Fredi, dabei nach Updates suchen ----------
+function makeSplash() {
+  const w = new BrowserWindow({
+    width: 480, height: 320, frame: false, transparent: true, resizable: false, maximizable: false,
+    fullscreenable: false, show: false, center: true, icon: ICON, title: 'Eat the Frog',
+    backgroundColor: '#00000000', webPreferences: { contextIsolation: true, nodeIntegration: false }
+  });
+  w.once('ready-to-show', () => w.show());
+  w.loadFile(path.join(__dirname, 'splash.html'));
+  return w;
+}
+const sp = (code) => { if (splash && !splash.isDestroyed()) return splash.webContents.executeJavaScript(code).catch(() => {}); return Promise.resolve(); };
+const wait = (ms) => new Promise(r => setTimeout(r, ms));
+
+async function startUp() {
+  splash = makeSplash();
+  await new Promise(r => splash.webContents.once('did-finish-load', r));
+  const started = Date.now();
+  let skipped = false;
+  splash.on('page-title-updated', (e, t) => { if (t === 'skip') skipped = true; });
+
+  let result = 'none';                        // none | update | error
+  if (app.isPackaged) {
+    sp(`setStatus('Fredi schaut nach Updates …')`);
+    const { autoUpdater } = require('electron-updater');
+    autoUpdater.autoDownload = false;
+    autoUpdater.autoInstallOnAppQuit = true;  // falls doch später fertig: still beim Schliessen installieren
+    result = await Promise.race([
+      autoUpdater.checkForUpdates().then(r => (r && r.isUpdateAvailable) ? 'update' : 'none').catch(() => 'error'),
+      wait(8000).then(() => 'error')          // kein Internet / zu langsam: einfach starten
+    ]);
+    if (result === 'update') {
+      sp(`setStatus('Neue Version wird geladen …')`);
+      autoUpdater.on('download-progress', p => sp(`setDownload(${Math.round(p.percent || 0)})`));
+      setTimeout(() => sp('showSkip()'), 12000);
+      const done = await Promise.race([
+        autoUpdater.downloadUpdate().then(() => 'ok').catch(() => 'fail'),
+        new Promise(r => { const t = setInterval(() => { if (skipped) { clearInterval(t); r('skip'); } }, 200); })
+      ]);
+      if (done === 'ok') {
+        await sp(`finish('Wird installiert … gleich geht’s los!')`);
+        await wait(400);
+        autoUpdater.quitAndInstall(true, true);   // still installieren und neu starten
+        return;
+      }
+    }
+  } else {
+    sp(`setStatus('Fredi schaut nach Updates …')`);
+    await wait(1400);
+  }
+  // Mindestens kurz zeigen, damit man Fredi hüpfen sieht
+  const rest = 1600 - (Date.now() - started); if (rest > 0) await wait(rest);
+  win = makeWindow(null, true);               // im Hintergrund laden, erst zeigen, wenn der Balken voll ist
+  const ready = new Promise(r => win.once('ready-to-show', r));
+  await Promise.all([ready, sp(`finish('Los geht’s! 🐸')`)]);
+  win.show();
+  if (splash && !splash.isDestroyed()) setTimeout(() => splash.close(), 120);
+}
+
+app.on('second-instance', () => { const w = (win && !win.isDestroyed()) ? win : splash; if (w && !w.isDestroyed()) { if (w.isMinimized()) w.restore(); w.focus(); } });
 app.on('window-all-closed', () => app.quit());
