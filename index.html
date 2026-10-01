@@ -4074,7 +4074,29 @@ $id('vFile').addEventListener('change', async e=>{
 //   (Chrome/Edge: File System Access API. Andere Browser: Sicherung von Hand)
 // ===================================================================
 const CARD_FILE = '💾 Tagesplan-Speicherkarte.html';
-const CARD_SUPPORTED = typeof window.showSaveFilePicker === 'function' && typeof window.showOpenFilePicker === 'function';
+const CARD_SUPPORTED = !!DESKTOP || (typeof window.showSaveFilePicker === 'function' && typeof window.showOpenFilePicker === 'function');
+// Im Windows-Programm: Speicherkarte über die normalen Windows-Fenster (Speichern / Öffnen).
+// Sieht für den Rest der App aus wie eine Browser-Datei.
+function deskHandle(path){
+  return { desk:path, name: path.split(/[\\/]/).pop(),
+    async getFile(){ const t = await DESKTOP.readFile(path); return { size:t.length, text: async ()=> t }; },
+    async createWritable(){ let buf = ''; return { write: async x=>{ buf += x; }, close: ()=> DESKTOP.writeFile(path, buf) }; },
+    async queryPermission(){ return 'granted'; }, async requestPermission(){ return 'granted'; } };
+}
+const CARD_TYPES = [{ description:'Tagesplan-Speicherkarte', accept:{ 'text/html':['.html'] } }];
+async function pickCardSave(){
+  if(!DESKTOP) return window.showSaveFilePicker({ suggestedName: CARD_FILE, startIn:'documents', types: CARD_TYPES });
+  const p = await DESKTOP.cardSave(CARD_FILE);
+  if(!p) throw new DOMException('Abgebrochen', 'AbortError');
+  return deskHandle(p);
+}
+async function pickCardOpen(){
+  if(!DESKTOP) return (await window.showOpenFilePicker({ startIn:'documents', multiple:false, types: CARD_TYPES }))[0];
+  const p = await DESKTOP.cardOpen();
+  if(!p) throw new DOMException('Abgebrochen', 'AbortError');
+  return deskHandle(p);
+}
+const cardStore = h=> idbSet('card', h.desk ? { desk:h.desk } : h);
 let cardHandle = null, cardState = CARD_SUPPORTED ? 'none' : 'unsupported';   // none | needs | ok | saving | error | unsupported
 let cardAt = null, cardJustIn = false;
 const sleep = ms=> new Promise(r=> setTimeout(r, ms));
@@ -4202,6 +4224,7 @@ function showPickHint(kind){
     insert: ['Links auf <em>Dokumente</em> klicken.', 'Die Datei <em>💾 Tagesplan-Speicherkarte</em> anklicken.', 'Auf <em>Öffnen</em> klicken.', 'Fragt der Browser nach Erlaubnis: <em>Änderungen speichern</em> bzw. <em>Zulassen</em> klicken.'],
     connect: ['Der Browser fragt gleich, ob die Seite deine Speicherkarte benutzen darf.', 'Klick auf <em>Änderungen speichern</em> bzw. <em>Zulassen</em>.']
   }[kind];
+  if(DESKTOP && kind==='insert') steps.pop();   // im Programm fragt niemand nach Erlaubnis
   const el = document.createElement('div'); el.className = 'pickhint no-print'; el.id = 'pickHint';
   el.innerHTML = `<span class="pf">🐸</span><div><b>Fredi hilft dir:</b><ol>${steps.map(x=> `<li>${x}</li>`).join('')}</ol></div>`;
   document.body.appendChild(el);
@@ -4218,13 +4241,12 @@ async function cardCreate(){
   if(!CARD_SUPPORTED) return openCardDialog();
   showPickHint('create');
   let h;
-  try{ h = await window.showSaveFilePicker({ suggestedName: CARD_FILE, startIn:'documents',
-    types:[{ description:'Tagesplan-Speicherkarte', accept:{ 'text/html':['.html'] } }] }); }
+  try{ h = await pickCardSave(); }
   catch(e){ return pickFail(e); }
   hidePickHint();
   // Hat jemand eine bestehende Karte gewählt? Dann zuerst deren Inhalt übernehmen, nichts geht verloren.
   let old = null; try{ const f = await h.getFile(); if(f.size) old = parseCard(await f.text()); }catch(e){}
-  cardHandle = h; cardState = 'ok'; await idbSet('card', h); setCardKnown(h.name);
+  cardHandle = h; cardState = 'ok'; await cardStore(h); setCardKnown(h.name);
   try{ localStorage.removeItem('alpen-card-skip'); }catch(e){}
   const r = old ? mergeCard(old) : null;
   cardJustIn = true; await cardWrite();
@@ -4235,14 +4257,13 @@ async function cardInsert(){
   if(!CARD_SUPPORTED) return openCardDialog();
   showPickHint('insert');
   let h;
-  try{ [h] = await window.showOpenFilePicker({ startIn:'documents', multiple:false,
-    types:[{ description:'Tagesplan-Speicherkarte', accept:{ 'text/html':['.html'] } }] }); }
+  try{ h = await pickCardOpen(); }
   catch(e){ return pickFail(e); }
   let data = null; try{ data = parseCard(await (await h.getFile()).text()); }catch(e){}
   if(!data){ hidePickHint(); toast('Das ist keine Tagesplan-Speicherkarte. Such die Datei «💾 Tagesplan-Speicherkarte».'); return; }
   let perm = 'prompt'; try{ perm = await h.requestPermission({ mode:'readwrite' }); }catch(e){}
   hidePickHint();
-  cardHandle = h; await idbSet('card', h); setCardKnown(h.name);
+  cardHandle = h; await cardStore(h); setCardKnown(h.name);
   try{ localStorage.removeItem('alpen-card-skip'); }catch(e){}
   const r = mergeCard(data);
   if(perm==='granted'){ cardState = 'ok'; cardJustIn = true; await cardWrite();
@@ -4367,7 +4388,8 @@ $id('cardChip').addEventListener('click', openCardDialog);
 // ---------- Beim Start: bekannte Speicherkarte wieder verbinden ----------
 async function cardInit(){
   if(VIEW || !CARD_SUPPORTED){ updateCardUI(); return; }
-  const h = await idbGet('card');
+  let h = await idbGet('card');
+  if(h && h.desk) h = deskHandle(h.desk);
   if(!h){ if(cardKnown()) cardState = 'lost'; updateCardUI(); return; }
   cardHandle = h;
   let perm = 'prompt'; try{ perm = await h.queryPermission({ mode:'readwrite' }); }catch(e){}

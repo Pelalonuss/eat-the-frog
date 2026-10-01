@@ -1,7 +1,7 @@
 {
   "name": "eat-the-frog",
   "productName": "Eat the Frog",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Eat the Frog – Tagesplanung mit Fredi: ALPEN, 80/20, Eisenhower",
   "author": "Patrik Kadar",
   "main": "main.js",
@@ -35,10 +35,20 @@
       "shortcutName": "Eat the Frog",
       "artifactName": "Eat-the-Frog-Setup.exe",
       "runAfterFinish": true
-    }
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Pelalonuss",
+        "repo": "eat-the-frog"
+      }
+    ]
   },
   "devDependencies": {
     "electron": "^44.5.1",
     "electron-builder": "^26.15.3"
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.9"
   }
 }

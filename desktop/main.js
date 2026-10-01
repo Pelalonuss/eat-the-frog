@@ -76,7 +76,43 @@ app.whenReady().then(() => {
     }
   });
 
+  // Speicherkarte: normale Windows-Fenster und eine ganz normale Datei
+  const CARD_FILTER = [{ name: 'Tagesplan-Speicherkarte', extensions: ['html'] }];
+  ipcMain.handle('card-save', async (e, name) => {
+    const { canceled, filePath } = await dialog.showSaveDialog(BrowserWindow.fromWebContents(e.sender), {
+      title: 'Speicherkarte erstellen', defaultPath: path.join(app.getPath('documents'), name), filters: CARD_FILTER
+    });
+    return canceled ? null : filePath;
+  });
+  ipcMain.handle('card-open', async (e) => {
+    const { canceled, filePaths } = await dialog.showOpenDialog(BrowserWindow.fromWebContents(e.sender), {
+      title: 'Speicherkarte einstecken', defaultPath: app.getPath('documents'), properties: ['openFile'], filters: CARD_FILTER
+    });
+    return canceled ? null : filePaths[0];
+  });
+  ipcMain.handle('read-file', (e, p) => fs.readFileSync(p, 'utf8'));
+  ipcMain.handle('write-file', (e, p, text) => {
+    const tmp = p + '.tmp';
+    fs.writeFileSync(tmp, text, 'utf8');
+    fs.renameSync(tmp, p);
+  });
+
   win = makeWindow();
+
+  // Neue Version auf GitHub? Im Hintergrund holen und beim nächsten Start installieren
+  if (app.isPackaged) {
+    const { autoUpdater } = require('electron-updater');
+    autoUpdater.on('update-downloaded', async (info) => {
+      const { response } = await dialog.showMessageBox(win, {
+        type: 'info', title: 'Update bereit 🐸',
+        message: `Eine neue Version von Eat the Frog (${info.version}) ist da.`,
+        detail: 'Jetzt neu starten? Deine Daten bleiben alle erhalten.',
+        buttons: ['Jetzt neu starten', 'Später'], defaultId: 0, cancelId: 1, noLink: true
+      });
+      if (response === 0) autoUpdater.quitAndInstall(true, true);
+    });
+    autoUpdater.checkForUpdates().catch(() => {});
+  }
 });
 
 app.on('second-instance', () => { if (win) { if (win.isMinimized()) win.restore(); win.focus(); } });
