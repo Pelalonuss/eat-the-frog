@@ -1,0 +1,44 @@
+{
+  "name": "eat-the-frog",
+  "productName": "Eat the Frog",
+  "version": "1.0.0",
+  "description": "Eat the Frog – Tagesplanung mit Fredi: ALPEN, 80/20, Eisenhower",
+  "author": "Patrik Kadar",
+  "main": "main.js",
+  "build": {
+    "appId": "ch.eatthefrog.fredi",
+    "productName": "Eat the Frog",
+    "files": [
+      "main.js",
+      "preload.js",
+      "app/**/*"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "Eat the Frog",
+      "artifactName": "Eat-the-Frog-Setup.exe",
+      "runAfterFinish": true
+    }
+  },
+  "devDependencies": {
+    "electron": "^44.5.1",
+    "electron-builder": "^26.15.3"
+  }
+}
