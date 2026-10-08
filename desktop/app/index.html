@@ -2073,7 +2073,7 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
         <div class="eyebrow">Statistik · alle deine Tage</div>
         <h2 class="big md">Dein<br><span class="o">Verlauf.</span></h2>
       </div>
-      <div class="vtools">
+      <div class="vtools nocloud">
         <button class="btn dark sm" id="vBackup" title="Alle Tage als Datei sichern, z.B. in «Dokumente»">💾 Sicherung speichern</button>
         <button class="btn dark sm" id="vRestore" title="Eine gespeicherte Sicherung wieder laden">📂 Sicherung laden</button>
         <input type="file" id="vFile" accept=".json,application/json" hidden>
@@ -2105,7 +2105,8 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
         <div class="vct"><h3>Alle Tage</h3><span class="vsub">Tippe auf einen Tag für die Details</span></div>
         <div class="days" id="vDays"></div>
       </div>
-      <p class="vnote">💾 Mit deiner <b>Speicherkarte</b> (oben rechts) sind alle Tage automatisch auch in deinem Ordner «Dokumente» gespeichert und an jedem Computer wieder da. Ohne Speicherkarte bleiben sie nur in diesem Browser. Dann hilft <b>«Sicherung speichern»</b>.</p>
+      <p class="vnote oncloud">☁️ Alle deine Tage sind in deinem <b>Konto</b> gespeichert (Server in Zürich) und an jedem Computer da. Einfach anmelden.</p>
+      <p class="vnote nocloud">💾 Mit deiner <b>Speicherkarte</b> (oben rechts) sind alle Tage automatisch auch in deinem Ordner «Dokumente» gespeichert und an jedem Computer wieder da. Ohne Speicherkarte bleiben sie nur in diesem Browser. Dann hilft <b>«Sicherung speichern»</b>.</p>
     </div>
   </div>
 </section>
@@ -3408,7 +3409,7 @@ const WZ = [
       <button class="cbtn" data-pday="${addDays(todayIso(),1)}">Morgen · ${escapeHtml(shortDate(addDays(todayIso(),1)))}</button></div>
       <div class="dph">Am Abend kannst du so schon den nächsten Tag planen.</div></div>`;
     const extras = `${!PRACTICE && !prologDone() ? `<div class="hasold">🎓 Zum ersten Mal hier? <button data-tour="practice">Zuerst eine Übungsrunde mit Fredi</button></div>` : ''}
-      ${!PRACTICE && CARD_SUPPORTED && !['ok','saving'].includes(cardState) ? `<div class="hasold">💾 Du hast eine Speicherkarte? <button id="wzOld">Speicherkarte einstecken</button></div>` : ''}`;
+      ${!PRACTICE && !CLOUD_ON && CARD_SUPPORTED && !['ok','saving'].includes(cardState) ? `<div class="hasold">💾 Du hast eine Speicherkarte? <button id="wzOld">Speicherkarte einstecken</button></div>` : ''}`;
     return wzReturning
       ? `<h2 class="wz-h">Hallo ${escapeHtml(nm())}! 👋<br>Für welchen Tag planst du?</h2>${chips}
          <div class="renamebox">Nicht ${escapeHtml(nm())}? <button class="linkish" id="wzRename">Name ändern</button>
@@ -3639,7 +3640,7 @@ function wzSayText(html){
   sayTimer = setInterval(()=>{ i = Math.min(units.length, i+3); p.innerHTML = units.slice(0,i).join(''); if(i>=units.length) clearInterval(sayTimer); }, 16);
 }
 function wzProg(){
-  $id('wzProg').innerHTML = WZ.map((st,i)=> `<li class="${i<wz?'done':''} ${i===wz?'cur':''}" ${i<wz?`data-wz="${i}" title="Zurück zu: ${st.label}"`:''}>
+  $id('wzProg').innerHTML = WZ.map((st,i)=> CLOUD_ON && i===1 ? '' : `<li class="${i<wz?'done':''} ${i===wz?'cur':''}" ${i<wz?`data-wz="${i}" title="Zurück zu: ${st.label}"`:''}>
     <span class="wbar"><i></i></span><span class="lb">${st.label}</span></li>`).join('');
 }
 function wzRender(){
@@ -3945,7 +3946,7 @@ const TOURS = {
             ['#vChart','Jeder Balken ist ein Tag. <b class="cw g">Grün</b> = erledigt, <b class="cw y">grau</b> = offen geblieben.'],
             ['#vMoved','Aufgaben, die du immer wieder verschiebst. Die sind perfekt als Frosch!'],
             ['#vDays','Klick auf einen Tag, dann siehst du alle Details. Du kannst ihn auch als A4 ansehen.'],
-            ['#vBackup','Keine Speicherkarte? Hier kannst du eine <b>Sicherung</b> als Datei speichern.']],
+            ...(CLOUD_ON ? [] : [['#vBackup','Keine Speicherkarte? Hier kannst du eine <b>Sicherung</b> als Datei speichern.']])],
   a4: [['#p-a4 .sheet','Das ist dein Tagesplan als <b>A4-Blatt</b>. Alles, was du in der App machst, steht automatisch hier drauf.'],
        ['#p-a4 .side .scard:nth-child(2) .btn.wide','Mit <b>«Drucken / PDF»</b> druckst du ihn aus. Er passt immer auf <b>1 Seite</b>.'],
        { center:true, text:`So sieht das Druck-Fenster aus:<br>1. Bei <b>«Ziel»</b> deinen Drucker wählen, oder <b>«Als PDF speichern»</b>.<br>2. Unten auf <b>«Drucken»</b> klicken. Fertig!${PRINT_MOCK}` }]
@@ -4742,7 +4743,8 @@ async function cloudWrite(){
   const u = cloud.user;
   try{
     cloudPacking = true;   // beim Einpacken nicht gleich wieder ein Speichern auslösen
-    let data; try{ data = JSON.parse(JSON.stringify({ ...cardData(), kind:'cloud', name: nm() || u.displayName || '', email: u.email || '', updatedAt: new Date().toISOString() })); } finally { cloudPacking = false; }
+    let data; try{ data = JSON.parse(JSON.stringify({ ...cardData(), kind:'cloud', name: nm() || u.displayName || '', email: u.email || '', updatedAt: new Date().toISOString() }));
+      data.plan.tasks = (data.plan.tasks || []).filter(t=> (t.text || '').trim()); } finally { cloudPacking = false; }
     const ok = await Promise.race([CloudAPI.save(u.uid, data).then(()=> true), sleep(12000).then(()=> false)]);
     cloud.state = ok ? 'in' : 'offline'; if(ok) cloud.at = new Date();
   }catch(e){ console.warn(e); cloud.state = navigator.onLine === false ? 'offline' : 'error'; }
@@ -4770,13 +4772,12 @@ function cloudGateMsg(g){ const e = g.querySelector('.lerr'), o = g.querySelecto
 function cloudGateFocus(g){ setTimeout(()=>{ const i = g.querySelector('.lform input'); if(i && !i.value) i.focus(); }, 60); }
 function cloudGateHtml(){
   const frog = '<div class="gfrog">🐸</div>';
-  const foot = (alt)=> `<div class="gatefoot">${!prologDone() ? '<button class="gprac" data-gate="practice">🎓 Zuerst die Übungsrunde (ohne Anmelden)</button>' : '<span></span>'}
-      <button class="gskip" data-gate="skip">${alt || 'Ohne Konto ausprobieren'}</button></div>`;
+  const foot = ()=> !prologDone() ? `<div class="gatefoot"><button class="gprac" data-gate="practice">🎓 Zuerst die Übungsrunde (ohne Anmelden)</button><span></span></div>` : '';
   if(!cloud.ready || cloud.state==='loading') return `<div class="gatebox login">${frog}<h2>Einen Moment …</h2>
     <div class="lwait"><div class="spin"></div><span>${cloud.user ? 'Deine Pläne werden geladen.' : 'Eat the Frog startet.'}</span></div></div>`;
   if(cloud.failed) return `<div class="gatebox login">${frog}<h2>📡 Keine Internetverbindung</h2>
     <div class="gsub">Zum Anmelden braucht Eat the Frog <b>Internet</b>. Prüf deine Verbindung und versuch es nochmal.</div>
-    <div class="lform"><button class="btn" data-acct="reload">🔄 Nochmal versuchen</button></div>${foot('Ohne Konto weiter (nur in diesem Browser)')}</div>`;
+    <div class="lform"><button class="btn" data-acct="reload">🔄 Nochmal versuchen</button></div>${foot()}</div>`;
   if(cloud.user && cloud.state==='loaderror') return `<div class="gatebox login">${frog}<h2>Hoppla!</h2>
     <div class="lerr" style="margin-top:14px">${escapeHtml(cloud.err)}</div>
     <div class="lform"><button class="btn" data-acct="reload">🔄 Nochmal versuchen</button><button class="btn dark" data-acct="logout-now">Abmelden</button></div></div>`;
