@@ -856,6 +856,18 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
   .dlist{ margin-top:14px; max-height:420px; overflow:auto; padding-right:6px; }
   .hours{ margin-top:22px; }
   .hours .cbtn{ min-width:64px; font-size:17px; padding:12px 16px; }
+  .hfrac{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-top:14px; }
+  .hfrac .hl{ font-size:14px; color:var(--txt-soft); font-weight:600; }
+  .hfrac .cbtn{ font-size:15px; padding:10px 14px; }
+  .hfrac .cbtn small{ display:block; font-size:11px; opacity:.7; font-weight:500; }
+  .hown{ margin-top:14px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:14px; color:var(--txt-soft); }
+  .hown .owntog{ font:inherit; font-weight:600; color:var(--mint); background:none; border:none; text-decoration:underline; cursor:pointer; padding:0; }
+  .hown .ownbox{ display:inline-flex; align-items:center; gap:8px; }
+  .hown .ownbox[hidden]{ display:none; }
+  .hown input{ width:64px; font:inherit; font-size:17px; font-weight:700; text-align:center; color:var(--txt); background:rgba(255,255,255,.07); border:1.5px solid rgba(141,224,211,.35); border-radius:10px; padding:8px 6px; }
+  .hown input:focus{ outline:none; border-color:var(--mint); }
+  .hsum{ margin-top:16px; font-size:15px; color:var(--txt-soft); }
+  .hsum b{ color:var(--mint); font-size:18px; }
   .bufbox{ margin-top:26px; background:rgba(255,255,255,.04); border:1px solid var(--card-b); border-radius:18px; padding:18px 20px; }
   .bufbar{ position:relative; height:34px; border-radius:10px; background:rgba(255,255,255,.08); overflow:visible; margin-top:26px; }
   .bufbar .fill{ height:100%; border-radius:10px; background:linear-gradient(90deg,#13b3a0,#8de0d3); transition:width .6s cubic-bezier(.2,.9,.25,1.1); }
@@ -936,6 +948,10 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
   .frogbig .ft small{ font-family:var(--display); font-size:10.5px; letter-spacing:1.6px; text-transform:uppercase; color:#c9f1ea; }
   .frogbig .ft b{ display:block; font-size:22px; margin-top:4px; }
   .frogbig .btn{ background:#fff; color:var(--accent-deep); box-shadow:0 5px 0 #b9e1da; font-size:15px; padding:14px 20px; }
+  .frogbig .fcheck{ width:54px; height:54px; font-size:26px; border:3px solid rgba(255,255,255,.85); background:rgba(255,255,255,.12); }
+  .frogbig .fcheck:hover{ border-color:#fff; background:rgba(255,255,255,.25); color:rgba(255,255,255,.7); }
+  .frogbig .fcheck.on{ background:var(--teal); border-color:var(--teal); color:#05201b; }
+  .frogbig .fhint{ flex:none; font-size:13px; font-weight:600; color:#c9f1ea; opacity:.85; }
   .frogbig.eaten{ background:linear-gradient(135deg,#1c3b35,#132a26); box-shadow:none; border:1px solid rgba(141,224,211,.25); }
   .frogbig.eaten .ft b{ text-decoration:line-through; opacity:.7; }
   .frogbig.none{ background:var(--card); box-shadow:none; border:1px dashed rgba(255,255,255,.18); }
@@ -2265,7 +2281,7 @@ function renderOrder(active){
 function renderBuffer(active){
   // Nur was wirklich getan wird zählt (④ Weglassen nicht).
   const sum = active.filter(t=> keyOf(t)!=="00").reduce((a,t)=> a + (parseInt(t.min,10)||0), 0);
-  const hours = parseFloat((document.getElementById('availIn').value||"").replace(',', '.'));
+  const hours = hoursOf(document.getElementById('availIn').value);
   const avail = hours>0 ? Math.round(hours*60) : 0;
   const plan = document.getElementById('pbarPlan');
   const bufEl = document.getElementById('pbarBuf');
@@ -2481,6 +2497,9 @@ function resetAll(){
 // ============ Speichern (localStorage, nur in diesem Browser) ============
 const KEY = "alpen-tagesplan-v2";
 const FIELDS = ['nameIn','dateIn','dayIn','availIn','focusInput','goodIn','takeIn','noteIn'];
+// Stunden lesen: «6», «4,5», «4.5» oder «3:20»
+function hoursOf(v){ v = String(v||'').trim(); const m = v.match(/^(\d+)\s*:\s*(\d{1,2})$/);
+  return m ? (+m[1] + +m[2] / 60) : (parseFloat(v.replace(',', '.')) || 0); }
 let booted = false;
 let planIso = null;   // Datum dieses Plans (JJJJ-MM-TT)
 let planned = true;    // ist dieser Tag schon geplant? (nach dem Abschliessen: nein, bis man plant)
@@ -2837,7 +2856,7 @@ function mailBody(name, fname, data, opts={}){
   b += `KURZFASSUNG\n`;
   if(st.frog) b += `- Frosch: ${st.frog}${st.eaten?' (erledigt)':' (noch offen)'}\n`;
   b += `- Erledigt: ${st.done} von ${st.act.length} Aufgaben\n`;
-  if(st.sum) b += `- Verplant: ${st.sum} Min${hours?` von ${Math.round(parseFloat(hours.replace(',','.'))*60)||'?'} Min`:''}\n`;
+  if(st.sum) b += `- Verplant: ${st.sum} Min${hours?` von ${Math.round(hoursOf(hours)*60)||'?'} Min`:''}\n`;
   if(f('goodIn')) b += `\nWas lief gut:\n${f('goodIn')}\n`;
   if(f('takeIn')) b += `\nWas nehme ich mit:\n${f('takeIn')}\n`;
   b += `\nFreundliche Grüsse\n${name}`;
@@ -3132,7 +3151,7 @@ function renderSide(active){
   sf.className = 'v' + (eaten ? ' good' : '');
   sf.title = frog;
   const st = document.getElementById('pStatus'), sb = document.getElementById('sBuf');
-  const hasAvail = parseFloat((document.getElementById('availIn').value||'').replace(',','.')) > 0;
+  const hasAvail = hoursOf(document.getElementById('availIn').value) > 0;
   sb.textContent = !hasAvail ? 'Stunden eintragen' : st.classList.contains('warn') ? '⚠ zu voll' : st.classList.contains('good') ? '✓ passt' : '–';
   sb.className = 'v' + (st.classList.contains('warn') ? ' warn' : st.classList.contains('good') ? ' good' : '');
   const q = { "11":0, "10":0, "01":0, "00":0 };
@@ -3282,7 +3301,14 @@ let wz = 0, wzQ1 = null, wzQFor = null, wzMounted = false, wzLastAdded = null, l
 try{ wz = Math.max(0, Math.min(8, parseInt(localStorage.getItem('alpen-wz')||'0',10) || 0)); }catch(e){}
 const SUGG = ['📧 E-Mails beantworten','📞 Telefonate','🛒 Einkaufen','🧹 Haushalt','📝 Bewerbung schreiben','💶 Rechnungen bezahlen','🏃 Sport','📚 Lernen'];
 const nm = ()=> $id('nameIn').value.trim();
-const hoursVal = ()=> parseFloat(($id('availIn').value||'').replace(',','.')) || 0;
+const hoursVal = ()=> hoursOf($id('availIn').value);
+// Stunden schön anzeigen: 4.5 → «4 Std 30 Min»; gespeichert wird wie bisher als Zahl («4,5»)
+function hoursLabel(h){ const w = Math.floor(h + 1e-9), m = Math.round((h - w) * 60); return [w ? w + ' Std' : '', m ? m + ' Min' : ''].filter(Boolean).join(' ') || '0 Std'; }
+const hoursStr = h=>{ const q = Math.round(h * 4) / 4;   // Viertelstunden als «4,5», alles andere als «3:20»
+  if(Math.abs(q - h) < 1e-6) return String(q).replace('.', ',');
+  const w = Math.floor(h), m = Math.round((h - w) * 60); return w + ':' + String(m).padStart(2, '0'); };
+const FRACS = [[0,'+ 0 Min',''],[.25,'+ ¼ Std','15 Min'],[.5,'+ ½ Std','30 Min'],[.75,'+ ¾ Std','45 Min']];
+function setHours(h){ h = Math.max(0, Math.min(24, Math.round(h * 60) / 60)); setField('availIn', h ? hoursStr(h) : ''); }
 
 const WZ = [
 { label:'Tag',
@@ -3384,11 +3410,31 @@ const WZ = [
   say:()=> `Wie viele Stunden hast du heute für diese Aufgaben? <b>Profi-Tipp:</b> Plane nur etwa 60 % deiner Zeit fest ein. Der Rest ist Puffer für Pausen und Überraschungen.`,
   mount:()=> `<h2 class="wz-h">Wie viel Zeit hast du heute?</h2><p class="wz-sub">Nur die Zeit für deine Aufgaben, ohne Essen und Pausen.</p>
     <div class="chips-row hours" id="wzHours">${[1,2,3,4,5,6,7,8,9,10].map(h=> `<button class="cbtn" data-h="${h}">${h} Std</button>`).join('')}</div>
+    <div class="hfrac" id="wzFrac"><span class="hl">Und noch:</span>${FRACS.map(([f,a,b])=> `<button class="cbtn" data-f="${f}">${a}${b ? `<small>${b}</small>` : ''}</button>`).join('')}</div>
+    <div class="hown"><button class="owntog" id="wzOwnT">✏️ Andere Zeit selbst eingeben</button>
+      <span class="ownbox" id="wzOwn" hidden><input id="wzOwnH" type="number" min="0" max="24" inputmode="numeric" aria-label="Stunden"> Std
+        <input id="wzOwnM" type="number" min="0" max="59" step="5" inputmode="numeric" aria-label="Minuten"> Min</span></div>
+    <div class="hsum" id="wzHsum"></div>
     <div class="bufbox" id="wzBuf"></div>`,
-  after(){ $id('wzCard').addEventListener('click', e=>{ const b = e.target.closest('[data-h]'); if(b) setField('availIn', b.dataset.h); }); },
+  after(){
+    $id('wzCard').addEventListener('click', e=>{
+      const h = hoursVal(), w = Math.floor(h + 1e-9), f = h - w;
+      const bh = e.target.closest('[data-h]'), bf = e.target.closest('[data-f]');
+      if(bh) setHours(+bh.dataset.h + (FRACS.some(x=> Math.abs(x[0]-f) < .01) ? f : 0));
+      if(bf) setHours(w + +bf.dataset.f);
+      if(e.target.closest('#wzOwnT')){ const box = $id('wzOwn'); box.hidden = !box.hidden; if(!box.hidden) $id('wzOwnH').focus(); }
+    });
+    const own = ()=> setHours((parseInt($id('wzOwnH').value, 10) || 0) + (parseInt($id('wzOwnM').value, 10) || 0) / 60);
+    $id('wzOwnH').addEventListener('input', own); $id('wzOwnM').addEventListener('input', own);
+    const h = hoursVal(); if(h && (h > 10.75 || Math.abs(h*4 - Math.round(h*4)) > .01)) $id('wzOwn').hidden = false;
+  },
   update(){
-    const h = hoursVal();
-    document.querySelectorAll('#wzHours .cbtn').forEach(b=> b.classList.toggle('on', +b.dataset.h===h));
+    const h = hoursVal(), w = Math.floor(h + 1e-9), f = h - w;
+    document.querySelectorAll('#wzHours .cbtn').forEach(b=> b.classList.toggle('on', h > 0 && +b.dataset.h === w));
+    document.querySelectorAll('#wzFrac .cbtn').forEach(b=> b.classList.toggle('on', h > 0 && Math.abs(+b.dataset.f - f) < .01));
+    const oh = $id('wzOwnH'), om = $id('wzOwnM');
+    if(oh && document.activeElement !== oh && document.activeElement !== om){ oh.value = h ? w : ''; om.value = h ? Math.round(f * 60) : ''; }
+    if($id('wzHsum')) $id('wzHsum').innerHTML = h ? `Deine Zeit heute: <b>${hoursLabel(h)}</b>` : '';
     const sum = real().reduce((a,t)=> a+(parseInt(t.min,10)||0), 0);
     if(!h){ $id('wzBuf').innerHTML = `<div class="bufmsg">👆 Tippe zuerst an, wie viele Stunden du hast.</div>`; return; }
     const avail = Math.round(h*60), cap = Math.round(avail*.6), pct = Math.min(100, sum/avail*100);
@@ -3399,7 +3445,7 @@ const WZ = [
       <div class="buflegend"><span>Deine Aufgaben: <b>${sum} Min</b></span><span>Deine Zeit: <b>${avail} Min</b></span></div>
       <div class="bufmsg ${msg[0]}">${msg[1]}</div>`; },
   ok:()=> hoursVal()>0, need:()=> 'Tippe an, wie viele Stunden du heute hast ☝️',
-  tour:[['#wzHours','Tippe an, wie viele Stunden du heute für deine Aufgaben hast.'],['#wzBuf','Hier siehst du sofort, ob alles in deine Zeit passt.']] },
+  tour:[['#wzHours','Tippe an, wie viele Stunden du heute für deine Aufgaben hast.'],['#wzFrac','Noch eine <b>Viertel-</b> oder <b>halbe Stunde</b> dazu? Hier antippen. Ganz eigene Zeit: «Andere Zeit selbst eingeben».'],['#wzBuf','Hier siehst du sofort, ob alles in deine Zeit passt.']] },
 
 { label:'Wichtig?',
   say:()=> real().every(t=> t.decided)
@@ -3633,8 +3679,8 @@ function renderHeute(){
   $id('hFrog').innerHTML = !frog
     ? `<div class="frogbig none"><span class="fe">🐸</span><div class="ft"><small>Noch kein Frosch</small><b>Welche Aufgabe schiebst du gern auf?</b></div><button class="btn" data-wz="7">Frosch wählen</button></div>`
     : !frog.done
-      ? `<div class="frogbig" id="frogCard"><span class="fe">🐸</span><div class="ft"><small>Zuerst den Frosch</small><b>${escapeHtml(frog.text)}</b></div><button class="btn" data-done="${frog.id}">✓ Erledigt</button></div>`
-      : `<div class="frogbig eaten"><span class="fe">🐸</span><div class="ft"><small>Frosch gegessen ✓ Stark!</small><b>${escapeHtml(frog.text)}</b></div></div>`;
+      ? `<div class="frogbig" id="frogCard"><button class="hcheck fcheck" data-done="${frog.id}" aria-label="Erledigt: ${escapeHtml(frog.text)}">✓</button><span class="fe">🐸</span><div class="ft"><small>Zuerst den Frosch</small><b>${escapeHtml(frog.text)}</b></div><span class="fhint">Erledigt? Abhaken ✓</span></div>`
+      : `<div class="frogbig eaten" id="frogCard"><button class="hcheck fcheck on" data-done="${frog.id}" aria-label="Nicht erledigt: ${escapeHtml(frog.text)}" title="Doch nicht erledigt? Nochmal klicken">✓</button><span class="fe">🐸</span><div class="ft"><small>Frosch gegessen ✓ Stark!</small><b>${escapeHtml(frog.text)}</b></div></div>`;
 
   // Reihenfolge (ohne Frosch), unsortierte hinten dran
   const todo = orderOf(r).filter(t=> !t.done && t!==frog).concat(r.filter(t=> !t.done && !t.decided && t!==frog));
@@ -3779,7 +3825,7 @@ function renderAbend(){
 // ===================================================================
 const PRINT_MOCK = `<div class="pmock"><div>Ziel <span class="hi">🖨 Dein Drucker ▾</span></div><div>Seiten <span>Alle</span></div><div class="pb"><em>Abbrechen</em><strong>Drucken</strong></div></div>`;
 const TOURS = {
-  heute: [['#hFrog','Starte mit dem Frosch 🐸 Dann ist das Schwierigste schon geschafft. Erledigt? Auf <b>«✓ Erledigt»</b> klicken.'],
+  heute: [['#hFrog','Starte mit dem Frosch 🐸 Dann ist das Schwierigste schon geschafft. Erledigt? Einfach den <b>Kreis</b> abhaken, wie bei allen Aufgaben.'],
           ['#hList .hcheck','Erledigt? Tippe auf den <b>Kreis</b>. Die Aufgabe rutscht dann nach unten zu «Erledigt».'],
           ['#hAdd','Kommt etwas dazu? Hier kannst du es <b>nachtragen</b>.'],
           ['#fSkip','Hier sind die Aufgaben, die du <b>bewusst weglässt</b>. Die kommen <b>nicht</b> auf morgen.'],
@@ -4092,7 +4138,7 @@ $id('calNext').addEventListener('click', ()=>{ calMonth = new Date(calMonth.getF
 
 function recToData(r){
   return { v:2, iso:r.iso, submittedAt:r.updated, tasks:r.tasks,
-    f:{ nameIn:r.name||'', dateIn:chDate(r.iso), dayIn:r.day||'', availIn:r.hours?String(r.hours):'', focusInput:r.frog||'', goodIn:r.good||'', takeIn:r.take||'', noteIn:'' } };
+    f:{ nameIn:r.name||'', dateIn:chDate(r.iso), dayIn:r.day||'', availIn:r.hours?hoursStr(r.hours):'', focusInput:r.frog||'', goodIn:r.good||'', takeIn:r.take||'', noteIn:'' } };
 }
 function showDay(iso){
   const r = histLoad()[iso]; if(!r) return;
@@ -4513,7 +4559,7 @@ const COACH = [
   { tab:'planen', sel:'#wzFrogs', text:'Wähle deinen <b>Frosch</b> 🐸: die Aufgabe, die du am liebsten aufschiebst. Tippe sie an.', done:()=> !!$id('focusInput').value.trim(), skipIf:()=> !orderOf(real()).length },
   { tab:'planen', sel:'#wzNext', text:'Klick auf <b>«Weiter»</b>.', done:()=> wz>=8 },
   { tab:'planen', sel:'#wzGoDay', also:'#wzOrder', text:'Links siehst du deine <b>Reihenfolge</b> für heute. Oben fängst du an, mit dem Frosch.<br>Jetzt geht der Tag los! Klick auf <b>«Zu meinem Tag»</b>.', done:()=> currentTab==='heute' },
-  { tab:'heute', sel:'#hFrog', text:'Stell dir vor, du hast deinen Frosch erledigt. Klick auf <b>«✓ Erledigt»</b>.', done:()=>{ const f = real().find(isFrog); return !f || f.done; } },
+  { tab:'heute', sel:'#hFrog .fcheck', text:'Stell dir vor, du hast deinen Frosch erledigt. Hak ihn ab: Klick auf den <b>Kreis</b>.', done:()=>{ const f = real().find(isFrog); return !f || f.done; } },
   { tab:'heute', sel:'#hAdd', text:'Oh, es kommt etwas dazu! Klick auf <b>«＋ Aufgabe nachtragen»</b>.', done:()=> !!document.querySelector('.modal.qa') || real().length>=4 },
   { tab:'heute', sel:'.modal.qa', missingSel:'#hAdd', missing:'Klick nochmal auf <b>«＋ Aufgabe nachtragen»</b>.', text:'Schreib z.B. <b>«Rechnung bezahlen»</b>, tippe eine Zeit an, beantworte die 2 Fragen und klick auf <b>«Hinzufügen»</b>.', done:()=> real().length>=4 && !document.querySelector('.modal.qa') },
   { tab:'heute', sel:'#hList .hcheck', text:'Du hast etwas geschafft! Klick auf den <b>Kreis</b>, um eine Aufgabe abzuhaken.', done:()=> real().filter(t=> t.done && !isFrog(t)).length>=1, skipIf:()=> !real().some(t=> !t.done && !isFrog(t) && keyOf(t)!=="00") },
