@@ -1,7 +1,7 @@
 {
   "name": "eat-the-frog",
   "productName": "Eat the Frog",
-  "version": "1.1.6",
+  "version": "1.2.0",
   "description": "Eat the Frog – Tagesplanung mit Fredi: ALPEN, 80/20, Eisenhower",
   "author": "Patrik Kadar",
   "main": "main.js",
