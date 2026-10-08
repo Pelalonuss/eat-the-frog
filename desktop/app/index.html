@@ -572,6 +572,20 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
     background:linear-gradient(180deg,#9ce8dc,#13b3a0); box-shadow:0 6px 22px rgba(19,179,160,.4);
     transition:left .45s cubic-bezier(.3,1.25,.5,1), width .45s cubic-bezier(.3,1.25,.5,1); }
   .navcta{ flex:none; font-size:13px; padding:10px 18px; }
+  /* Leiste passt sich an: wird es eng, wird sie Stufe für Stufe kompakter (siehe fitNav) */
+  .topnav{ max-width:100vw; }
+  .topnav > *{ flex-shrink:0; }
+  .tabs{ min-width:0; flex-shrink:1; overflow-x:auto; scrollbar-width:none; }
+  .tabs::-webkit-scrollbar{ display:none; }
+  .topnav.c1 .tab .tn{ display:none; }
+  .topnav.c1 .tab{ padding:10px 14px; }
+  .topnav.c1{ gap:16px; padding:0 22px; }
+  .topnav.c2 .logo .lt, .topnav.c2 .cardchip .ct, .topnav.c2 .installbtn .it{ display:none; }
+  .topnav.c3 .navcta{ display:none; }
+  .topnav.c3 .tab{ padding:9px 11px; font-size:11px; letter-spacing:.5px; }
+  .topnav.c3{ gap:10px; padding:0 14px; }
+  .topnav.c4 .navicon{ display:none; }
+  .topnav.c4 .tab{ padding:8px 9px; font-size:10.5px; letter-spacing:.3px; }
   .viewtag{ margin:0 auto; display:flex; align-items:center; gap:12px; font-size:13px; }
   .viewtag b{ font-family:var(--display); font-weight:700; }
   .viewtag span{ color:var(--txt-soft); }
@@ -1652,7 +1666,7 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
   <button class="cardchip" id="cardChip" title="Deine Speicherkarte">
     <span class="mini"><i></i></span><span class="ct">Karte</span><span class="cled"></span>
   </button>
-  <button class="navicon installbtn" id="installBtn" hidden title="Eat the Frog als App auf deinen Computer holen">📲 App</button>
+  <button class="navicon installbtn" id="installBtn" hidden title="Eat the Frog als App auf deinen Computer holen">📲<span class="it"> App</span></button>
   <button class="navicon" data-go="a4" title="A4-Blatt ansehen und drucken">📄 A4</button>
   <button class="btn navcta" data-go="planen">Jetzt planen →</button>
 </nav>
@@ -3159,6 +3173,9 @@ function moveInd(instant){
   if(!a){ ind.style.width = '0px'; return; }
   if(instant) ind.classList.add('no-anim');
   ind.style.left = a.offsetLeft + 'px'; ind.style.width = a.offsetWidth + 'px';
+  // schmales Fenster: aktiven Tab in den sichtbaren Bereich schieben
+  const t = a.parentElement, l = a.offsetLeft, r = l + a.offsetWidth;
+  if(t && t.scrollWidth > t.clientWidth){ if(l < t.scrollLeft) t.scrollLeft = l - 8; else if(r > t.scrollLeft + t.clientWidth) t.scrollLeft = r - t.clientWidth + 8; }
   if(instant){ void ind.offsetWidth; ind.classList.remove('no-anim'); }
 }
 function planReady(){ const r = real(); return planned && r.length>0 && r.every(t=> t.decided); }
@@ -3221,7 +3238,19 @@ document.querySelector('.tabs')?.addEventListener('keydown', e=>{
   goTab(NAV_TABS[i]); document.querySelector(`.tab[data-tab="${NAV_TABS[i]}"]`).focus();
 });
 addEventListener('hashchange', ()=>{ const h = location.hash.slice(1); if(!h.startsWith('view=')) goTab(h); });
-addEventListener('resize', ()=> moveInd(true));
+// Obere Leiste: passt nicht alles drauf? Dann Stufe für Stufe kompakter machen.
+function fitNav(){
+  const nav = document.querySelector('.topnav'); if(!nav) return;
+  const lv = ['c1','c2','c3','c4'];
+  nav.classList.remove(...lv);
+  const tabs = nav.querySelector('.tabs');
+  const tight = ()=> nav.scrollWidth > nav.clientWidth + 1 || (tabs && tabs.scrollWidth > tabs.clientWidth + 1);
+  for(const c of lv){ if(!tight()) break; nav.classList.add(c); }
+  moveInd(true);
+}
+let fitT = null;
+addEventListener('resize', ()=>{ moveInd(true); clearTimeout(fitT); fitT = setTimeout(fitNav, 60); });
+if(document.fonts) document.fonts.ready.then(fitNav);
 if(document.fonts) document.fonts.ready.then(()=> moveInd(true));
 document.querySelectorAll('.trn').forEach(el=> el.textContent = TRAINER_NAME);
 
@@ -4774,6 +4803,7 @@ addEventListener('online', ()=>{ if(cloud.user && cloud.state!=='in') cloudWrite
 // ---------- Anzeige: Chip oben rechts ----------
 function cloudChip(chip){
   chip = chip || $id('cardChip'); if(!chip) return;
+  requestAnimationFrame(fitNav);
   chip.style.display = VIEW ? 'none' : '';
   const first = (nm() || (cloud.user && cloud.user.displayName) || '').split(' ')[0];
   chip.className = 'cardchip acct ' + ({ in:'ok', saving:'saving', offline:'warn', error:'warn' }[cloud.state] || '');
@@ -5246,7 +5276,7 @@ function startApp(){ if(!prologDone()) startPractice(); else goTab(planReady() ?
 // ===================================================================
 let installEvt = null;
 const IS_APP = !!window.desktopApp || matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
-function showInstall(on){ ['installBtn','installTip'].forEach(id=>{ const el = $id(id); if(el) el.hidden = !on || IS_APP || VIEW; }); }
+function showInstall(on){ ['installBtn','installTip'].forEach(id=>{ const el = $id(id); if(el) el.hidden = !on || IS_APP || VIEW; }); fitNav(); }
 addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); installEvt = e; showInstall(true); });
 addEventListener('appinstalled', ()=>{ installEvt = null; showInstall(false); toast('🎉 Installiert! Fredi ist jetzt auf deinem Desktop.'); });
 async function installApp(){
@@ -5276,6 +5306,7 @@ quiet = true; rollover(); ensureDate(); quiet = false;
 }
 if(VIEW) autoCockpit();
 if(CLOUD_ON) cloudInit(); else cardInit();
+fitNav();
 </script>
 </body>
 </html>
