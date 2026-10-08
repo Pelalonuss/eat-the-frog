@@ -1276,6 +1276,7 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
   .gatefoot .gprac{ color:var(--mint); font-weight:600; }
   .gatefoot .gskip{ color:var(--txt-soft); text-decoration:underline; opacity:.75; }
   .gatefoot .gshow{ color:var(--txt-soft); font-weight:600; }
+  html.cloud .nocloud, html:not(.cloud) .oncloud{ display:none !important; }
   /* Anmelden */
   .gatebox.login{ width:min(520px,100%); }
   .gatebox .gfrog{ width:72px; height:72px; border-radius:20px; background:linear-gradient(135deg,#22d3bb,#0b7a6c); display:flex; align-items:center; justify-content:center; box-shadow:0 6px 0 #06483f, 0 14px 30px rgba(0,0,0,.35); margin-bottom:18px; }
@@ -1584,6 +1585,22 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
   .orow.ocard::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:6px; background:#69737c; }
   .orow.ocard.k11::before{ background:var(--q1); } .orow.ocard.k10::before{ background:var(--q2); } .orow.ocard.k01::before{ background:var(--q3); }
   .orow.ocard .ot{ font-size:19px; font-weight:700; }
+  .orow.ocard{ transition:opacity .3s, transform .3s, max-height .3s; }
+  .orow.ocard.leaving{ opacity:0; transform:translateY(24px) scale(.97); pointer-events:none; }
+  .orow.ocard .cbtn.main{ background:var(--teal); border-color:var(--teal); color:#05201b; }
+  .tomhead{ display:flex; align-items:center; gap:10px; margin-top:22px; font-family:var(--display); font-weight:700; font-size:15px; color:var(--mint); }
+  .tomhead .mh-n{ min-width:28px; height:28px; font-size:15px; background:var(--teal); color:#05201b; }
+  .tomlist{ margin-top:10px; display:flex; flex-direction:column; gap:8px; }
+  .tomrow{ display:flex; align-items:center; gap:12px; background:rgba(19,179,160,.1); border:1px solid rgba(141,224,211,.25); border-radius:14px; padding:11px 14px; animation:tomIn .35s cubic-bezier(.2,.8,.2,1); }
+  @keyframes tomIn{ from{ opacity:0; transform:translateY(-10px); } }
+  .tomrow .tt{ flex:1; min-width:0; font-weight:700; font-size:16px; }
+  .tomrow .tt span{ font-weight:500; font-size:12.5px; color:var(--txt-soft); margin-left:8px; }
+  .tomrow .tl{ flex:none; font-size:13.5px; font-weight:700; color:var(--mint); }
+  .tomrow.frog{ background:rgba(19,179,160,.2); }
+  .tomrow.gone{ background:rgba(255,255,255,.04); border-color:rgba(255,255,255,.1); }
+  .tomrow.gone .tt{ text-decoration:line-through; opacity:.6; } .tomrow.gone .tl{ color:var(--txt-soft); }
+  .tomrow .tch{ flex:none; font:inherit; font-size:12.5px; color:var(--txt-soft); background:none; border:1px solid rgba(255,255,255,.18); border-radius:8px; padding:4px 9px; cursor:pointer; }
+  .tomrow .tch:hover{ color:var(--txt); border-color:var(--mint); }
   .orow.ocard .ot span{ display:block; font-size:13.5px; font-weight:500; margin-top:3px; color:var(--txt-soft); }
   .orow.ocard .chips-row{ margin-top:12px; gap:8px; }
   .orow.ocard .cbtn{ font-size:14.5px; padding:10px 14px; }
@@ -2030,19 +2047,20 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
         <div class="an">4</div>
         <div class="ab">
           <h3>Tag abschliessen</h3>
-          <p class="asub">Fertig für heute? Dann speichere deinen Tag. Offene Aufgaben kommen automatisch auf morgen. Danach kannst du ihn noch <b>an <span class="trn"></span> senden</b> oder <b>als PDF drucken</b>.</p>
+          <p class="asub">Fertig für heute? Dann speichere deinen Tag. Offene Aufgaben kommen automatisch auf morgen. <span class="nocloud">Danach kannst du ihn noch <b>an <span class="trn"></span> senden</b> oder <b>als PDF drucken</b>.</span><span class="oncloud"><span class="trn"></span> sieht ihn <b>automatisch</b>, du musst nichts senden.</span></p>
           <button class="btn closeday" id="closeDayBtn" onclick="newDay()">✓ Tag abschliessen &amp; speichern</button>
         </div>
       </div>
     </div>
     <div class="aside2">
-      <div class="pvhead">Das bekommt <span class="trn"></span></div>
+      <div class="pvhead"><span class="nocloud">Das bekommt</span><span class="oncloud">Das sieht</span> <span class="trn"></span></div>
       <div class="pvcard" id="pvCard"></div>
       <ul class="checks" id="checks"></ul>
-      <button class="btn send lg wide" id="sendBtn" onclick="sendToTrainer()">📤 An <span class="trn"></span> senden</button>
+      <button class="btn send lg wide nocloud" id="sendBtn" onclick="sendToTrainer()">📤 An <span class="trn"></span> senden</button>
+      <p class="how oncloud">✓ <span class="trn"></span> sieht deinen Plan <b>automatisch</b> in ihrem Bereich. Du musst nichts senden.</p>
       <button class="btn lg wide closeday2" onclick="newDay()" title="Tag im Verlauf speichern, Offenes kommt auf morgen">✓ Tag abschliessen</button>
       <button class="btn dark wide" onclick="window.print()">🖨 Drucken</button>
-      <p class="how">Dein Tagesplan wird als <b>PDF</b> erstellt und hängt schon an einer fertigen Mail an <span class="trn"></span>. Du öffnest die Mail-Datei und drückst nur noch <b>Senden</b>.</p>
+      <p class="how nocloud">Dein Tagesplan wird als <b>PDF</b> erstellt und hängt schon an einer fertigen Mail an <span class="trn"></span>. Du öffnest die Mail-Datei und drückst nur noch <b>Senden</b>.</p>
     </div>
   </div>
 </section>
@@ -2533,8 +2551,8 @@ function showDayDone(iso, carriedN){
   bg.innerHTML = `<div class="modal daydone" role="dialog" aria-modal="true">
     <div class="ddtop">🎉</div><h3>Tag gespeichert!</h3>
     <div class="sub">Dein ${escapeHtml(r.day||'')}, ${chDate(iso)} ist jetzt im Verlauf.${carriedN ? ` ${carriedN} offene Aufgabe${carriedN>1?'n warten':' wartet'} schon auf morgen.` : ''}</div>
-    <p class="ddq">Möchtest du ihn noch senden oder ausdrucken?</p>
-    <div class="ddbtns"><button class="btn send lg" data-dd-send>📤 An ${escapeHtml(TRAINER_NAME)} senden</button><button class="btn lg" data-dd-print>🖨 Drucken / als PDF</button></div>
+    <p class="ddq">${CLOUD_ON ? `✓ ${escapeHtml(TRAINER_NAME)} sieht ihn automatisch. Möchtest du ihn noch ausdrucken?` : 'Möchtest du ihn noch senden oder ausdrucken?'}</p>
+    <div class="ddbtns">${CLOUD_ON ? '' : `<button class="btn send lg" data-dd-send>📤 An ${escapeHtml(TRAINER_NAME)} senden</button>`}<button class="btn lg" data-dd-print>🖨 Drucken / als PDF</button></div>
     <div class="mbtns"><button class="btn ghost" data-dd-close>Fertig</button></div></div>`;
   document.body.appendChild(bg); requestAnimationFrame(()=> bg.classList.add('show'));
   const close = ()=>{ bg.classList.remove('show'); setTimeout(()=> bg.remove(), 250); };
@@ -2582,6 +2600,7 @@ const SUBMITTED = (()=>{ try{
 }catch(e){ return null; } })();
 const VIEW = !!SUBMITTED;
 const CLOUD_ON = !!(FIREBASE_CONFIG && FIREBASE_CONFIG.apiKey) && !VIEW;   // mit Konto (statt Speicherkarte)
+document.documentElement.classList.toggle('cloud', CLOUD_ON);
 function collect(){
   const data = { v:2, iso:planIso, abend:abendSeen, planned, tasks: tasks.map(({text,min,w,d,lever,snail,done,decided,tomorrow,moved,at})=>({text,min,w,d,lever,snail,done,decided:!!decided,tomorrow:tomorrow||"",moved:moved||0,at:at||""})), f:{} };
   FIELDS.forEach(id=> data.f[id] = document.getElementById(id).value);
@@ -3823,8 +3842,9 @@ function quickAdd(){
 const GOOD_SUGG = ['🐸 Frosch zuerst erledigt','⏰ Pünktlich angefangen','☕ Pausen gemacht','🎯 Fokus gehalten','✅ Mehr geschafft als gedacht','📵 Weniger am Handy'];
 // Was passiert morgen mit einer offenen Aufgabe? (passt zur Methode: Frosch, Sofort, Delegieren)
 let abendFresh = null;   // gerade «doch mitgenommen» → Karte kurz hervorheben
-const TOMORROW = [['', '↪ Mitnehmen'], ['frosch', '🐸 Morgen mein Frosch'], ['zuerst', '⚡ Morgen zuerst'], ['abgeben', '👉 Abgeben'], ['weg', '✕ Fällt weg']];
-const TOM_LINE = { frosch:['🐸 Morgen als Frosch',0], zuerst:['⚡ Morgen zuerst',1], '':['→ Morgen',2], mit:['→ Morgen (neu sortieren)',3], abgeben:['👉 Morgen abgeben',4] };
+const TOMORROW = [['carry', '↪ Mitnehmen'], ['frosch', '🐸 Morgen mein Frosch'], ['zuerst', '⚡ Morgen zuerst'], ['abgeben', '👉 Abgeben'], ['weg', '✕ Fällt weg']];
+const TOM_LABEL = { carry:'↪ Mitnehmen', mit:'↪ Mitnehmen (neu sortieren)', frosch:'🐸 Morgen mein Frosch', zuerst:'⚡ Morgen zuerst', abgeben:'👉 Morgen abgeben', weg:'✕ Fällt weg' };
+const TOM_LINE = { frosch:['🐸 Morgen als Frosch',0], zuerst:['⚡ Morgen zuerst',1], '':['→ Morgen',2], carry:['→ Morgen',2], mit:['→ Morgen (neu sortieren)',3], abgeben:['👉 Morgen abgeben',4] };
 let abendMounted = false;
 function mountAbend(){
   if(abendMounted) return; abendMounted = true;
@@ -3837,6 +3857,18 @@ function mountAbend(){
       g.value = cur.includes(txt) ? cur.split(/\n/).filter(l=> l.trim()!==txt).join('\n') : (cur ? cur + '\n' : '') + txt;
       setField('goodIn', g.value); }
     const tm = e.target.closest('[data-tm]');
+    if(tm && tm.closest('.ocard')){ const t = tasks.find(k=> k.id==tm.dataset.id); if(t){
+      // Wahl getroffen: Karte rutscht raus, Aufgabe steht bei «Für morgen eingetragen»
+      const v = tm.dataset.tm, card = tm.closest('.ocard');
+      if(v==='frosch') real().forEach(o=>{ if(o!==t && o.tomorrow==='frosch') o.tomorrow = 'carry'; });   // nur ein Frosch
+      const [x,y] = centerOf(tm);
+      burst(x, y, v==='weg' ? ['#9aa5a2','#cfd6d4','#fff'] : ['#13b3a0','#8de0d3','#f4b23c'], 16, {speed:4.2, g:.1, size:6, life:36});
+      const go = ()=>{ updTask(t, { tomorrow: v }); syncTake();
+        toast(v==='weg' ? `✕ «${t.text.trim()}» fällt weg` : `✓ «${t.text.trim()}» ist für morgen eingetragen`); };
+      if(MOTION && card){ card.classList.add('leaving'); setTimeout(go, 320); } else go();
+    } return; }
+    const tc = e.target.closest('[data-tchange]');
+    if(tc){ const t = tasks.find(k=> k.id==tc.dataset.tchange); if(t){ updTask(t, { tomorrow: '' }); syncTake(); } return; }
     if(tm){ const t = tasks.find(k=> k.id==tm.dataset.id); if(t){
       const v = (t.tomorrow||'')===tm.dataset.tm ? '' : tm.dataset.tm;
       if(v==='frosch') real().forEach(o=>{ if(o!==t && o.tomorrow==='frosch') o.tomorrow = ''; });   // nur ein Frosch
@@ -3874,13 +3906,19 @@ function renderAbend(){
     <div class="${frog && frog.done?'good':''}"><b>${!frog ? '–' : frog.done ? '🐸 ✓' : '🐸 offen'}</b><span>Frosch</span></div>
     <div><b>${minsDone ? minLabel(minsDone) : '0 Min'}</b><span>geschafft</span></div>
     <div><b>⚡ ${r.filter(t=> t.lever && t.done).length}</b><span>Hebel erledigt</span></div>`;
+  const decided = r.filter(t=> !t.done && t.tomorrow && (!isSkip(t) || t.tomorrow==='mit'));
+  const todo = open.filter(t=> !decided.includes(t));
   $id('aOpen').innerHTML = !r.length ? `<p class="asub">Du hast heute noch keine Aufgaben eingetragen.</p>`
     : (!open.length ? `<div class="allok">🎉 Alles erledigt! Nichts muss auf morgen.</div>`
-    : `<div class="movehead"><span class="mh-n">${open.length}</span> offene Aufgabe${open.length>1?'n kommen':' kommt'} automatisch mit auf morgen
-         <span><b>Was passiert morgen damit?</b> Normalerweise einfach mitnehmen. Du kannst eine aber auch zu deinem <b>Frosch</b> machen, <b>nach vorne</b> holen, <b>abgeben</b> oder streichen.</span></div>
-       <div class="rules">So funktioniert's: Was bei <b>Sofort</b>, <b>Einplanen</b> oder <b>Delegieren</b> offen ist, kommt <b>automatisch</b> auf morgen. Was bei <b>Weglassen</b> ist, kommt <b>nicht</b> mit, das hast du ja bewusst weggelassen.</div>`)
-      + open.map(t=> `<div class="orow ocard k${t.decided ? keyOf(t) : 'xx'} ${t.tomorrow && t.tomorrow!=='weg' ? 'set' : ''} ${t.tomorrow==='weg' ? 'gone' : ''} ${t.id===abendFresh ? 'fresh' : ''}" data-oid="${t.id}"><div class="ot">${escapeHtml(t.text)}<span>${t.min ? minLabel(t.min) : ''}${isSkip(t) ? ' · Weglassen, kommt doch mit' : t.decided ? ' · ' + QLABEL[keyOf(t)] : ''}${t.moved ? ` · schon ${t.moved}× verschoben` : ''}</span></div><div class="chips-row">
-        ${(isSkip(t) ? TOMORROW.map(([v,l])=> v==='' ? ['mit', l] : v==='weg' ? ['', '✕ Doch weglassen'] : [v,l]) : TOMORROW).map(([v,l])=> `<button class="cbtn ${(t.tomorrow||'')===v?'on':''} ${v==='weg' || (isSkip(t) && v==='') ?'neg':''}" data-tm="${v}" data-id="${t.id}">${l}</button>`).join('')}</div></div>`).join('')
+    : !todo.length ? `<div class="allok">✓ Alles für morgen eingetragen. Stark!</div>`
+    : `<div class="movehead"><span class="mh-n">${todo.length}</span> offene Aufgabe${todo.length>1?'n':''}: Was passiert morgen damit?
+         <span>Tippe bei jeder Aufgabe an, was morgen damit passiert. Dann rutscht sie nach unten zu <b>«Für morgen eingetragen»</b>. Normalerweise einfach <b>«Mitnehmen»</b>.</span></div>
+       <div class="rules">So funktioniert's: Was bei <b>Sofort</b>, <b>Einplanen</b> oder <b>Delegieren</b> offen ist, kommt <b>automatisch</b> auf morgen, auch wenn du nichts antippst. Was bei <b>Weglassen</b> ist, kommt <b>nicht</b> mit.</div>`)
+      + todo.map(t=> `<div class="orow ocard k${t.decided ? keyOf(t) : 'xx'} ${t.tomorrow && t.tomorrow!=='weg' ? 'set' : ''} ${t.tomorrow==='weg' ? 'gone' : ''} ${t.id===abendFresh ? 'fresh' : ''}" data-oid="${t.id}"><div class="ot">${escapeHtml(t.text)}<span>${t.min ? minLabel(t.min) : ''}${isSkip(t) ? ' · Weglassen, kommt doch mit' : t.decided ? ' · ' + QLABEL[keyOf(t)] : ''}${t.moved ? ` · schon ${t.moved}× verschoben` : ''}</span></div><div class="chips-row">
+        ${TOMORROW.map(([v,l])=> `<button class="cbtn ${v==='carry' ? 'main' : ''} ${v==='weg' ? 'neg' : ''}" data-tm="${v}" data-id="${t.id}">${l}</button>`).join('')}</div></div>`).join('')
+    + (decided.length ? `<div class="tomhead">✓ Für morgen eingetragen <span class="mh-n">${decided.length}</span></div><div class="tomlist">`
+      + decided.map(t=> `<div class="tomrow ${t.tomorrow==='weg' ? 'gone' : ''} ${t.tomorrow==='frosch' ? 'frog' : ''}"><div class="tt">${escapeHtml(t.text)}<span>${t.min ? minLabel(t.min) : ''}</span></div>
+        <span class="tl">${TOM_LABEL[t.tomorrow] || TOM_LABEL.carry}</span><button class="tch" data-tchange="${t.id}" title="Andere Wahl treffen">ändern</button></div>`).join('') + '</div>' : '')
     + (skipped.length ? `<div class="skiphead">🗑 <b>${skipped.length} Aufgabe${skipped.length>1?'n':''} bei «Weglassen»</b> ${skipped.length>1?'kommen':'kommt'} <b>nicht</b> auf morgen. Willst du eine doch morgen machen?</div>`
       + skipped.map(t=> `<div class="orow skiprow"><div class="ot">${escapeHtml(t.text)} <span>· Weglassen</span></div>
         <button class="cbtn ${t.tomorrow==='mit'?'on':''}" data-tm="mit" data-id="${t.id}">${t.tomorrow==='mit' ? '✓ kommt doch mit' : '↪ doch mitnehmen'}</button></div>`).join('') : '');
@@ -3901,7 +3939,7 @@ const TOURS = {
   abend: [['#aGood','Schreib kurz auf, <b>was heute gut lief</b>. Oder tippe oben auf einen Vorschlag.'],
           ['#aStats','Hier siehst du deinen Tag in Zahlen.'],
           ['#aOpen','<b>Offene Aufgaben kommen automatisch auf morgen</b>, alles aus Sofort, Einplanen und Delegieren. Bei <b>«Was passiert morgen damit?»</b> kannst du eine zu deinem Frosch machen, nach vorne holen oder abgeben. Aufgaben bei <b>«Weglassen»</b> kommen <b>nicht</b> mit, ausser du tippst auf «doch mitnehmen».'],
-          ['#sendBtn','Hier schickst du deinen Plan an <b>'+TRAINER_NAME+'</b>.'],
+          ...(CLOUD_ON ? [] : [['#sendBtn','Hier schickst du deinen Plan an <b>'+TRAINER_NAME+'</b>.']]),
           ['#closeDayBtn','Und ganz zum Schluss: <b>«Tag abschliessen»</b>. Dann ist dein Tag gespeichert und morgen startet frisch.']],
   verlauf: [['#vKpis','Hier siehst du auf einen Blick, wie deine Tage laufen: wie viele Tage du geplant hast, wie viel du erledigst und wie oft du den Frosch gegessen hast 🐸'],
             ['#vChart','Jeder Balken ist ein Tag. <b class="cw g">Grün</b> = erledigt, <b class="cw y">grau</b> = offen geblieben.'],
@@ -3923,7 +3961,7 @@ const RUNDGANG = [
   { tab:'heute', sel:'#hAdd', text:'Kommt etwas dazu? Hier <b>nachtragen</b>.' },
   { tab:'abend', sel:'.tab[data-tab="abend"]', text:'<b>Abend:</b> Am Abend schaust du kurz zurück. Was lief gut? Was hast du geschafft?' },
   { tab:'abend', sel:'#aOpen', text:'<b>Was du nicht geschafft hast, kommt automatisch auf morgen.</b> Ausser Aufgaben bei «Weglassen», die hast du ja bewusst weggelassen.' },
-  { tab:'abend', sel:'#sendBtn', text:'Hier schickst du deinen Plan an <b>'+TRAINER_NAME+'</b>. Dein Plan hängt schon als PDF an einer fertigen Mail, du drückst nur noch «Senden».' },
+  ...(CLOUD_ON ? [] : [{ tab:'abend', sel:'#sendBtn', text:'Hier schickst du deinen Plan an <b>'+TRAINER_NAME+'</b>. Dein Plan hängt schon als PDF an einer fertigen Mail, du drückst nur noch «Senden».' }]),
   { tab:'abend', sel:'#closeDayBtn', text:'Und zum Schluss: <b>«Tag abschliessen»</b>. Dann ist dein Tag gespeichert.' },
   { tab:'verlauf', sel:'.tab[data-tab="verlauf"]', text:'<b>Verlauf:</b> Hier siehst du alle deine Tage und wie gut es läuft 📊' },
   { tab:'verlauf', sel:'.navicon', text:'Willst du deinen Plan <b>auf Papier</b>? Klick oben auf <b>«📄 A4»</b>.' },
@@ -4218,7 +4256,7 @@ function showDay(iso){
       <span class="tg k${k}">${t.decided ? QLABEL[k] : 'unsortiert'}</span></li>`; }).join('')}</ul>
     ${(r.good||'').trim() ? `<div class="dl">Was lief gut</div><div class="dt2">${escapeHtml(r.good)}</div>` : ''}
     ${(r.take||'').trim() ? `<div class="dl">Mitgenommen</div><div class="dt2">${escapeHtml(r.take)}</div>` : ''}
-    <div class="ddbtns"><button class="btn send" data-dsend>📤 An ${escapeHtml(TRAINER_NAME)} senden</button><button class="btn" data-dprint>🖨 Drucken / als PDF</button></div>
+    <div class="ddbtns">${CLOUD_ON ? '' : `<button class="btn send" data-dsend>📤 An ${escapeHtml(TRAINER_NAME)} senden</button>`}<button class="btn" data-dprint>🖨 Drucken / als PDF</button></div>
     <div class="mbtns"><button class="btn danger" data-del>🗑 Tag löschen</button><button class="btn ghost" data-a4>📄 Als A4 ansehen</button><button class="btn ghost" data-close>Schliessen</button></div></div>`;
   document.body.appendChild(bg); requestAnimationFrame(()=> bg.classList.add('show'));
   const close = ()=>{ bg.classList.remove('show'); setTimeout(()=> bg.remove(), 250); };
@@ -4948,18 +4986,12 @@ const COACH = [
   { tab:'heute', sel:'#hToAbend', text:'Es ist Abend 🌙 Klick auf <b>«Zum Abend-Check»</b>.', done:()=> currentTab==='abend' },
   { tab:'abend', sel:'#aGoodChips', extra:['#aGood'], text:'Was lief heute gut? Tippe auf einen <b>Vorschlag</b> (oder schreib selbst ins Feld darunter).', done:()=> !!$id('goodIn').value.trim() },
   { tab:'abend', sel:'#aStats', manual:true, text:'Hier siehst du deinen Tag <b>in Zahlen</b>.' },
-  { tab:'abend', sel:'#aOpen', text:'Was offen ist, kommt <b>automatisch auf morgen</b>. Was soll morgen damit passieren? Tippe z.B. auf <b>«🐸 Morgen mein Frosch»</b>, dann ist sie morgen das Erste, was du machst.', done:()=> real().some(t=> ['frosch','zuerst','abgeben','weg'].includes(t.tomorrow)), skipIf:()=> !real().some(t=> !t.done && keyOf(t)!=="00") },
+  { tab:'abend', sel:'#aOpen', text:'Was offen ist, kommt auf morgen. Tippe bei einer Aufgabe an, was morgen damit passiert, z.B. <b>«↪ Mitnehmen»</b> oder <b>«🐸 Morgen mein Frosch»</b>. Dann rutscht sie zu <b>«Für morgen eingetragen»</b>.', done:()=> real().some(t=> ['carry','frosch','zuerst','abgeben','weg'].includes(t.tomorrow)), skipIf:()=> !real().some(t=> !t.done && keyOf(t)!=="00") },
   { tab:'abend', sel:'.skiprow', manual:true, skipIf:()=> !document.querySelector('.skiprow'), text:'Aufgaben bei <b>«Weglassen»</b> kommen <b>nicht</b> auf morgen. Willst du später doch eine machen, tippst du hier auf <b>«doch mitnehmen»</b>. Jetzt einfach auf <b>«Weiter»</b>.' },
   { tab:'abend', sel:'#closeDayBtn', text:'Fertig für heute! Klick auf <b>«Tag abschliessen &amp; speichern»</b>.', done:()=> practice.flags.closed },
-  { sel:()=> document.querySelector('.modal.psend') ? '.modal.psend [data-ok]' : '.modal.daydone [data-dd-send]',
-    missing:'Dein Tag ist gespeichert.', text:()=> document.querySelector('.modal.psend')
-      ? 'So würde deine Mail an <b>'+TRAINER_NAME+'</b> aussehen. Klick auf <b>«Verstanden»</b>.'
-      : 'Dein Tag ist gespeichert! 🎉 Jetzt kannst du ihn noch an <b>'+TRAINER_NAME+'</b> senden. Klick drauf, in der Übung wird <b>nichts</b> verschickt.', done:()=> practice.flags.sent && !document.querySelector('.modal.psend') },
-  { sel:'.modal.daydone [data-dd-print]', missing:'Dein Tag ist gespeichert.',
-    text:'Und jetzt einmal als <b>PDF</b> speichern: Klick auf <b>«Drucken / als PDF»</b>. Im Fenster bei <b>«Ziel»</b> → <b>«Als PDF speichern»</b> wählen und <b>«Speichern»</b> klicken.', done:()=> practice.flags.printed },
-  { sel:'.modal.daydone [data-dd-close]', text:'Super! Klick auf <b>«Fertig»</b>.', done:()=> !document.querySelector('.modal.daydone') },
+  { sel:'.modal.daydone [data-dd-close]', missing:'Dein Tag ist gespeichert.', text:()=> CLOUD_ON ? 'Dein Tag ist gespeichert! 🎉 <b>'+TRAINER_NAME+'</b> sieht ihn automatisch, du musst nichts senden. Klick auf <b>«Fertig»</b>.' : 'Dein Tag ist gespeichert! 🎉 Klick auf <b>«Fertig»</b>.', done:()=> !document.querySelector('.modal.daydone') },
   { tab:'verlauf', sel:'#vKpis', manual:true, text:'Das ist dein <b>Verlauf</b>. Hier siehst du auf einen Blick, wie deine Tage gelaufen sind. In der Übung mit ein paar <b>Beispiel-Tagen</b>.' },
-  { tab:'verlauf', sel:'#vDays', manual:true, text:'Jeder Tag wird hier gespeichert. Klickst du auf einen Tag, kannst du ihn auch <b>später noch senden oder drucken</b>.' },
+  { tab:'verlauf', sel:'#vDays', manual:true, text:'Jeder Tag wird hier gespeichert. Klickst du auf einen Tag, kannst du ihn <b>ansehen oder drucken</b>.' },
   { tab:'heute', sel:'#hWait', manual:true, missing:'Klick oben auf <b>«Mein Tag»</b>.', text:'So sieht dein <b>nächster Tag</b> aus: noch <b>leer</b>, weil du ihn noch nicht geplant hast. Die offenen Aufgaben von heute <b>warten</b> schon auf dich. Morgen klickst du einfach auf <b>«Jetzt planen»</b>.' },
   { sel:'#cardChip', manual:true, text: CLOUD_ON ? 'Und hier oben ist dein <b>Konto</b> 👤. Nach der Übung meldest du dich an. Dann ist alles gespeichert, an jedem Computer.' : 'Und hier oben ist deine <b>Speicherkarte</b> 💾. Die richten wir gleich zusammen richtig ein, damit deine Tage auch an anderen Computern da sind.' },
   { center:true, manual:true, btn:'Jetzt richtig starten →', finish:true,
