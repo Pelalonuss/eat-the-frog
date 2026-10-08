@@ -5057,7 +5057,7 @@ function endPractice(completed){
   updateHero();
   cardGate();   // danach: Speicherkarte einstecken bzw. erstellen
 }
-$id('practiceQuit').addEventListener('click', ()=>{ if(confirm('Übung beenden? Du kannst sie später auf der Startseite nochmal machen.')) endPractice(false); });
+$id('practiceQuit').addEventListener('click', ()=>{ if(confirm('Übung beenden?\n\nDu kannst sie jederzeit auf der Startseite nochmal machen («🎓 Übungsrunde nochmal»).')) endPractice(true); });
 
 // In der Übung: Senden nur zeigen, nicht verschicken
 function practiceSend(data){
