@@ -4,7 +4,7 @@ Tagesplanung mit System: **ALPEN-Methode**, **80/20 (Pareto)**, **Eisenhower-Mat
 
 ## 🌐 Hier geht's los
 
-**https://pelalonuss.github.io/eat-the-frog/**
+**https://eatthefrog.web.app**
 
 - Konto erstellen oder anmelden, fertig. Es braucht nichts zu installieren.
 - Deine Pläne sind in deinem Konto gespeichert (Server in **Zürich**) und an jedem Computer da.
@@ -16,3 +16,5 @@ Tagesplanung mit System: **ALPEN-Methode**, **80/20 (Pareto)**, **Eisenhower-Mat
 - `index.html`: die ganze App (eine Datei)
 - Login und Speicher: Firebase (Authentication + Firestore, Standort europe-west6 Zürich)
 - `desktop/`: alte Windows-Version (wird nicht mehr verwendet)
+- `docs/`: leitet die alte Adresse (pelalonuss.github.io/eat-the-frog) auf die neue um
+- Hochladen: `firebase deploy --only hosting` (Firebase Hosting, Site «eatthefrog»)

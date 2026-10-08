@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "site": "eatthefrog",
+    "public": ".",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "desktop/**", "docs/**", "README.md"],
+    "headers": [
+      { "source": "**/*.@(html|js|webmanifest)", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }
+    ]
+  }
+}
