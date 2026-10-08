@@ -2,6 +2,12 @@
 
 Tagesplanung mit System: **ALPEN-Methode**, **80/20 (Pareto)**, **Eisenhower-Matrix** und **Eat the Frog**, mit Fredi dem Frosch als Begleiter.
 
+## 🌐 Online (mit Login)
+
+**https://pelalonuss.github.io/eat-the-frog/**
+
+Anmelden, und deine Pläne sind an jedem Computer da (gespeichert in Zürich).
+
 ## ⬇️ Für Windows herunterladen
 
 **[Eat-the-Frog-Setup.exe herunterladen](https://github.com/pelalonuss/eat-the-frog/releases/latest/download/Eat-the-Frog-Setup.exe)**

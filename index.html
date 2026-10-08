@@ -1276,6 +1276,49 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
   .gatefoot .gprac{ color:var(--mint); font-weight:600; }
   .gatefoot .gskip{ color:var(--txt-soft); text-decoration:underline; opacity:.75; }
   .gatefoot .gshow{ color:var(--txt-soft); font-weight:600; }
+  /* Anmelden */
+  .gatebox.login{ width:min(520px,100%); }
+  .gatebox .gfrog{ width:72px; height:72px; border-radius:20px; background:linear-gradient(135deg,#22d3bb,#0b7a6c); display:flex; align-items:center; justify-content:center; box-shadow:0 6px 0 #06483f, 0 14px 30px rgba(0,0,0,.35); margin-bottom:18px; }
+  .gatebox .gfrog img.fredi{ width:52px; height:auto; margin:0; vertical-align:0; }
+  .lform{ margin-top:20px; display:flex; flex-direction:column; gap:14px; }
+  .lform label{ display:flex; flex-direction:column; gap:6px; font-size:13.5px; font-weight:600; color:var(--txt-soft); }
+  .lform input{ font:inherit; font-size:17px; color:var(--txt); background:rgba(255,255,255,.06); border:1.5px solid rgba(141,224,211,.3); border-radius:12px; padding:13px 14px; }
+  .lform input:focus{ outline:none; border-color:var(--mint); background:rgba(141,224,211,.08); }
+  .lform .pw{ position:relative; display:flex; }
+  .lform .pw input{ flex:1; padding-right:52px; }
+  .lform .pw button{ position:absolute; right:6px; top:50%; transform:translateY(-50%); font-size:18px; background:none; border:none; cursor:pointer; padding:6px 8px; color:var(--txt-soft); }
+  .lform .btn{ margin-top:4px; justify-content:center; font-size:16px; padding:15px 20px; }
+  .lform .btn[disabled]{ opacity:.6; cursor:wait; }
+  .lerr{ background:rgba(229,72,77,.14); border:1px solid rgba(229,72,77,.45); color:#ffb0b2; border-radius:12px; padding:11px 13px; font-size:14px; }
+  .lok{ background:rgba(57,227,154,.1); border:1px solid rgba(57,227,154,.4); color:#a6f3cf; border-radius:12px; padding:11px 13px; font-size:14px; }
+  .lerr:empty, .lok:empty{ display:none; }
+  .llinks{ display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top:6px; font-size:14px; color:var(--txt-soft); }
+  .llinks button{ font:inherit; font-weight:600; color:var(--mint); background:none; border:none; cursor:pointer; padding:0; text-decoration:underline; }
+  .lnote{ font-size:12.5px; color:var(--txt-soft); line-height:1.5; }
+  .lwait{ display:flex; align-items:center; gap:14px; margin-top:18px; color:var(--txt-soft); }
+  .lwait .spin{ width:26px; height:26px; border-width:3px; }
+  .cardchip.acct .mini{ display:none; }
+  .cardchip.acct .av{ font-size:14px; }
+  /* Konto-Fenster & Trainerinnen-Bereich */
+  .modal.acctm{ max-width:520px; background:#0f1a18; color:var(--txt); border:1px solid rgba(141,224,211,.2); }
+  .modal.acctm h3, .modal.trm h3{ color:var(--txt); }
+  .acctrow{ display:flex; align-items:center; gap:14px; margin-top:16px; background:rgba(255,255,255,.05); border-radius:16px; padding:14px 16px; }
+  .acctrow .ava{ width:46px; height:46px; border-radius:50%; background:linear-gradient(135deg,#22d3bb,#0b7a6c); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:20px; color:#05201b; flex:none; }
+  .acctrow b{ display:block; font-size:17px; } .acctrow span{ font-size:13.5px; color:var(--txt-soft); }
+  .acctok{ margin-top:14px; font-size:14px; color:var(--txt-soft); line-height:1.55; }
+  .acctok b{ color:var(--mint); }
+  .modal.trm{ max-width:980px; width:calc(100vw - 32px); max-height:calc(100vh - 40px); overflow:auto; background:#0f1a18; color:var(--txt); border:1px solid rgba(141,224,211,.2); }
+  .trtable{ width:100%; border-collapse:collapse; margin-top:18px; font-size:14px; }
+  .trtable th{ background:none !important; text-align:left; font-family:var(--display); font-size:10.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--txt-soft); font-weight:600; padding:8px 10px; border-bottom:1px solid rgba(255,255,255,.1); }
+  .trtable td{ padding:12px 10px; border-bottom:1px solid rgba(255,255,255,.06); vertical-align:middle; }
+  .trtable tr.click{ cursor:pointer; } .trtable tr.click:hover td{ background:rgba(141,224,211,.06); }
+  .trtable td b{ font-size:15px; } .trtable td small{ display:block; color:var(--txt-soft); font-size:12px; }
+  .trpill{ display:inline-block; border-radius:99px; padding:3px 10px; font-size:12.5px; font-weight:700; background:rgba(255,255,255,.08); }
+  .trpill.g{ background:rgba(57,227,154,.16); color:#a6f3cf; } .trpill.o{ background:rgba(244,178,60,.18); color:#ffd07a; } .trpill.r{ background:rgba(229,72,77,.18); color:#ffb0b2; }
+  .trhead{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+  .trhead .btn{ margin-left:auto; }
+  .trsearch{ font:inherit; font-size:15px; color:var(--txt); background:rgba(255,255,255,.06); border:1.5px solid rgba(141,224,211,.3); border-radius:12px; padding:10px 13px; width:min(320px,100%); margin-top:14px; }
+  .trempty{ margin-top:20px; color:var(--txt-soft); }
   .modal.cardm h3{ color:var(--txt); }
   .modal.cardm .sub{ color:var(--txt-soft); }
   .modal.cardm .cardstep{ grid-template-columns:170px 1fr; margin-top:10px; }
@@ -1614,7 +1657,7 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
           <span>🐸</span>
         </div>
       </div>
-      <div class="facts rv" style="--d:4"><span>⏱ 10 Minuten</span><span>🖨 1 A4-Seite</span><span>🔒 bleibt auf deinem Gerät</span><button class="replay" id="replayBtn" data-tour="practice" hidden>🎓 Übungsrunde nochmal</button></div>
+      <div class="facts rv" style="--d:4"><span>⏱ 10 Minuten</span><span>🖨 1 A4-Seite</span><span>🔒 nur für dich und deine Trainerin</span><button class="replay" id="replayBtn" data-tour="practice" hidden>🎓 Übungsrunde nochmal</button></div>
       <div class="installtip" id="installTip" hidden><img src="icon-192.png" alt=""><div><b>Eat the Frog als App</b><span>Mit Fredi-Symbol auf deinem Desktop, öffnet sich wie ein Programm.</span></div><button class="btn sm" data-install>📲 Installieren</button></div>
     </div>
     <div class="hvis rv" style="--d:2" aria-hidden="true">
@@ -2115,6 +2158,15 @@ const TRAINER_GREETING = "Guten Tag Frau Wyss"; // Anrede im Mail
 // Adresse des Trainer-Cockpits. Leer lassen = wird automatisch ermittelt, sobald die Seite online ist
 // (dann liegt trainer.html im selben Ordner). Nur nötig, wenn das Cockpit woanders liegt.
 const COCKPIT_URL = "";
+// Konto & Online-Speicher (Firebase, Daten in Zürich). Leer lassen = wie früher mit Speicherkarte.
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBAxms23hycLaeiGN4Q1C900D1pXM5iYLc",
+  authDomain: "eat-the-frog-26dd1.firebaseapp.com",
+  projectId: "eat-the-frog-26dd1",
+  storageBucket: "eat-the-frog-26dd1.firebasestorage.app",
+  messagingSenderId: "610863369181",
+  appId: "1:610863369181:web:feb71aa0c4325de37d8434"
+};
 
 const QUAD = {
   "11": { q:"q1", cls:"c1", act:"a1", label:"Sofort" },
@@ -2529,6 +2581,7 @@ const SUBMITTED = (()=>{ try{
   return null;
 }catch(e){ return null; } })();
 const VIEW = !!SUBMITTED;
+const CLOUD_ON = !!(FIREBASE_CONFIG && FIREBASE_CONFIG.apiKey) && !VIEW;   // mit Konto (statt Speicherkarte)
 function collect(){
   const data = { v:2, iso:planIso, abend:abendSeen, planned, tasks: tasks.map(({text,min,w,d,lever,snail,done,decided,tomorrow,moved,at})=>({text,min,w,d,lever,snail,done,decided:!!decided,tomorrow:tomorrow||"",moved:moved||0,at:at||""})), f:{} };
   FIELDS.forEach(id=> data.f[id] = document.getElementById(id).value);
@@ -3599,7 +3652,7 @@ function wzGo(i){
   wzForced = false;
 }
 // Speicherkarte schon geklärt? Dann diesen Schritt überspringen
-const cardStepDone = ()=> PRACTICE || ['ok','saving','unsupported'].includes(cardState) || cardSkipped();
+const cardStepDone = ()=> PRACTICE || CLOUD_ON || ['ok','saving','unsupported'].includes(cardState) || cardSkipped();
 function wzNext(){
   const st = WZ[wz];
   if(!st.ok()){
@@ -3876,7 +3929,7 @@ const RUNDGANG = [
   { tab:'verlauf', sel:'.navicon', text:'Willst du deinen Plan <b>auf Papier</b>? Klick oben auf <b>«📄 A4»</b>.' },
   { tab:'a4', sel:'#p-a4 .side .scard:nth-child(2) .btn.wide', text:'Dann auf <b>«Drucken / PDF»</b>. Dein Plan passt immer auf 1 Seite.' },
   { tab:'a4', center:true, text:`Im Druck-Fenster:<br>1. Bei <b>«Ziel»</b> deinen Drucker wählen, oder <b>«Als PDF speichern»</b>.<br>2. Unten auf <b>«Drucken»</b> klicken.${PRINT_MOCK}` },
-  { sel:'#cardChip', text:'Und hier oben ist deine <b>Speicherkarte</b> 💾. Leuchtet das Lämpchen grün, ist alles gespeichert. Klick drauf, wenn du sie einrichten willst.' },
+  { sel:'#cardChip', text: CLOUD_ON ? 'Und hier oben ist dein <b>Konto</b> 👤. Leuchtet das Lämpchen grün, ist alles gespeichert. Hier kannst du dich auch abmelden.' : 'Und hier oben ist deine <b>Speicherkarte</b> 💾. Leuchtet das Lämpchen grün, ist alles gespeichert. Klick drauf, wenn du sie einrichten willst.' },
   { center:true, text:'Das war\'s! 🎉 Wenn du nicht weiterweisst: unten rechts auf <b>«🐸 Hilfe»</b> oder beim Planen auf <b>«🎬 Zeig\'s mir»</b>. Viel Erfolg!' }
 ];
 function tourFor(tab){ return tab==='planen' ? WZ[wz].tour : TOURS[tab]; }
@@ -3993,7 +4046,7 @@ function addDays(iso, n){ const d = dateOfIso(iso); d.setDate(d.getDate()+n); re
 function shortDay(iso){ return ['So','Mo','Di','Mi','Do','Fr','Sa'][dateOfIso(iso).getDay()]; }
 
 function histLoad(){ if(PRACTICE) return practice.hist; try{ return JSON.parse(localStorage.getItem(HKEY)||'{}') || {}; }catch(e){ return {}; } }
-function histSave(h){ if(PRACTICE){ practice.hist = h; return; } try{ localStorage.setItem(HKEY, JSON.stringify(h)); }catch(e){ toast('⚠ Speicher voll: bitte eine Sicherung speichern und alte Tage löschen.'); } }
+function histSave(h){ if(PRACTICE){ practice.hist = h; return; } try{ const j = JSON.stringify(h); if(j === localStorage.getItem(HKEY)) return; localStorage.setItem(HKEY, j); if(booted) cloudTouch(); }catch(e){ toast('⚠ Speicher voll: bitte eine Sicherung speichern und alte Tage löschen.'); } }
 function snapshot(){
   const r = real(); if(!r.length || !planIso || !planned) return null;
   const f = id=> $id(id).value;
@@ -4173,7 +4226,7 @@ function showDay(iso){
     if(e.target===bg || e.target.hasAttribute('data-close')) return close();
     if(e.target.closest('[data-dsend]')) sendData(recToData(r));
     if(e.target.closest('[data-dprint]')) printData(recToData(r));
-    if(e.target.hasAttribute('data-a4')) window.open(new URL('index.html#view=' + b64u(JSON.stringify(recToData(r))), location.href).href, '_blank');
+    if(e.target.hasAttribute('data-a4')) openView(recToData(r));
     if(e.target.hasAttribute('data-del') && confirm(`Den ${chDate(r.iso)} wirklich aus dem Verlauf löschen?`)){
       const h = histLoad(); delete h[iso]; histSave(h); close(); renderVerlauf(); toast('Tag gelöscht');
     }
@@ -4344,7 +4397,7 @@ function afterCardLoad(r){
 
 // ---------- Schreiben (automatisch, kurz nach jeder Änderung) ----------
 let cardTimer = null, cardBusy = false, cardAgain = false;
-function cardTouch(){ if(PRACTICE) return; if(cardState!=='ok' && cardState!=='saving') return; clearTimeout(cardTimer); cardTimer = setTimeout(cardWrite, 1200); }
+function cardTouch(){ if(PRACTICE) return; cloudTouch(); if(cardState!=='ok' && cardState!=='saving') return; clearTimeout(cardTimer); cardTimer = setTimeout(cardWrite, 1200); }
 async function cardWrite(){
   if(PRACTICE) return;
   if(!cardHandle || !['ok','saving'].includes(cardState)) return;
@@ -4476,6 +4529,7 @@ function cardPanelHtml(ctx){
 function updateCardUI(){
   // Chip oben rechts
   const chip = $id('cardChip');
+  if(chip && CLOUD_ON){ cloudChip(chip); cardGate(); if(currentTab==='heute') renderCardBanner(); return; }
   if(chip){
     chip.style.display = VIEW ? 'none' : '';
     chip.className = 'cardchip ' + ({ ok:'ok', saving:'saving', needs:'warn', error:'warn', lost:'warn' }[cardState] || '');
@@ -4498,6 +4552,8 @@ function updateCardUI(){
 function renderCardBanner(){
   const box = $id('hCard'); if(!box) return;
   if(VIEW || PRACTICE){ box.innerHTML = ''; return; }
+  if(CLOUD_ON){ box.innerHTML = cloud.user && (cloud.state==='offline' || cloud.state==='error')
+    ? `<div class="cardwarn"><span style="font-size:30px">📡</span><div class="rt"><b>Gerade keine Verbindung.</b> Deine Änderungen werden gespeichert, sobald du wieder Internet hast. Bitte das Fenster noch nicht schliessen.</div><button class="btn" data-acct="retry">🔄 Nochmal</button></div>` : ''; return; }
   if(cardState==='needs' || cardState==='error' || cardState==='lost')
     box.innerHTML = `<div class="cardwarn">${sdCard('warn')}<div class="rt"><b>Deine Speicherkarte ist nicht verbunden.</b> Gerade wird nur auf diesem Computer gespeichert.</div><button class="btn" data-card="${cardState==='lost' ? 'insert' : 'connect'}">🔌 ${cardState==='lost' ? 'Einstecken' : 'Verbinden'}</button></div>`;
   else if(cardState==='none' && !cardKnown() && !cardSkipped() && real().length)
@@ -4529,11 +4585,11 @@ function cardTour(P){
           [`#${P}Insert`,'An einem anderen Computer klickst du hier und wählst deine Speicherkarte aus dem Ordner «Dokumente».']]
           .concat(P==='wz' ? [[`#${P}Skip`,'Keine Speicherkarte? Dann hier weiter. Dann bleibt alles nur auf diesem Computer.']] : []);
 }
-$id('cardChip').addEventListener('click', openCardDialog);
+$id('cardChip').addEventListener('click', ()=> CLOUD_ON ? openAccount() : openCardDialog());
 
 // ---------- Karten-Start: Alles wird auf der Speicherkarte gespeichert. Ohne Karte geht's nicht los. ----------
 let cardReady = false, gateSkip = false;   // gateSkip gilt nur bis zum Schliessen des Fensters
-function gateNeeded(){ return cardReady && !VIEW && !PRACTICE && !gateSkip && !['ok','saving'].includes(cardState); }
+function gateNeeded(){ if(CLOUD_ON) return !VIEW && !PRACTICE && !gateSkip && !(cloud.user && cloud.state!=='loading' && cloud.state!=='loaderror'); return cardReady && !VIEW && !PRACTICE && !gateSkip && !['ok','saving'].includes(cardState); }
 function gateHtml(){
   const back = cardState==='needs' || cardState==='error' || cardState==='lost';
   const head = cardState==='unsupported'
@@ -4559,13 +4615,279 @@ function cardGate(){
       const b = e.target.closest('[data-gate]'); if(!b) return;
       if(b.dataset.gate==='practice') startPractice();
       if(b.dataset.gate==='show') startTour(cardTour('gate'));
+      if(b.dataset.gate==='skip' && CLOUD_ON){
+        if(!confirm('Ohne Konto ausprobieren?\n\nDann wird nur in diesem Browser gespeichert und nichts in deinem Konto. Das kann über Nacht weg sein.')) return;
+        gateSkip = true; cardGate(); return;
+      }
       if(b.dataset.gate==='skip'){
         if(cardState!=='unsupported' && !confirm('Wirklich ohne Speicherkarte?\n\nDann wird nur in diesem Browser gespeichert. Wird der Computer zurückgesetzt, kann alles weg sein.')) return;
         gateSkip = true; cardSkipMem = true; cardGate(); updateCardUI();
       }
     });
   }
+  if(CLOUD_ON){ const sig = cloudGateSig(); if(g.dataset.sig !== sig){ g.dataset.sig = sig; g.innerHTML = cloudGateHtml(); cloudGateFocus(g); } else cloudGateMsg(g); return; }
   g.innerHTML = gateHtml();
+}
+
+// ===================================================================
+//   KONTO: anmelden, alles online speichern (Firebase, Server in Zürich)
+//   Jede Person sieht nur ihre eigenen Pläne, Trainerinnen sehen alle.
+// ===================================================================
+const UIDKEY = 'alpen-cloud-uid';
+const FB_BASE = 'https://www.gstatic.com/firebasejs/13.0.0/';
+const cloud = { ready:false, failed:false, user:null, state:'loading', trainer:false, at:null, mode:'login', err:'', ok:'', busy:false, pendingName:'' };
+let fb = null;
+const CloudAPI = {
+  async init(onUser){
+    const [A, U, S] = await Promise.all(['app','auth','firestore'].map(n=> import(FB_BASE + 'firebase-' + n + '.js')));
+    const app = A.initializeApp(FIREBASE_CONFIG);
+    const auth = U.getAuth(app); auth.languageCode = 'de';
+    fb = { U, S, auth, db: S.getFirestore(app) };
+    U.onAuthStateChanged(auth, onUser);
+  },
+  signIn: (e, p)=> fb.U.signInWithEmailAndPassword(fb.auth, e, p),
+  async signUp(name, e, p){ const c = await fb.U.createUserWithEmailAndPassword(fb.auth, e, p); try{ await fb.U.updateProfile(c.user, { displayName:name }); }catch(_){} return c; },
+  reset: e=> fb.U.sendPasswordResetEmail(fb.auth, e),
+  signOut: ()=> fb.U.signOut(fb.auth),
+  async load(uid){ const s = await fb.S.getDoc(fb.S.doc(fb.db, 'users', uid)); return s.exists() ? s.data() : null; },
+  save: (uid, data)=> fb.S.setDoc(fb.S.doc(fb.db, 'users', uid), data),
+  async isTrainer(uid){ try{ return (await fb.S.getDoc(fb.S.doc(fb.db, 'admins', uid))).exists(); }catch(e){ return false; } },
+  async listUsers(){ const q = await fb.S.getDocs(fb.S.collection(fb.db, 'users')); return q.docs.map(d=> ({ uid:d.id, ...d.data() })); }
+};
+function openView(data){ window.open(location.href.split('#')[0] + '#view=' + b64u(JSON.stringify(data)), '_blank'); }
+const appKeys = ()=>{ try{ return Object.keys(localStorage).filter(k=> k.startsWith('alpen-') && k!==UIDKEY); }catch(e){ return []; } };
+function wipeLocal(){ HOLD = true; appKeys().forEach(k=>{ try{ localStorage.removeItem(k); }catch(e){} }); }
+const hasLocalData = ()=> real().length > 0 || Object.keys(histLoad()).length > 0;
+
+async function cloudInit(){
+  updateCardUI();                                   // Tor sofort: «Einen Moment …»
+  try{ await CloudAPI.init(cloudOnUser); }
+  catch(e){ console.warn(e); cloud.failed = true; cloud.ready = true; cloud.state = 'offline'; updateCardUI(); }
+}
+async function cloudOnUser(u){
+  cloud.ready = true; cloud.user = u || null; cloud.trainer = false;
+  if(!u){ cloud.state = 'out'; updateCardUI(); return; }
+  let owner = ''; try{ owner = localStorage.getItem(UIDKEY) || ''; }catch(e){}
+  // Auf diesem Computer liegen Pläne von jemand anderem? Weg damit, dann frisch laden.
+  if(owner && owner !== u.uid){ wipeLocal(); try{ localStorage.setItem(UIDKEY, u.uid); }catch(e){} location.reload(); return; }
+  cloud.state = 'loading'; updateCardUI();
+  let doc = null;
+  try{ doc = await CloudAPI.load(u.uid); }
+  catch(e){ console.warn(e); cloud.state = 'loaderror'; cloud.err = 'Deine Pläne konnten nicht geladen werden. Bist du mit dem Internet verbunden?'; updateCardUI(); return; }
+  // Pläne von früher (vor dem Konto) auf diesem Computer: gehören sie dir?
+  if(!owner && hasLocalData()){
+    const who = nm() ? `von «${nm()}»` : 'ohne Namen';
+    if(!confirm(`Auf diesem Computer sind schon Pläne gespeichert (${who}).\n\nSind das deine? Dann kommen sie jetzt in dein Konto.\n\nOK = Ja, das sind meine\nAbbrechen = Nein, nicht meine`)){
+      wipeLocal(); try{ localStorage.setItem(UIDKEY, u.uid); }catch(e){} location.reload(); return;
+    }
+  }
+  try{ localStorage.setItem(UIDKEY, u.uid); }catch(e){}
+  const r = doc ? mergeCard(doc) : null;
+  const name = cloud.pendingName || u.displayName || ''; cloud.pendingName = '';
+  if(!nm() && name){ $id('nameIn').value = name; renderAll(); }
+  cloud.state = 'in'; cloud.err = '';
+  updateCardUI();
+  await cloudWrite();                               // erster Abgleich: Pläne von vorher landen im Konto
+  cloud.trainer = await CloudAPI.isTrainer(u.uid); updateCardUI();
+  afterCardLoad(r);
+  toast(`👋 Hallo ${nm() || ''}! Deine Pläne sind da.`.replace(' !', '!'));
+}
+
+// ---------- Speichern (kurz nach jeder Änderung) ----------
+let cloudTimer = null, cloudBusy = false, cloudAgain = false, cloudPacking = false;
+function cloudTouch(){ if(!CLOUD_ON || PRACTICE || VIEW || cloudPacking || !cloud.user || cloud.state==='loading') return; clearTimeout(cloudTimer); cloudTimer = setTimeout(cloudWrite, 1500); }
+async function cloudWrite(){
+  if(!CLOUD_ON || PRACTICE || VIEW || HOLD || !cloud.user || cloud.state==='loading' || cloud.state==='loaderror') return;
+  if(cloudBusy){ cloudAgain = true; return; }
+  clearTimeout(cloudTimer);
+  cloudBusy = true; cloud.state = 'saving'; cloudChip();
+  const u = cloud.user;
+  try{
+    cloudPacking = true;   // beim Einpacken nicht gleich wieder ein Speichern auslösen
+    let data; try{ data = JSON.parse(JSON.stringify({ ...cardData(), kind:'cloud', name: nm() || u.displayName || '', email: u.email || '', updatedAt: new Date().toISOString() })); } finally { cloudPacking = false; }
+    const ok = await Promise.race([CloudAPI.save(u.uid, data).then(()=> true), sleep(12000).then(()=> false)]);
+    cloud.state = ok ? 'in' : 'offline'; if(ok) cloud.at = new Date();
+  }catch(e){ console.warn(e); cloud.state = navigator.onLine === false ? 'offline' : 'error'; }
+  cloudBusy = false; updateCardUI();
+  if(cloudAgain){ cloudAgain = false; cloudWrite(); }
+}
+document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='hidden' && cloudTimer){ clearTimeout(cloudTimer); cloudTimer = null; cloudWrite(); } });
+addEventListener('online', ()=>{ if(cloud.user && cloud.state!=='in') cloudWrite(); });
+
+// ---------- Anzeige: Chip oben rechts ----------
+function cloudChip(chip){
+  chip = chip || $id('cardChip'); if(!chip) return;
+  chip.style.display = VIEW ? 'none' : '';
+  const first = (nm() || (cloud.user && cloud.user.displayName) || '').split(' ')[0];
+  chip.className = 'cardchip acct ' + ({ in:'ok', saving:'saving', offline:'warn', error:'warn' }[cloud.state] || '');
+  if(!chip.querySelector('.av')) chip.insertAdjacentHTML('afterbegin', '<span class="av">👤</span>');
+  chip.querySelector('.ct').textContent = !cloud.user ? 'Anmelden' : ({ in:(first || 'Konto') + ' ✓', saving:'Speichert …', offline:'Offline', error:'Nicht gespeichert!', loading:'Lädt …' }[cloud.state] || 'Konto');
+  chip.title = !cloud.user ? 'Anmelden' : ({ in:'Alles ist in deinem Konto gespeichert', saving:'Speichert gerade in deinem Konto', offline:'Keine Verbindung: wird später gespeichert', error:'Speichern hat nicht geklappt: klicken' }[cloud.state] || 'Dein Konto');
+}
+
+// ---------- Anmelde-Bildschirm ----------
+function cloudGateSig(){ return [cloud.ready, cloud.failed, !!cloud.user, cloud.state==='loaderror' || cloud.state==='loading' ? cloud.state : '', cloud.mode, prologDone()].join('|'); }
+function cloudGateMsg(g){ const e = g.querySelector('.lerr'), o = g.querySelector('.lok'); if(e) e.textContent = cloud.err; if(o) o.textContent = cloud.ok;
+  g.querySelectorAll('.lform .btn').forEach(b=> b.disabled = cloud.busy); }
+function cloudGateFocus(g){ setTimeout(()=>{ const i = g.querySelector('.lform input'); if(i && !i.value) i.focus(); }, 60); }
+function cloudGateHtml(){
+  const frog = '<div class="gfrog">🐸</div>';
+  const foot = (alt)=> `<div class="gatefoot">${!prologDone() ? '<button class="gprac" data-gate="practice">🎓 Zuerst die Übungsrunde (ohne Anmelden)</button>' : '<span></span>'}
+      <button class="gskip" data-gate="skip">${alt || 'Ohne Konto ausprobieren'}</button></div>`;
+  if(!cloud.ready || cloud.state==='loading') return `<div class="gatebox login">${frog}<h2>Einen Moment …</h2>
+    <div class="lwait"><div class="spin"></div><span>${cloud.user ? 'Deine Pläne werden geladen.' : 'Eat the Frog startet.'}</span></div></div>`;
+  if(cloud.failed) return `<div class="gatebox login">${frog}<h2>📡 Keine Internetverbindung</h2>
+    <div class="gsub">Zum Anmelden braucht Eat the Frog <b>Internet</b>. Prüf deine Verbindung und versuch es nochmal.</div>
+    <div class="lform"><button class="btn" data-acct="reload">🔄 Nochmal versuchen</button></div>${foot('Ohne Konto weiter (nur in diesem Browser)')}</div>`;
+  if(cloud.user && cloud.state==='loaderror') return `<div class="gatebox login">${frog}<h2>Hoppla!</h2>
+    <div class="lerr" style="margin-top:14px">${escapeHtml(cloud.err)}</div>
+    <div class="lform"><button class="btn" data-acct="reload">🔄 Nochmal versuchen</button><button class="btn dark" data-acct="logout-now">Abmelden</button></div></div>`;
+  const pw = (id, ph, auto)=> `<div class="pw"><input id="${id}" type="password" autocomplete="${auto}" placeholder="${ph}" required><button type="button" data-acct="peek" title="Passwort anzeigen">👁</button></div>`;
+  if(cloud.mode==='signup') return `<div class="gatebox login">${frog}<h2>✨ Konto erstellen</h2>
+    <div class="gsub">Einmal einrichten, dann sind deine Pläne <b>an jedem Computer</b> da.</div>
+    <form class="lform" data-form="signup">
+      <label>Dein Name<input id="lName" autocomplete="name" placeholder="z.B. Anna Muster" required></label>
+      <label>Deine E-Mail<input id="lMail" type="email" autocomplete="email" placeholder="name@beispiel.ch" required></label>
+      <label>Neues Passwort (mindestens 6 Zeichen)${pw('lPass','Passwort ausdenken','new-password')}</label>
+      <div class="lerr"></div>
+      <button class="btn" type="submit">Konto erstellen →</button>
+      <div class="lnote">🔒 Deine Pläne werden in deinem Konto gespeichert (Server in Zürich). Sehen können sie nur <b>du</b> und <b>deine Trainerin</b>.</div>
+      <div class="llinks"><span>Schon ein Konto? <button type="button" data-acct="mode-login">Anmelden</button></span></div>
+    </form>${foot()}</div>`;
+  if(cloud.mode==='reset') return `<div class="gatebox login">${frog}<h2>🔑 Passwort vergessen?</h2>
+    <div class="gsub">Kein Problem. Gib deine E-Mail ein. Du bekommst ein Mail mit einem Link, dort wählst du ein neues Passwort.</div>
+    <form class="lform" data-form="reset">
+      <label>Deine E-Mail<input id="lMail" type="email" autocomplete="email" placeholder="name@beispiel.ch" required></label>
+      <div class="lerr"></div><div class="lok"></div>
+      <button class="btn" type="submit">Link schicken</button>
+      <div class="llinks"><button type="button" data-acct="mode-login">← Zurück zum Anmelden</button></div>
+    </form></div>`;
+  return `<div class="gatebox login">${frog}<h2>Willkommen bei Eat the Frog</h2>
+    <div class="gsub">Melde dich an. Deine Pläne sind in deinem <b>Konto</b> gespeichert und an jedem Computer da.</div>
+    <form class="lform" data-form="login">
+      <label>E-Mail<input id="lMail" type="email" autocomplete="email" placeholder="name@beispiel.ch" required></label>
+      <label>Passwort${pw('lPass','Dein Passwort','current-password')}</label>
+      <div class="lerr"></div><div class="lok"></div>
+      <button class="btn" type="submit">Anmelden →</button>
+      <div class="llinks"><button type="button" data-acct="mode-reset">Passwort vergessen?</button><span>Neu hier? <button type="button" data-acct="mode-signup">Konto erstellen</button></span></div>
+    </form>${foot()}</div>`;
+}
+function authMsg(e){
+  const c = (e && e.code) || '';
+  return ({
+    'auth/invalid-credential':'E-Mail oder Passwort stimmt nicht. Bitte nochmal versuchen.',
+    'auth/invalid-login-credentials':'E-Mail oder Passwort stimmt nicht. Bitte nochmal versuchen.',
+    'auth/wrong-password':'Das Passwort stimmt nicht.',
+    'auth/user-not-found':'Zu dieser E-Mail gibt es noch kein Konto. Klick auf «Konto erstellen».',
+    'auth/invalid-email':'Diese E-Mail-Adresse stimmt nicht. Bitte prüfen.',
+    'auth/missing-password':'Bitte gib dein Passwort ein.',
+    'auth/email-already-in-use':'Mit dieser E-Mail gibt es schon ein Konto. Klick unten auf «Anmelden».',
+    'auth/weak-password':'Das Passwort braucht mindestens 6 Zeichen.',
+    'auth/network-request-failed':'Keine Internetverbindung. Bitte nochmal versuchen.',
+    'auth/too-many-requests':'Zu viele Versuche. Warte kurz und versuch es dann nochmal.'
+  })[c] || 'Das hat nicht geklappt. Bitte nochmal versuchen.';
+}
+document.addEventListener('submit', async e=>{
+  const f = e.target.closest('[data-form]'); if(!f) return;
+  e.preventDefault(); if(cloud.busy) return;
+  const v = id=> (($id(id) || {}).value || '').trim();
+  cloud.err = ''; cloud.ok = ''; cloud.busy = true; cardGate();
+  try{
+    if(f.dataset.form==='login') await CloudAPI.signIn(v('lMail'), $id('lPass').value);
+    if(f.dataset.form==='signup'){
+      if(!v('lName')){ cloud.err = 'Bitte gib deinen Namen ein.'; }
+      else { cloud.pendingName = v('lName'); await CloudAPI.signUp(v('lName'), v('lMail'), $id('lPass').value); }
+    }
+    if(f.dataset.form==='reset'){ await CloudAPI.reset(v('lMail')); cloud.ok = '✓ Mail ist unterwegs! Schau in dein Postfach (auch im Spam-Ordner).'; }
+  }catch(err){ cloud.err = authMsg(err); cloud.pendingName = ''; }
+  cloud.busy = false; cardGate();
+});
+document.addEventListener('click', e=>{
+  const b = e.target.closest('[data-acct]'); if(!b) return;
+  const a = b.dataset.acct;
+  if(a.startsWith('mode-')){ const mail = ($id('lMail') || {}).value || ''; cloud.mode = a.slice(5); cloud.err = ''; cloud.ok = ''; cardGate(); if(mail && $id('lMail')) $id('lMail').value = mail; }
+  if(a==='peek'){ const i = b.parentElement.querySelector('input'); i.type = i.type==='password' ? 'text' : 'password'; b.textContent = i.type==='password' ? '👁' : '🙈'; }
+  if(a==='reload') location.reload();
+  if(a==='retry') cloudWrite();
+  if(a==='logout') cloudLogout();
+  if(a==='logout-now') cloudLogout(true);
+  if(a==='trainer') openTrainer();
+});
+async function cloudLogout(now){
+  if(!now && !confirm('Abmelden?\n\nDeine Pläne bleiben in deinem Konto. Auf diesem Computer wird alles gelöscht, damit niemand sonst sie sieht.')) return;
+  clearTimeout(cloudTimer);
+  if(cloud.state==='in' || cloud.state==='saving') await cloudWrite();
+  try{ await CloudAPI.signOut(); }catch(e){}
+  wipeLocal(); try{ localStorage.removeItem(UIDKEY); }catch(e){}
+  location.reload();
+}
+
+// ---------- Konto-Fenster ----------
+function openAccount(){
+  if(!cloud.user){ gateSkip = false; cardGate(); return; }
+  document.querySelectorAll('.modal.acctm').forEach(m=> m.closest('.modal-bg').remove());
+  const u = cloud.user, name = nm() || u.displayName || '';
+  const bg = document.createElement('div'); bg.className = 'modal-bg no-print';
+  const st = { in:`<b>✓ Alles ist gespeichert</b>${cloud.at ? ' (zuletzt ' + cloud.at.toLocaleTimeString('de-CH',{hour:'2-digit',minute:'2-digit'}) + ' Uhr)' : ''}. Deine Pläne sind in deinem Konto, an jedem Computer.`,
+    saving:'Speichert gerade …', offline:'📡 Gerade keine Verbindung. Wird gespeichert, sobald du wieder Internet hast.', error:'⚠ Speichern hat nicht geklappt. <button class="linkbtn" data-acct="retry">Nochmal</button>' }[cloud.state] || '';
+  bg.innerHTML = `<div class="modal acctm" role="dialog" aria-modal="true"><h3>👤 Dein Konto</h3>
+    <div class="acctrow"><div class="ava">${escapeHtml((name || '?').charAt(0).toUpperCase())}</div><div><b>${escapeHtml(name || 'Ohne Namen')}</b><span>${escapeHtml(u.email || '')}</span></div></div>
+    <p class="acctok">${st}</p>
+    <p class="acctok">🔒 Server in Zürich. Deine Pläne sehen nur <b>du</b> und <b>deine Trainerin</b>.</p>
+    <div class="mbtns">${cloud.trainer ? '<button class="btn" data-acct="trainer">👩‍🏫 Teilnehmende ansehen</button>' : ''}<button class="btn ghost" data-acct="logout">Abmelden</button><button class="btn ${cloud.trainer ? 'ghost' : ''}" data-close>Schliessen</button></div></div>`;
+  document.body.appendChild(bg); requestAnimationFrame(()=> bg.classList.add('show'));
+  bg.addEventListener('click', e=>{ if(e.target===bg || e.target.hasAttribute('data-close') || e.target.closest('[data-acct="trainer"]')){ bg.classList.remove('show'); setTimeout(()=> bg.remove(), 250); } });
+}
+
+// ---------- Trainerinnen-Bereich: alle Teilnehmenden ----------
+async function openTrainer(){
+  const bg = document.createElement('div'); bg.className = 'modal-bg no-print';
+  bg.innerHTML = `<div class="modal trm" role="dialog" aria-modal="true"><div class="trbody"><h3>👩‍🏫 Teilnehmende</h3><div class="lwait"><div class="spin"></div><span>Wird geladen …</span></div></div></div>`;
+  document.body.appendChild(bg); requestAnimationFrame(()=> bg.classList.add('show'));
+  const close = ()=>{ bg.classList.remove('show'); setTimeout(()=> bg.remove(), 250); };
+  bg.addEventListener('click', e=>{ if(e.target===bg || e.target.closest('[data-close]')) close(); });
+  const body = bg.querySelector('.trbody');
+  let users = [];
+  try{ users = await CloudAPI.listUsers(); }
+  catch(e){ body.innerHTML = `<h3>👩‍🏫 Teilnehmende</h3><div class="lerr" style="margin-top:14px">Konnte nicht geladen werden. Bist du als Trainerin freigeschaltet?</div><div class="mbtns"><button class="btn" data-close>Schliessen</button></div>`; return; }
+  const today = todayIso();
+  const fmtWhen = s=>{ if(!s) return '–'; const d = new Date(s); return d.toLocaleDateString('de-CH') + ', ' + d.toLocaleTimeString('de-CH',{hour:'2-digit',minute:'2-digit'}); };
+  const recsOf = u=> Object.values(u.history||{}).filter(r=> r && r.tasks && r.tasks.length).sort((a,b)=> b.iso.localeCompare(a.iso));
+  const planRec = u=>{ const p = u.plan; if(!p || p.planned===false) return null; const t = (p.tasks||[]).filter(x=> (x.text||'').trim()); if(!t.length) return null;
+    return { iso:p.iso, tasks:t, frog:((p.f||{}).focusInput||'').trim(), hours:hoursOf((p.f||{}).availIn) }; };
+  const pill = m=> m ? `<span class="trpill ${m.rate>=.8 ? 'g' : m.rate>=.5 ? 'o' : 'r'}">${m.done}/${m.total} erledigt</span>` : '<span class="trpill">–</span>';
+  function list(q){
+    q = (q||'').toLowerCase();
+    const rows = users.filter(u=> !q || (u.name||'').toLowerCase().includes(q) || (u.email||'').toLowerCase().includes(q))
+      .sort((a,b)=> (a.name||a.email||'').localeCompare(b.name||b.email||'', 'de'));
+    body.innerHTML = `<div class="trhead"><h3>👩‍🏫 Teilnehmende (${users.length})</h3><button class="btn ghost" data-close>Schliessen</button></div>
+      <input class="trsearch" placeholder="🔎 Name oder E-Mail suchen" value="${escapeHtml(q)}">
+      ${rows.length ? `<table class="trtable"><thead><tr><th>Name</th><th>Heute</th><th>Frosch heute</th><th>Letzte 7 Tage</th><th>Zuletzt aktiv</th></tr></thead><tbody>
+      ${rows.map(u=>{
+        const pr = planRec(u), m = pr && pr.iso===today ? dayMetrics(pr) : null;
+        const last7 = recsOf(u).filter(r=> r.iso > addDays(today, -7));
+        const avg = last7.length ? Math.round(last7.reduce((a,r)=> a + dayMetrics(r).rate, 0) / last7.length * 100) : null;
+        return `<tr class="click" data-uid="${escapeHtml(u.uid)}"><td><b>${escapeHtml(u.name || 'Ohne Namen')}</b><small>${escapeHtml(u.email || '')}</small></td>
+          <td>${m ? pill(m) : '<span class="trpill">noch nicht geplant</span>'}</td>
+          <td>${m && m.frog ? (m.eaten ? '🐸 ✓ gegessen' : '🐸 offen') : '–'}</td>
+          <td>${avg!=null ? `${last7.length} Tag${last7.length>1?'e':''} · Ø ${avg} %` : '–'}</td>
+          <td>${fmtWhen(u.updatedAt)}</td></tr>`; }).join('')}</tbody></table>` : `<p class="trempty">${users.length ? 'Niemand gefunden.' : 'Noch niemand hat sich angemeldet.'}</p>`}`;
+    const inp = body.querySelector('.trsearch'); inp.addEventListener('input', ()=>{ const pos = inp.selectionStart; list(inp.value); const n = body.querySelector('.trsearch'); n.focus(); n.setSelectionRange(pos, pos); });
+    body.querySelectorAll('tr[data-uid]').forEach(tr=> tr.addEventListener('click', ()=> detail(users.find(u=> u.uid===tr.dataset.uid))));
+  }
+  function detail(u){
+    const pr = planRec(u), recs = recsOf(u);
+    body.innerHTML = `<div class="trhead"><button class="btn ghost sm" data-back>← Alle</button><h3>${escapeHtml(u.name || 'Ohne Namen')}</h3><button class="btn ghost" data-close>Schliessen</button></div>
+      <p class="acctok">${escapeHtml(u.email || '')} · zuletzt aktiv ${fmtWhen(u.updatedAt)}</p>
+      <table class="trtable"><thead><tr><th>Tag</th><th>Erledigt</th><th>Frosch</th><th>Geschafft</th><th></th></tr></thead><tbody>
+      ${pr ? (()=>{ const m = dayMetrics(pr); return `<tr><td><b>Aktueller Plan</b><small>${pr.iso ? shortDay(pr.iso) + ', ' + chDate(pr.iso) : ''}</small></td><td>${pill(m)}</td><td>${m.frog ? (m.eaten ? '🐸 ✓' : '🐸 offen') : '–'}</td><td>${m.minsDone ? minLabel(m.minsDone) : '–'}</td><td><button class="btn sm" data-viewplan>📄 Ansehen</button></td></tr>`; })() : ''}
+      ${recs.filter(r=> !pr || r.iso!==pr.iso).map(r=>{ const m = dayMetrics(r); return `<tr><td><b>${shortDay(r.iso)}, ${chDate(r.iso)}</b></td><td>${pill(m)}</td><td>${m.frog ? (m.eaten ? '🐸 ✓' : '🐸 offen') : '–'}</td><td>${m.minsDone ? minLabel(m.minsDone) : '–'}</td><td><button class="btn ghost sm" data-viewday="${r.iso}">📄 Ansehen</button></td></tr>`; }).join('')}
+      </tbody></table>${!pr && !recs.length ? '<p class="trempty">Noch keine Pläne.</p>' : ''}`;
+    body.querySelector('[data-back]').addEventListener('click', ()=> list(''));
+    body.querySelector('[data-viewplan]')?.addEventListener('click', ()=> openView({ ...u.plan, submittedAt:u.updatedAt }));
+    body.querySelectorAll('[data-viewday]').forEach(b=> b.addEventListener('click', ()=> openView(recToData(recsOf(u).find(r=> r.iso===b.dataset.viewday)))));
+  }
+  list('');
 }
 
 // ---------- Beim Start: bekannte Speicherkarte wieder verbinden ----------
@@ -4639,7 +4961,7 @@ const COACH = [
   { tab:'verlauf', sel:'#vKpis', manual:true, text:'Das ist dein <b>Verlauf</b>. Hier siehst du auf einen Blick, wie deine Tage gelaufen sind. In der Übung mit ein paar <b>Beispiel-Tagen</b>.' },
   { tab:'verlauf', sel:'#vDays', manual:true, text:'Jeder Tag wird hier gespeichert. Klickst du auf einen Tag, kannst du ihn auch <b>später noch senden oder drucken</b>.' },
   { tab:'heute', sel:'#hWait', manual:true, missing:'Klick oben auf <b>«Mein Tag»</b>.', text:'So sieht dein <b>nächster Tag</b> aus: noch <b>leer</b>, weil du ihn noch nicht geplant hast. Die offenen Aufgaben von heute <b>warten</b> schon auf dich. Morgen klickst du einfach auf <b>«Jetzt planen»</b>.' },
-  { sel:'#cardChip', manual:true, text:'Und hier oben ist deine <b>Speicherkarte</b> 💾. Die richten wir gleich zusammen richtig ein, damit deine Tage auch an anderen Computern da sind.' },
+  { sel:'#cardChip', manual:true, text: CLOUD_ON ? 'Und hier oben ist dein <b>Konto</b> 👤. Nach der Übung meldest du dich an. Dann ist alles gespeichert, an jedem Computer.' : 'Und hier oben ist deine <b>Speicherkarte</b> 💾. Die richten wir gleich zusammen richtig ein, damit deine Tage auch an anderen Computern da sind.' },
   { center:true, manual:true, btn:'Jetzt richtig starten →', finish:true,
     text:`🎉 <b>Übung geschafft${'${NAME}'}!</b> Jetzt weisst du, wie alles geht.<br><br>Die Übung wird gelöscht, und <b>dein echter Tag</b> beginnt. Ich bin immer dabei: oben links beim Planen, und unten rechts mit <b>«🐸 Hilfe»</b>.` }
 ];
@@ -4902,7 +5224,7 @@ quiet = true; rollover(); ensureDate(); quiet = false;
   goTab(TABS.includes(OLD[h]||h) ? h : planReady() ? 'heute' : (real().length || nm()) ? 'planen' : 'start');
 }
 if(VIEW) autoCockpit();
-cardInit();
+if(CLOUD_ON) cloudInit(); else cardInit();
 </script>
 </body>
 </html>
