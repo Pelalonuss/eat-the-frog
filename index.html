@@ -3980,6 +3980,7 @@ document.addEventListener('click', e=>{
 function firstTour(key){
   if(VIEW || PRACTICE || gateNeeded()) return;
   try{ if(localStorage.getItem('alpen-tour-'+key)) return; localStorage.setItem('alpen-tour-'+key, '1'); }catch(e){ return; }
+  cloudTouch();
   setTimeout(()=>{ if(currentTab===key && !document.querySelector('.tour')) startTour(tourFor(currentTab)); }, 900);
 }
 function endTour(){ const t = document.querySelector('.tour'); if(t){ t._off && t._off(); t.remove(); } }
@@ -4349,7 +4350,22 @@ const idbDel = k=> idbDo('readwrite', s=> s.delete(k));
 function cardData(){
   histCommit();
   return { app:'alpen-tagesplan', kind:'card', version:1, saved: savedAt || new Date().toISOString(), written:new Date().toISOString(),
-           owner: nm(), plan:{ ...collect(), iso:planIso }, history: histLoad() };
+           owner: nm(), plan:{ ...collect(), iso:planIso }, history: histLoad(), prefs: prefsGet() };
+}
+// Was diese Person schon gesehen hat (Übungsrunde, Tipps): gehört zur Person, nicht zum Computer
+const TOUR_KEYS = ['planen','heute','abend','verlauf'];
+function prefsGet(){
+  const p = { prolog: prologDone(), tours: [] };
+  try{ p.tours = TOUR_KEYS.filter(k=> localStorage.getItem('alpen-tour-'+k)); }catch(e){}
+  return p;
+}
+function prefsApply(p){
+  if(!p) return;
+  try{
+    if(p.prolog) localStorage.setItem('alpen-prolog-done','1');
+    (p.tours||[]).forEach(k=> localStorage.setItem('alpen-tour-'+k,'1'));
+  }catch(e){}
+  if(typeof updateHero==='function') updateHero();
 }
 function parseCard(txt){
   const m = /<script type="application\/json" id="card-data">([\s\S]*?)<\/script>/.exec(txt||'');
@@ -4420,6 +4436,7 @@ function mergeCard(data){
     savedAt = data.saved || ''; try{ localStorage.setItem('alpen-saved-at', savedAt); }catch(e){}
   }
   if(!nm() && data.owner) $id('nameIn').value = data.owner;
+  prefsApply(data.prefs);
   // Karte mit Plänen = kennt die App schon: Übungsrunde und Tipps nicht nochmal aufdrängen
   if(Object.keys(data.history||{}).length || planTaken){
     try{ localStorage.setItem('alpen-prolog-done','1'); ['planen','heute','abend'].forEach(k=> localStorage.setItem('alpen-tour-'+k,'1')); }catch(e){}
@@ -5032,6 +5049,7 @@ function endPractice(completed){
   practice = null;
   if(completed){
     try{ localStorage.setItem('alpen-prolog-done','1'); ['planen','heute','abend'].forEach(k=> localStorage.setItem('alpen-tour-'+k,'1')); }catch(e){}
+    cloudTouch(); cardTouch();
     if(planReady()) goTab('heute');
     else { wz = nm() ? 1 : 0; goTab('planen'); if(currentTab==='planen') wzRender(); }
     toast("🚀 Jetzt geht's richtig los!");
