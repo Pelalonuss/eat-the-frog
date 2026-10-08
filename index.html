@@ -321,7 +321,7 @@ tbody tr.frog td.num::after{ content:""; display:inline-block; width:12px; heigh
 #confetti{ position:fixed; inset:0; pointer-events:none; z-index:50; }
 .toast{ position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(30px); opacity:0;
   background:var(--ink); color:#fff; font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:14px;
-  padding:12px 20px; border-radius:14px; box-shadow:0 12px 30px rgba(0,0,0,.25); transition:all .35s ease; z-index:60; }
+  padding:12px 20px; border-radius:14px; box-shadow:0 12px 30px rgba(0,0,0,.25); transition:all .35s ease; z-index:97; }
 .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
 
 /* ============ Schmale Bildschirme ============ */
@@ -1262,6 +1262,20 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
   .hasold{ margin-top:18px; font-size:14px; }
   .hasold button{ font:inherit; font-weight:700; color:var(--mint); background:none; border:none; cursor:pointer; text-decoration:underline; padding:0; }
   .modal.cardm{ max-width:640px; background:#0f1a18; color:var(--txt); border:1px solid rgba(141,224,211,.2); }
+  /* Karten-Start: ohne Speicherkarte geht's nicht los */
+  .gate{ position:fixed; inset:0; z-index:85; display:flex; align-items:center; justify-content:center; padding:16px; overflow:auto;
+    background:radial-gradient(120% 90% at 20% 0%, rgba(21,64,58,.97), rgba(10,19,17,.98) 60%); opacity:0; transition:opacity .3s; }
+  .gate.show{ opacity:1; }
+  .gatebox{ width:min(700px,100%); background:#0f1a18; border:1px solid rgba(141,224,211,.22); border-radius:28px; padding:34px 34px 24px; box-shadow:0 30px 70px rgba(0,0,0,.5); color:var(--txt); }
+  .gatebox h2{ font-family:var(--display); font-size:clamp(22px,3vw,30px); line-height:1.15; }
+  .gatebox .gsub{ margin-top:10px; color:var(--txt-soft); font-size:15px; line-height:1.55; }
+  .gatebox .gsub b{ color:var(--mint); }
+  .gatebox .slotwrap{ --cw:112px; }
+  .gatefoot{ margin-top:22px; padding-top:16px; border-top:1px solid rgba(255,255,255,.08); display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+  .gatefoot button{ font:inherit; font-size:13.5px; background:none; border:none; cursor:pointer; padding:4px 0; }
+  .gatefoot .gprac{ color:var(--mint); font-weight:600; }
+  .gatefoot .gskip{ color:var(--txt-soft); text-decoration:underline; opacity:.75; }
+  .gatefoot .gshow{ color:var(--txt-soft); font-weight:600; }
   .modal.cardm h3{ color:var(--txt); }
   .modal.cardm .sub{ color:var(--txt-soft); }
   .modal.cardm .cardstep{ grid-template-columns:170px 1fr; margin-top:10px; }
@@ -3872,7 +3886,7 @@ document.addEventListener('click', e=>{
   startPractice();
 });
 function firstTour(key){
-  if(VIEW || PRACTICE) return;
+  if(VIEW || PRACTICE || gateNeeded()) return;
   try{ if(localStorage.getItem('alpen-tour-'+key)) return; localStorage.setItem('alpen-tour-'+key, '1'); }catch(e){ return; }
   setTimeout(()=>{ if(currentTab===key && !document.querySelector('.tour')) startTour(tourFor(currentTab)); }, 900);
 }
@@ -4314,6 +4328,11 @@ function mergeCard(data){
     savedAt = data.saved || ''; try{ localStorage.setItem('alpen-saved-at', savedAt); }catch(e){}
   }
   if(!nm() && data.owner) $id('nameIn').value = data.owner;
+  // Karte mit Plänen = kennt die App schon: Übungsrunde und Tipps nicht nochmal aufdrängen
+  if(Object.keys(data.history||{}).length || planTaken){
+    try{ localStorage.setItem('alpen-prolog-done','1'); ['planen','heute','abend'].forEach(k=> localStorage.setItem('alpen-tour-'+k,'1')); }catch(e){}
+    if(typeof updateHero==='function') updateHero();
+  }
   rollover(); ensureDate(); renderAll();
   quiet = false;
   return { days, planTaken };
@@ -4467,6 +4486,7 @@ function updateCardUI(){
   const dlg = $id('cardDlgBox'); if(dlg) dlg.innerHTML = cardPanelHtml('dlg');
   if(currentTab==='planen' && wz===1 && wzMounted) wzUpdate();
   if(currentTab==='heute') renderCardBanner();
+  cardGate();
   if(cardJustIn){
     cardJustIn = false;
     requestAnimationFrame(()=> setTimeout(()=> document.querySelectorAll('.slotwrap').forEach(s=>{
@@ -4511,8 +4531,48 @@ function cardTour(P){
 }
 $id('cardChip').addEventListener('click', openCardDialog);
 
+// ---------- Karten-Start: Alles wird auf der Speicherkarte gespeichert. Ohne Karte geht's nicht los. ----------
+let cardReady = false, gateSkip = false;   // gateSkip gilt nur bis zum Schliessen des Fensters
+function gateNeeded(){ return cardReady && !VIEW && !PRACTICE && !gateSkip && !['ok','saving'].includes(cardState); }
+function gateHtml(){
+  const back = cardState==='needs' || cardState==='error' || cardState==='lost';
+  const head = cardState==='unsupported'
+    ? `<h2>🌐 Bitte mit Chrome oder Edge öffnen</h2><div class="gsub">Deine Pläne werden auf deiner <b>Speicherkarte</b> gespeichert. Das geht nur mit <b>Google Chrome</b> oder <b>Microsoft Edge</b>.</div>`
+    : back
+    ? `<h2>👋 Willkommen zurück${nm() ? ', ' + escapeHtml(nm()) : ''}!</h2><div class="gsub">Steck zuerst deine <b>Speicherkarte</b> ein. Darauf sind alle deine Pläne und dein Verlauf.</div>`
+    : `<h2>💾 Zuerst deine Speicherkarte</h2><div class="gsub">Auf der Speicherkarte wird <b>alles gespeichert</b>: deine Pläne und dein Verlauf. Sie ist eine Datei in deinem Ordner <b>«Dokumente»</b>. So ist nichts weg, auch wenn der Computer über Nacht zurückgesetzt wird.<br><br>
+        <b>Zum ersten Mal hier?</b> → «Neue Speicherkarte erstellen».<br><b>Schon mal benutzt</b> (auch an einem anderen Computer)? → «Speicherkarte einstecken».</div>`;
+  return `<div class="gatebox" role="dialog" aria-modal="true">${head}<div style="margin-top:20px">${cardPanelHtml('gate')}</div>
+    <div class="gatefoot">
+      ${!prologDone() && cardState!=='unsupported' ? '<button class="gprac" data-gate="practice">🎓 Zuerst die Übungsrunde ausprobieren (wird nicht gespeichert)</button>' : cardState!=='unsupported' ? '<button class="gshow" data-gate="show">🎬 Zeig\'s mir</button>' : '<span></span>'}
+      <button class="gskip" data-gate="skip">${cardState==='unsupported' ? 'Trotzdem weiter (nur in diesem Browser)' : 'Ohne Speicherkarte weiter'}</button>
+    </div></div>`;
+}
+function cardGate(){
+  let g = $id('cardGate');
+  if(!gateNeeded()){ if(g){ g.classList.remove('show'); g.id = ''; setTimeout(()=> g.remove(), 300); } return; }
+  if(!g){
+    endTour();
+    g = document.createElement('div'); g.className = 'gate no-print'; g.id = 'cardGate';
+    document.body.appendChild(g); requestAnimationFrame(()=> g.classList.add('show'));
+    g.addEventListener('click', e=>{
+      const b = e.target.closest('[data-gate]'); if(!b) return;
+      if(b.dataset.gate==='practice') startPractice();
+      if(b.dataset.gate==='show') startTour(cardTour('gate'));
+      if(b.dataset.gate==='skip'){
+        if(cardState!=='unsupported' && !confirm('Wirklich ohne Speicherkarte?\n\nDann wird nur in diesem Browser gespeichert. Wird der Computer zurückgesetzt, kann alles weg sein.')) return;
+        gateSkip = true; cardSkipMem = true; cardGate(); updateCardUI();
+      }
+    });
+  }
+  g.innerHTML = gateHtml();
+}
+
 // ---------- Beim Start: bekannte Speicherkarte wieder verbinden ----------
 async function cardInit(){
+  try{ await cardInitInner(); } finally { cardReady = true; updateCardUI(); }
+}
+async function cardInitInner(){
   if(VIEW || !CARD_SUPPORTED){ updateCardUI(); return; }
   let h = await idbGet('card');
   if(h && h.desk) h = deskHandle(h.desk);
@@ -4602,6 +4662,7 @@ function startPractice(){
   PRACTICE = true; document.documentElement.classList.add('practice');
   quiet = true; clearSheet(true); for(let i=0;i<6;i++) addRow(false); planIso = todayIso(); ensureDate(); quiet = false;
   rollInfo = null; wz = 0; wzQ1 = null; wzResume = 0; wzDayPicked = false; renderAll();
+  cardGate();
   coachMount(); coachGo(0);
 }
 function endPractice(completed){
@@ -4621,6 +4682,7 @@ function endPractice(completed){
     toast("🚀 Jetzt geht's richtig los!");
   } else goTab('start');
   updateHero();
+  cardGate();   // danach: Speicherkarte einstecken bzw. erstellen
 }
 $id('practiceQuit').addEventListener('click', ()=>{ if(confirm('Übung beenden? Du kannst sie später auf der Startseite nochmal machen.')) endPractice(false); });
 
