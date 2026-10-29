@@ -2,9 +2,29 @@
   "hosting": {
     "site": "eatthefrog",
     "public": ".",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "desktop/**", "docs/**", "README.md"],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "desktop/**",
+      "docs/**",
+      "README.md",
+      "firestore.rules",
+      ".firebaserc"
+    ],
     "headers": [
-      { "source": "**/*.@(html|js|webmanifest)", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }
+      {
+        "source": "**/*.@(html|js|webmanifest)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      }
     ]
+  },
+  "firestore": {
+    "rules": "firestore.rules"
   }
 }

@@ -1,0 +1,28 @@
+rules_version = '2';
+
+// Eat the Frog
+// - Jede Person sieht und ändert nur ihre eigenen Pläne.
+// - Trainer (Eintrag in «admins») dürfen lesen, aber nichts ändern:
+//   standort = 'olten' | 'solothurn' | 'brugg' | 'wohlen' → nur dieser Standort
+//   standort = 'alle' (oder leer) → alle Standorte (Leitung)
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function adminPath() { return /databases/$(database)/documents/admins/$(request.auth.uid); }
+    function isAdmin() { return signedIn() && exists(adminPath()); }
+    function adminOrt() { return get(adminPath()).data.get('standort', 'alle'); }
+
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid
+                    || (isAdmin() && (adminOrt() == 'alle' || adminOrt() == resource.data.standort)));
+      allow create, update: if signedIn() && request.auth.uid == uid;
+      allow delete: if false;
+    }
+
+    // Wer Trainer ist, wird nur in der Firebase-Konsole eingetragen
+    match /admins/{uid} {
+      allow read: if signedIn() && request.auth.uid == uid;
+      allow write: if false;
+    }
+  }
+}

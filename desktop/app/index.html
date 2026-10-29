@@ -550,7 +550,7 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
   html{ background:var(--bg); color-scheme:dark; }
   body{ background:transparent; }
   .sheet{ color-scheme:light; color:var(--ink); }
-  .topnav, #p-start, #p-methode, #p-planen, #p-heute, #p-abend, #p-verlauf, .side, .hside, .modal-bg, .tour, .helpfab{ color:var(--txt); }
+  .topnav, #p-start, #p-methode, #p-planen, #p-heute, #p-abend, #p-verlauf, #p-trainer, .side, .hside, .modal-bg, .tour, .helpfab{ color:var(--txt); }
   .modal{ color:var(--ink); }
   .toast{ border:1px solid rgba(255,255,255,.14); }
 
@@ -794,7 +794,7 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
 
 @media (prefers-reduced-motion: reduce){ .tab-ind{ transition:none; } }
 @media print{
-  .topnav, .side, #p-start, #p-methode, #p-planen, #p-heute, #p-abend, #p-verlauf, .modal-bg, .tour, .helpfab{ display:none !important; }
+  .topnav, .side, #p-start, #p-methode, #p-planen, #p-heute, #p-abend, #p-verlauf, #p-trainer, .modal-bg, .tour, .helpfab{ display:none !important; }
   #p-a4{ display:block !important; min-height:0 !important; }
   .planwrap{ display:block !important; padding:0 !important; }
   .planwrap .sheet{ margin:0 !important; }
@@ -1334,6 +1334,52 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
   .trhead .btn{ margin-left:auto; }
   .trsearch{ font:inherit; font-size:15px; color:var(--txt); background:rgba(255,255,255,.06); border:1.5px solid rgba(141,224,211,.3); border-radius:12px; padding:10px 13px; width:min(320px,100%); margin-top:14px; }
   .trempty{ margin-top:20px; color:var(--txt-soft); }
+  .tab[hidden]{ display:none; }
+  .lform select{ font:inherit; font-size:17px; color:var(--txt); background:rgba(255,255,255,.06); border:1.5px solid rgba(141,224,211,.3); border-radius:12px; padding:13px 14px; }
+  .lform select option{ color:#111; }
+  .ortbtns{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:18px; }
+  .ortbtns .btn{ justify-content:center; font-size:17px; padding:18px 14px; }
+  .trtools{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .trtools select{ font:inherit; font-size:14px; color:var(--txt); background:rgba(255,255,255,.06); border:1px solid var(--card-b); border-radius:12px; padding:9px 12px; }
+  .trtools select option{ color:#111; }
+  .kpis.k8{ margin-top:14px; }
+  .kpi.warn b{ color:#ffd07a; } .kpi.good b{ color:var(--mint); }
+  .tgrid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .tgrid .vcard{ margin-top:16px; }
+  .tchart{ display:flex; gap:4px; align-items:flex-end; height:170px; margin-top:16px; }
+  .tchart .tc{ flex:1; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; gap:5px; }
+  .tchart .tb{ width:100%; max-width:30px; border-radius:6px 6px 3px 3px; background:linear-gradient(180deg,#8de0d3,#13b3a0); min-height:3px; }
+  .tchart .tb.lo{ background:linear-gradient(180deg,#ffd07a,#e0912a); } .tchart .tb.zero{ background:rgba(255,255,255,.08); }
+  .tchart .tn2{ font-size:10.5px; font-weight:700; min-height:13px; white-space:nowrap; }
+  .tchart .tl{ font-size:9.5px; color:var(--txt-soft); white-space:nowrap; text-align:center; line-height:1.25; min-height:24px; }
+  .tchart .tc.we .tl{ opacity:.45; }
+  .tlist{ margin-top:12px; display:flex; flex-direction:column; gap:7px; }
+  .tlrow{ display:flex; align-items:center; gap:12px; background:rgba(255,255,255,.04); border-radius:12px; padding:10px 12px; font-size:14px; }
+  .tlrow .tx{ flex:1; min-width:0; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .tlrow .tx small{ display:block; font-weight:500; color:var(--txt-soft); font-size:12px; white-space:normal; }
+  .tlrow .tv{ flex:none; font-family:"Space Grotesk",sans-serif; font-weight:700; color:#ffd07a; }
+  .tlrow.click{ cursor:pointer; } .tlrow.click:hover{ background:rgba(141,224,211,.08); }
+  .mbar{ display:flex; height:30px; border-radius:10px; overflow:hidden; margin-top:16px; }
+  .mbar div{ display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#05201b; min-width:0; overflow:hidden; white-space:nowrap; }
+  .mleg{ display:grid; grid-template-columns:1fr 1fr; gap:6px 14px; margin-top:12px; font-size:13px; color:var(--txt-soft); }
+  .mleg i{ display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:7px; }
+  .wdays{ display:grid; grid-template-columns:repeat(5,1fr); gap:10px; align-items:end; height:130px; margin-top:16px; }
+  .wdays .wd{ display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; gap:5px; font-size:12px; color:var(--txt-soft); }
+  .wdays .wb{ width:100%; max-width:46px; border-radius:8px 8px 4px 4px; background:linear-gradient(180deg,#8de0d3,#13b3a0); min-height:3px; }
+  .wdays .wd b{ color:var(--txt); font-size:12.5px; }
+  .ttable{ width:100%; border-collapse:collapse; margin-top:14px; font-size:14px; }
+  .ttable th{ background:none !important; text-align:left; font-family:var(--display); font-size:10px; letter-spacing:1.1px; text-transform:uppercase; color:var(--txt-soft); font-weight:600; padding:8px 8px; border-bottom:1px solid rgba(255,255,255,.1); cursor:pointer; white-space:nowrap; user-select:none; }
+  .ttable th.on{ color:var(--mint); }
+  .ttable td{ padding:11px 8px; border-bottom:1px solid rgba(255,255,255,.06); vertical-align:middle; }
+  .ttable tr.click{ cursor:pointer; } .ttable tr.click:hover td{ background:rgba(141,224,211,.06); }
+  .ttable td b{ font-size:14.5px; } .ttable td small{ display:block; color:var(--txt-soft); font-size:12px; }
+  .twrap{ overflow-x:auto; }
+  .goodlist{ margin-top:12px; display:flex; flex-direction:column; gap:8px; }
+  .goodlist div{ background:rgba(57,227,154,.07); border:1px solid rgba(57,227,154,.2); border-radius:12px; padding:10px 12px; font-size:14px; white-space:pre-line; }
+  .goodlist small{ display:block; color:var(--txt-soft); font-size:12px; margin-bottom:3px; }
+  .tback{ margin-bottom:10px; }
+  .tloading{ display:flex; align-items:center; gap:14px; margin-top:40px; color:var(--txt-soft); }
+  @media (max-width:1000px){ .tgrid{ grid-template-columns:1fr; } }
   .modal.cardm h3{ color:var(--txt); }
   .modal.cardm .sub{ color:var(--txt-soft); }
   .modal.cardm .cardstep{ grid-template-columns:170px 1fr; margin-top:10px; }
@@ -1661,6 +1707,7 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
     <button class="tab" role="tab" data-tab="heute"><span class="tn">04</span>Mein Tag</button>
     <button class="tab" role="tab" data-tab="abend"><span class="tn">05</span>Abend</button>
     <button class="tab" role="tab" data-tab="verlauf"><span class="tn">06</span>Verlauf</button>
+    <button class="tab" role="tab" data-tab="trainer" id="trTab" hidden><span class="tn">07</span>👩‍🏫 Trainer</button>
     <span class="tab-ind" aria-hidden="true"></span>
   </div>
   <button class="cardchip" id="cardChip" title="Deine Speicherkarte">
@@ -2080,6 +2127,10 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
 </section>
 
 <!-- ================= 06 VERLAUF ================= -->
+<section class="panel no-print" id="p-trainer" role="tabpanel">
+  <div class="vwrap" id="trWrap"></div>
+</section>
+
 <section class="panel no-print" id="p-verlauf" role="tabpanel">
   <div class="vwrap">
     <div class="vhead">
@@ -3163,7 +3214,7 @@ function setupView(){
   document.querySelectorAll('.sheet input[type=checkbox], .sheet .tog').forEach(el=> el.disabled = true);
 }
 // ============ Tabs ============
-const NAV_TABS = ['start','methode','planen','heute','abend','verlauf'];
+const NAV_TABS = ['start','methode','planen','heute','abend','verlauf','trainer'];
 const TABS = NAV_TABS.concat('a4');
 const OLD = { plan:'planen', abschliessen:'abend' };   // Links aus älteren Versionen
 let currentTab = null;
@@ -3183,6 +3234,7 @@ function goTab(name, keepTour){
   name = OLD[name] || name;
   if(VIEW) name = 'a4';
   if(!TABS.includes(name)) name = 'start';
+  if(name==='trainer' && !(CLOUD_ON && cloud.trainer)) name = 'start';
   const changed = name !== currentTab, first = currentTab === null;
   currentTab = name;
   document.querySelectorAll('.panel').forEach(p=> p.classList.toggle('active', p.id==='p-'+name));
@@ -3198,8 +3250,8 @@ function goTab(name, keepTour){
     const next = { start: pre || (planReady() ? ['heute','Mein Tag →'] : ['planen','Jetzt planen →']),
                    methode: pre || (planReady() ? ['heute','Mein Tag →'] : ['planen','Jetzt planen →']),
                    planen:['heute','Mein Tag →'], heute:['abend','🌙 Abend-Check →'],
-                   abend:['heute','← Mein Tag'], verlauf:['heute','← Mein Tag'], a4:['heute','← Zurück'] }[name];
-    cta.dataset.go = next[0]; cta.textContent = next[1];
+                   abend:['heute','← Mein Tag'], verlauf:['heute','← Mein Tag'], a4:['heute','← Zurück'], trainer:['trainer',''] }[name];
+    cta.dataset.go = next[0]; cta.textContent = next[1]; cta.style.display = name==='trainer' ? 'none' : '';
   }
   if(changed) window.scrollTo(0, 0);
   try{ if(location.hash !== '#'+name) history.replaceState(null, '', '#'+name); }catch(e){}
@@ -3215,6 +3267,7 @@ function goTab(name, keepTour){
   if(name==='heute'){ renderHeute(); if(changed) firstTour('heute'); }
   if(name==='abend'){ abendSeen = true; syncTake(); mountAbend(); renderAbend(); if(changed) firstTour('abend'); }
   if(name==='verlauf') renderVerlauf();
+  if(name==='trainer') renderTrainer();
   if(name==='start' || name==='methode') updateHero();
   if(name==='a4') requestAnimationFrame(()=> document.querySelectorAll('.sheet textarea').forEach(autosize));
 }
@@ -4720,7 +4773,9 @@ function cardGate(){
 // ===================================================================
 const UIDKEY = 'alpen-cloud-uid';
 const FB_BASE = 'https://www.gstatic.com/firebasejs/13.0.0/';
-const cloud = { ready:false, failed:false, user:null, state:'loading', trainer:false, at:null, mode:'login', err:'', ok:'', busy:false, pendingName:'' };
+const cloud = { ready:false, failed:false, user:null, state:'loading', trainer:false, scope:'', standort:'', stats:{}, at:null, mode:'login', err:'', ok:'', busy:false, pendingName:'', pendingOrt:'' };
+const STANDORTE = [['olten','Olten'],['solothurn','Solothurn'],['brugg','Brugg'],['wohlen','Wohlen']];
+const ortName = k=> (STANDORTE.find(x=> x[0]===k) || [0, k ? k : 'ohne Standort'])[1];
 let fb = null;
 const CloudAPI = {
   async init(onUser){
@@ -4736,8 +4791,11 @@ const CloudAPI = {
   signOut: ()=> fb.U.signOut(fb.auth),
   async load(uid){ const s = await fb.S.getDoc(fb.S.doc(fb.db, 'users', uid)); return s.exists() ? s.data() : null; },
   save: (uid, data)=> fb.S.setDoc(fb.S.doc(fb.db, 'users', uid), data),
-  async isTrainer(uid){ try{ return (await fb.S.getDoc(fb.S.doc(fb.db, 'admins', uid))).exists(); }catch(e){ return false; } },
-  async listUsers(){ const q = await fb.S.getDocs(fb.S.collection(fb.db, 'users')); return q.docs.map(d=> ({ uid:d.id, ...d.data() })); }
+  async trainerInfo(uid){ try{ const s = await fb.S.getDoc(fb.S.doc(fb.db, 'admins', uid)); return s.exists() ? (s.data() || {}) : null; }catch(e){ return null; } },
+  async listUsers(scope){   // Trainer eines Standorts sehen nur ihren Standort, die Leitung («alle») alle
+    const c = fb.S.collection(fb.db, 'users');
+    const q = await fb.S.getDocs(scope && scope !== 'alle' ? fb.S.query(c, fb.S.where('standort', '==', scope)) : c);
+    return q.docs.map(d=> ({ uid:d.id, ...d.data() })); }
 };
 function openView(data){ window.open(location.href.split('#')[0] + '#view=' + b64u(JSON.stringify(data)), '_blank'); }
 const appKeys = ()=>{ try{ return Object.keys(localStorage).filter(k=> k.startsWith('alpen-') && k!==UIDKEY); }catch(e){ return []; } };
@@ -4750,7 +4808,7 @@ async function cloudInit(){
   catch(e){ console.warn(e); cloud.failed = true; cloud.ready = true; cloud.state = 'offline'; updateCardUI(); }
 }
 async function cloudOnUser(u){
-  cloud.ready = true; cloud.user = u || null; cloud.trainer = false;
+  cloud.ready = true; cloud.user = u || null; cloud.trainer = false; cloud.scope = '';
   if(!u){ cloud.state = 'out'; updateCardUI(); return; }
   let owner = ''; try{ owner = localStorage.getItem(UIDKEY) || ''; }catch(e){}
   // Auf diesem Computer liegen Pläne von jemand anderem? Weg damit, dann frisch laden.
@@ -4767,15 +4825,23 @@ async function cloudOnUser(u){
     }
   }
   try{ localStorage.setItem(UIDKEY, u.uid); }catch(e){}
+  cloud.standort = (doc && doc.standort) || cloud.pendingOrt || ''; cloud.pendingOrt = '';
+  cloud.stats = (doc && doc.stats) || {};
+  cloud.stats.logins = (cloud.stats.logins || 0) + 1; cloud.stats.lastLogin = new Date().toISOString();
   const r = doc ? mergeCard(doc) : null;
   const name = cloud.pendingName || u.displayName || ''; cloud.pendingName = '';
   if(!nm() && name){ $id('nameIn').value = name; renderAll(); }
   cloud.state = 'in'; cloud.err = '';
   updateCardUI();
+  const ti = await CloudAPI.trainerInfo(u.uid);
+  cloud.trainer = !!ti; cloud.scope = ti ? (ti.standort || 'alle') : '';
+  if(cloud.trainer){ try{ localStorage.setItem('alpen-prolog-done','1'); }catch(e){} }
   await cloudWrite();                               // erster Abgleich: Pläne von vorher landen im Konto
-  cloud.trainer = await CloudAPI.isTrainer(u.uid); updateCardUI();
+  updateCardUI(); trainerTab();
+  if(cloud.trainer){ goTab('trainer'); toast(`👋 Hallo! Trainer-Bereich: ${cloud.scope==='alle' ? 'alle Standorte' : ortName(cloud.scope)}`); return; }
   afterCardLoad(r);
   toast(`👋 Hallo ${nm() || ''}! Deine Pläne sind da.`.replace(' !', '!'));
+  if(!cloud.standort) askStandort();
 }
 
 // ---------- Speichern (kurz nach jeder Änderung) ----------
@@ -4789,7 +4855,11 @@ async function cloudWrite(){
   const u = cloud.user;
   try{
     cloudPacking = true;   // beim Einpacken nicht gleich wieder ein Speichern auslösen
-    let data; try{ data = JSON.parse(JSON.stringify({ ...cardData(), kind:'cloud', name: nm() || u.displayName || '', email: u.email || '', updatedAt: new Date().toISOString() }));
+    const st = cloud.stats || (cloud.stats = {}), today = todayIso();
+    st.activeDays = (st.activeDays || []).filter(Boolean); if(st.activeDays[st.activeDays.length-1] !== today) st.activeDays.push(today);
+    st.activeDays = st.activeDays.slice(-200);
+    let data; try{ data = JSON.parse(JSON.stringify({ ...cardData(), kind:'cloud', name: nm() || u.displayName || '', email: u.email || '', updatedAt: new Date().toISOString(),
+      standort: cloud.standort || '', role: cloud.trainer ? 'trainer' : 'teilnehmer', stats: st }));
       data.plan.tasks = (data.plan.tasks || []).filter(t=> (t.text || '').trim()); } finally { cloudPacking = false; }
     const ok = await Promise.race([CloudAPI.save(u.uid, data).then(()=> true), sleep(12000).then(()=> false)]);
     cloud.state = ok ? 'in' : 'offline'; if(ok) cloud.at = new Date();
@@ -4834,6 +4904,7 @@ function cloudGateHtml(){
     <form class="lform" data-form="signup">
       <label>Dein Name<input id="lName" autocomplete="name" placeholder="z.B. Anna Muster" required></label>
       <label>Deine E-Mail<input id="lMail" type="email" autocomplete="email" placeholder="name@beispiel.ch" required></label>
+      <label>Dein Standort<select id="lOrt" required><option value="">Bitte wählen …</option>${STANDORTE.map(([k,n])=> `<option value="${k}">${n}</option>`).join('')}</select></label>
       <label>Neues Passwort (mindestens 6 Zeichen)${pw('lPass','Passwort ausdenken','new-password')}</label>
       <div class="lerr"></div>
       <button class="btn" type="submit">Konto erstellen →</button>
@@ -4882,7 +4953,8 @@ document.addEventListener('submit', async e=>{
     if(f.dataset.form==='login') await CloudAPI.signIn(v('lMail'), $id('lPass').value);
     if(f.dataset.form==='signup'){
       if(!v('lName')){ cloud.err = 'Bitte gib deinen Namen ein.'; }
-      else { cloud.pendingName = v('lName'); await CloudAPI.signUp(v('lName'), v('lMail'), $id('lPass').value); }
+      else if(!v('lOrt')){ cloud.err = 'Bitte wähle deinen Standort.'; }
+      else { cloud.pendingName = v('lName'); cloud.pendingOrt = v('lOrt'); await CloudAPI.signUp(v('lName'), v('lMail'), $id('lPass').value); }
     }
     if(f.dataset.form==='reset'){ await CloudAPI.reset(v('lMail')); cloud.ok = '✓ Mail ist unterwegs! Schau in dein Postfach (auch im Spam-Ordner).'; }
   }catch(err){ cloud.err = authMsg(err); cloud.pendingName = ''; }
@@ -4897,7 +4969,8 @@ document.addEventListener('click', e=>{
   if(a==='retry') cloudWrite();
   if(a==='logout') cloudLogout();
   if(a==='logout-now') cloudLogout(true);
-  if(a==='trainer') openTrainer();
+  if(a==='trainer') goTab('trainer');
+  if(a==='ort') askStandort(true);
 });
 async function cloudLogout(now){
   if(!now && !confirm('Abmelden?\n\nDeine Pläne bleiben in deinem Konto. Auf diesem Computer wird alles gelöscht, damit niemand sonst sie sieht.')) return;
@@ -4919,61 +4992,226 @@ function openAccount(){
   bg.innerHTML = `<div class="modal acctm" role="dialog" aria-modal="true"><h3>👤 Dein Konto</h3>
     <div class="acctrow"><div class="ava">${escapeHtml((name || '?').charAt(0).toUpperCase())}</div><div><b>${escapeHtml(name || 'Ohne Namen')}</b><span>${escapeHtml(u.email || '')}</span></div></div>
     <p class="acctok">${st}</p>
+    ${cloud.trainer ? `<p class="acctok">👩‍🏫 <b>Trainer-Zugang</b> · ${cloud.scope==='alle' ? 'alle Standorte' : 'Standort ' + ortName(cloud.scope)}</p>`
+      : `<p class="acctok">📍 Standort: <b>${escapeHtml(ortName(cloud.standort))}</b> <button class="linkbtn" data-acct="ort">ändern</button></p>`}
     <p class="acctok">🔒 Server in Zürich. Deine Pläne sehen nur <b>du</b> und <b>deine Trainerin</b>.</p>
-    <div class="mbtns">${cloud.trainer ? '<button class="btn" data-acct="trainer">👩‍🏫 Teilnehmende ansehen</button>' : ''}<button class="btn ghost" data-acct="logout">Abmelden</button><button class="btn ${cloud.trainer ? 'ghost' : ''}" data-close>Schliessen</button></div></div>`;
+    <div class="mbtns">${cloud.trainer ? '<button class="btn" data-acct="trainer">👩‍🏫 Trainer-Bereich</button>' : ''}<button class="btn ghost" data-acct="logout">Abmelden</button><button class="btn ${cloud.trainer ? 'ghost' : ''}" data-close>Schliessen</button></div></div>`;
   document.body.appendChild(bg); requestAnimationFrame(()=> bg.classList.add('show'));
-  bg.addEventListener('click', e=>{ if(e.target===bg || e.target.hasAttribute('data-close') || e.target.closest('[data-acct="trainer"]')){ bg.classList.remove('show'); setTimeout(()=> bg.remove(), 250); } });
+  bg.addEventListener('click', e=>{ if(e.target===bg || e.target.hasAttribute('data-close') || e.target.closest('[data-acct="trainer"],[data-acct="ort"]')){ bg.classList.remove('show'); setTimeout(()=> bg.remove(), 250); } });
 }
 
-// ---------- Trainerinnen-Bereich: alle Teilnehmenden ----------
-async function openTrainer(){
+// ---------- Standort wählen (einmal, dann im Konto gespeichert) ----------
+function askStandort(change){
+  if(document.querySelector('.modal.ortm')) return;
   const bg = document.createElement('div'); bg.className = 'modal-bg no-print';
-  bg.innerHTML = `<div class="modal trm" role="dialog" aria-modal="true"><div class="trbody"><h3>👩‍🏫 Teilnehmende</h3><div class="lwait"><div class="spin"></div><span>Wird geladen …</span></div></div></div>`;
+  bg.innerHTML = `<div class="modal acctm ortm" role="dialog" aria-modal="true"><h3>📍 Wo bist du bei Visio Coaching?</h3>
+    <div class="sub">${change ? 'Wähle deinen neuen Standort.' : 'Einmal kurz auswählen. So sieht deine Trainerin vor Ort deine Pläne.'}</div>
+    <div class="ortbtns">${STANDORTE.map(([k,n])=> `<button class="btn ${cloud.standort===k ? '' : 'dark'}" data-ort="${k}">${n}</button>`).join('')}</div>
+    ${change ? '<div class="mbtns"><button class="btn ghost" data-close>Abbrechen</button></div>' : ''}</div>`;
   document.body.appendChild(bg); requestAnimationFrame(()=> bg.classList.add('show'));
   const close = ()=>{ bg.classList.remove('show'); setTimeout(()=> bg.remove(), 250); };
-  bg.addEventListener('click', e=>{ if(e.target===bg || e.target.closest('[data-close]')) close(); });
-  const body = bg.querySelector('.trbody');
-  let users = [];
-  try{ users = await CloudAPI.listUsers(); }
-  catch(e){ body.innerHTML = `<h3>👩‍🏫 Teilnehmende</h3><div class="lerr" style="margin-top:14px">Konnte nicht geladen werden. Bist du als Trainerin freigeschaltet?</div><div class="mbtns"><button class="btn" data-close>Schliessen</button></div>`; return; }
-  const today = todayIso();
-  const fmtWhen = s=>{ if(!s) return '–'; const d = new Date(s); return d.toLocaleDateString('de-CH') + ', ' + d.toLocaleTimeString('de-CH',{hour:'2-digit',minute:'2-digit'}); };
-  const recsOf = u=> Object.values(u.history||{}).filter(r=> r && r.tasks && r.tasks.length).sort((a,b)=> b.iso.localeCompare(a.iso));
-  const planRec = u=>{ const p = u.plan; if(!p || p.planned===false) return null; const t = (p.tasks||[]).filter(x=> (x.text||'').trim()); if(!t.length) return null;
-    return { iso:p.iso, tasks:t, frog:((p.f||{}).focusInput||'').trim(), hours:hoursOf((p.f||{}).availIn) }; };
-  const pill = m=> m ? `<span class="trpill ${m.rate>=.8 ? 'g' : m.rate>=.5 ? 'o' : 'r'}">${m.done}/${m.total} erledigt</span>` : '<span class="trpill">–</span>';
-  function list(q){
-    q = (q||'').toLowerCase();
-    const rows = users.filter(u=> !q || (u.name||'').toLowerCase().includes(q) || (u.email||'').toLowerCase().includes(q))
-      .sort((a,b)=> (a.name||a.email||'').localeCompare(b.name||b.email||'', 'de'));
-    body.innerHTML = `<div class="trhead"><h3>👩‍🏫 Teilnehmende (${users.length})</h3><button class="btn ghost" data-close>Schliessen</button></div>
-      <input class="trsearch" placeholder="🔎 Name oder E-Mail suchen" value="${escapeHtml(q)}">
-      ${rows.length ? `<table class="trtable"><thead><tr><th>Name</th><th>Heute</th><th>Frosch heute</th><th>Letzte 7 Tage</th><th>Zuletzt aktiv</th></tr></thead><tbody>
-      ${rows.map(u=>{
-        const pr = planRec(u), m = pr && pr.iso===today ? dayMetrics(pr) : null;
-        const last7 = recsOf(u).filter(r=> r.iso > addDays(today, -7));
-        const avg = last7.length ? Math.round(last7.reduce((a,r)=> a + dayMetrics(r).rate, 0) / last7.length * 100) : null;
-        return `<tr class="click" data-uid="${escapeHtml(u.uid)}"><td><b>${escapeHtml(u.name || 'Ohne Namen')}</b><small>${escapeHtml(u.email || '')}</small></td>
-          <td>${m ? pill(m) : '<span class="trpill">noch nicht geplant</span>'}</td>
-          <td>${m && m.frog ? (m.eaten ? '🐸 ✓ gegessen' : '🐸 offen') : '–'}</td>
-          <td>${avg!=null ? `${last7.length} Tag${last7.length>1?'e':''} · Ø ${avg} %` : '–'}</td>
-          <td>${fmtWhen(u.updatedAt)}</td></tr>`; }).join('')}</tbody></table>` : `<p class="trempty">${users.length ? 'Niemand gefunden.' : 'Noch niemand hat sich angemeldet.'}</p>`}`;
-    const inp = body.querySelector('.trsearch'); inp.addEventListener('input', ()=>{ const pos = inp.selectionStart; list(inp.value); const n = body.querySelector('.trsearch'); n.focus(); n.setSelectionRange(pos, pos); });
-    body.querySelectorAll('tr[data-uid]').forEach(tr=> tr.addEventListener('click', ()=> detail(users.find(u=> u.uid===tr.dataset.uid))));
-  }
-  function detail(u){
-    const pr = planRec(u), recs = recsOf(u);
-    body.innerHTML = `<div class="trhead"><button class="btn ghost sm" data-back>← Alle</button><h3>${escapeHtml(u.name || 'Ohne Namen')}</h3><button class="btn ghost" data-close>Schliessen</button></div>
-      <p class="acctok">${escapeHtml(u.email || '')} · zuletzt aktiv ${fmtWhen(u.updatedAt)}</p>
-      <table class="trtable"><thead><tr><th>Tag</th><th>Erledigt</th><th>Frosch</th><th>Geschafft</th><th></th></tr></thead><tbody>
-      ${pr ? (()=>{ const m = dayMetrics(pr); return `<tr><td><b>Aktueller Plan</b><small>${pr.iso ? shortDay(pr.iso) + ', ' + chDate(pr.iso) : ''}</small></td><td>${pill(m)}</td><td>${m.frog ? (m.eaten ? '🐸 ✓' : '🐸 offen') : '–'}</td><td>${m.minsDone ? minLabel(m.minsDone) : '–'}</td><td><button class="btn sm" data-viewplan>📄 Ansehen</button></td></tr>`; })() : ''}
-      ${recs.filter(r=> !pr || r.iso!==pr.iso).map(r=>{ const m = dayMetrics(r); return `<tr><td><b>${shortDay(r.iso)}, ${chDate(r.iso)}</b></td><td>${pill(m)}</td><td>${m.frog ? (m.eaten ? '🐸 ✓' : '🐸 offen') : '–'}</td><td>${m.minsDone ? minLabel(m.minsDone) : '–'}</td><td><button class="btn ghost sm" data-viewday="${r.iso}">📄 Ansehen</button></td></tr>`; }).join('')}
-      </tbody></table>${!pr && !recs.length ? '<p class="trempty">Noch keine Pläne.</p>' : ''}`;
-    body.querySelector('[data-back]').addEventListener('click', ()=> list(''));
-    body.querySelector('[data-viewplan]')?.addEventListener('click', ()=> openView({ ...u.plan, submittedAt:u.updatedAt }));
-    body.querySelectorAll('[data-viewday]').forEach(b=> b.addEventListener('click', ()=> openView(recToData(recsOf(u).find(r=> r.iso===b.dataset.viewday)))));
-  }
-  list('');
+  bg.addEventListener('click', e=>{
+    const b = e.target.closest('[data-ort]');
+    if(b){ cloud.standort = b.dataset.ort; cloudWrite(); close(); toast(`📍 Standort: ${ortName(cloud.standort)}`); return; }
+    if(change && (e.target===bg || e.target.hasAttribute('data-close'))) close();
+  });
+}
+function trainerTab(){ const t = $id('trTab'); if(t){ t.hidden = !(CLOUD_ON && cloud.trainer); fitNav(); } }
+
+// ===================================================================
+//   TRAINER-BEREICH: Übersicht über alle Teilnehmenden + Statistik pro Person
+// ===================================================================
+const TRS = { users:null, at:0, loading:false, err:'', ort:'', range:30, sel:null, sort:'name', dir:1 };
+const pct = x=> x==null || isNaN(x) ? '–' : Math.round(x*100) + ' %';
+const avg = a=> a.length ? a.reduce((x,y)=> x+y, 0) / a.length : null;
+const WD2 = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+const isWe = iso=> [0,6].includes(dateOfIso(iso).getDay());
+function fmtWhen(s){ if(!s) return '–'; const d = new Date(s), days = Math.floor((Date.now() - d) / 864e5);
+  return days<=0 ? 'heute, ' + d.toLocaleTimeString('de-CH',{hour:'2-digit',minute:'2-digit'}) : days===1 ? 'gestern' : `vor ${days} Tagen`; }
+// Alle geplanten Tage einer Person (nur Zeilen mit Text), neueste zuerst
+function trRecs(u){
+  return Object.values(u.history||{}).filter(r=> r && r.iso && (r.tasks||[]).some(t=> (t.text||'').trim()))
+    .map(r=> ({ ...r, tasks: r.tasks.filter(t=> (t.text||'').trim()) })).sort((a,b)=> b.iso.localeCompare(a.iso));
+}
+// Kennzahlen einer Person für einen Zeitraum
+function trStats(u, since){
+  const all = trRecs(u), rs = all.filter(r=> r.iso >= since), ms = rs.map(dayMetrics), today = todayIso();
+  const frogDays = ms.filter(m=> m.frog), buf = ms.filter(m=> m.bufOk !== null);
+  // Arbeitstage-Serie: wie viele Werktage am Stück geplant (bis heute bzw. gestern)
+  const have = new Set(all.map(r=> r.iso)); let streak = 0, d = today;
+  if(!have.has(d)) d = addDays(d, -1);
+  for(let k=0; k<400; k++){ if(isWe(d)){ d = addDays(d, -1); continue; } if(!have.has(d)) break; streak++; d = addDays(d, -1); }
+  // am meisten verschoben (höchste Anzahl pro Aufgabe)
+  const moved = {};
+  all.forEach(r=> r.tasks.forEach(t=>{ const k = t.text.trim().toLowerCase(); if((t.moved||0) >= 1 && (!moved[k] || t.moved > moved[k].n)) moved[k] = { text:t.text.trim(), n:t.moved||0, iso:r.iso, done:!!t.done }; }));
+  const mat = { "11":0, "10":0, "01":0, "00":0 };
+  rs.forEach(r=> r.tasks.forEach(t=>{ if(t.decided || t.w || t.d) mat[(t.w?'1':'0')+(t.d?'1':'0')]++; }));
+  const wd = [1,2,3,4,5].map(n=>{ const x = rs.filter(r=> dateOfIso(r.iso).getDay()===n).map(r=> dayMetrics(r).rate); return { n, rate:avg(x), cnt:x.length }; });
+  const todayRec = all.find(r=> r.iso===today);
+  return {
+    days: rs.length, allDays: all.length, rate: avg(ms.map(m=> m.rate)),
+    frogT: frogDays.length, frogE: frogDays.filter(m=> m.eaten).length,
+    buf: buf.length ? buf.filter(m=> m.bufOk).length / buf.length : null,
+    abend: rs.length ? rs.filter(r=> (r.good||'').trim()).length / rs.length : null,
+    tasks: avg(rs.map(r=> r.tasks.length)), mins: avg(ms.map(m=> m.planned)),
+    streak, moved: Object.values(moved).sort((a,b)=> b.n - a.n), mat, wd,
+    today: todayRec ? dayMetrics(todayRec) : null,
+    logins: (u.stats && u.stats.logins) || 0,
+    active: ((u.stats && u.stats.activeDays) || []).filter(x=> x >= since).length || rs.length,
+    last: u.updatedAt || '', recs: all
+  };
+}
+async function trLoad(force){
+  if(TRS.loading) return;
+  if(!force && TRS.users && Date.now() - TRS.at < 60000) return;
+  TRS.loading = true; TRS.err = ''; renderTrainer();
+  try{ TRS.users = (await CloudAPI.listUsers(cloud.scope)).filter(u=> u.role !== 'trainer'); TRS.at = Date.now(); }
+  catch(e){ console.warn(e); TRS.err = 'Die Daten konnten nicht geladen werden. Bist du mit dem Internet verbunden?'; }
+  TRS.loading = false; renderTrainer();
+}
+function renderTrainer(){
+  const box = $id('trWrap'); if(!box || currentTab !== 'trainer') return;
+  if(!TRS.users && !TRS.loading && !TRS.err){ trLoad(); return; }
+  if(!TRS.ort) TRS.ort = cloud.scope === 'alle' ? 'alle' : cloud.scope;
+  const head = (title, sub)=> `<div class="vhead"><div><div class="eyebrow">Trainer-Bereich · ${cloud.scope==='alle' ? (TRS.ort==='alle' ? 'alle Standorte' : 'Standort ' + ortName(TRS.ort)) : 'Standort ' + ortName(cloud.scope)}</div>
+      <h2 class="big md">${title}</h2>${sub ? `<p class="vsub">${sub}</p>` : ''}</div>
+      <div class="trtools">
+        ${cloud.scope==='alle' && !TRS.sel ? `<select id="trOrt"><option value="alle">Alle Standorte</option>${STANDORTE.map(([k,n])=> `<option value="${k}" ${TRS.ort===k?'selected':''}>${n}</option>`).join('')}</select>` : ''}
+        <select id="trRange">${[[7,'Letzte 7 Tage'],[30,'Letzte 30 Tage'],[90,'Letzte 90 Tage']].map(([v,l])=> `<option value="${v}" ${TRS.range===v?'selected':''}>${l}</option>`).join('')}</select>
+        <button class="btn dark sm" id="trReload">🔄 Aktualisieren</button></div></div>`;
+  if(TRS.loading && !TRS.users){ box.innerHTML = head('Deine<br><span class="o">Teilnehmenden.</span>') + `<div class="tloading"><div class="spin"></div>Daten werden geladen …</div>`; trBind(); return; }
+  if(TRS.err){ box.innerHTML = head('Deine<br><span class="o">Teilnehmenden.</span>') + `<div class="lerr" style="margin-top:20px">${escapeHtml(TRS.err)}</div>`; trBind(); return; }
+  const since = addDays(todayIso(), -(TRS.range-1));
+  const users = TRS.users.filter(u=> TRS.ort==='alle' || u.standort===TRS.ort);
+  const sel = TRS.sel && users.find(u=> u.uid===TRS.sel);
+  box.innerHTML = sel ? trDetail(sel, since, head) : trOverview(users, since, head);
+  trBind();
+}
+// Balken pro Tag (Wert 0..1 oder Anzahl)
+function trChart(days, val, label, max){
+  const vals = days.map(val), mx = max || Math.max(1, ...vals.map(v=> v||0));
+  return `<div class="tchart">${days.map((d,i)=>{ const v = vals[i];
+    return `<div class="tc ${isWe(d)?'we':''}" title="${shortDay(d)}, ${chDate(d)}: ${label(v)}"><span class="tn2">${v ? label(v) : ''}</span>
+      <div class="tb ${!v ? 'zero' : (max===1 && v<.5) ? 'lo' : ''}" style="height:${v ? Math.max(4, v/mx*100) : 3}%"></div>
+      <span class="tl">${days.length<=31 || i%3===0 ? WD2[dateOfIso(d).getDay()] + '<br>' + dateOfIso(d).getDate() + '.' : ''}</span></div>`; }).join('')}</div>`;
+}
+function trMatrix(mat){
+  const tot = Object.values(mat).reduce((a,b)=> a+b, 0);
+  if(!tot) return '<p class="vsub" style="margin-top:12px">Noch keine sortierten Aufgaben.</p>';
+  const parts = [["11",'Sofort','var(--q1)'],["10",'Einplanen','var(--q2)'],["01",'Delegieren','var(--q3)'],["00",'Weglassen','#69737c']];
+  return `<div class="mbar">${parts.map(([k,l,c])=> mat[k] ? `<div style="flex:${mat[k]};background:${c}" title="${l}: ${mat[k]}">${Math.round(mat[k]/tot*100)}%</div>` : '').join('')}</div>
+    <div class="mleg">${parts.map(([k,l,c])=> `<span><i style="background:${c}"></i>${l}: <b>${mat[k]}</b> (${Math.round(mat[k]/tot*100)} %)</span>`).join('')}</div>`;
+}
+function trWeekdays(wd){
+  return `<div class="wdays">${wd.map(w=> `<div class="wd"><b>${w.rate==null ? '–' : pct(w.rate)}</b><div class="wb" style="height:${w.rate==null ? 3 : Math.max(4, w.rate*100)}%;${w.rate==null ? 'background:rgba(255,255,255,.08)' : ''}"></div>${WD2[w.n]}</div>`).join('')}</div>`;
+}
+function trOverview(users, since, head){
+  const today = todayIso(), days = []; for(let d = since; d <= today; d = addDays(d, 1)) days.push(d);
+  const S = users.map(u=> ({ u, s: trStats(u, since) }));
+  const act7 = S.filter(x=> x.s.recs.some(r=> r.iso > addDays(today, -7))).length;
+  const planToday = S.filter(x=> x.s.today).length;
+  const rates = S.map(x=> x.s.rate).filter(x=> x!=null);
+  const fT = S.reduce((a,x)=> a + x.s.frogT, 0), fE = S.reduce((a,x)=> a + x.s.frogE, 0);
+  const bufs = S.map(x=> x.s.buf).filter(x=> x!=null), abends = S.map(x=> x.s.abend).filter(x=> x!=null);
+  const totDays = S.reduce((a,x)=> a + x.s.days, 0), tasks = S.map(x=> x.s.tasks).filter(x=> x!=null);
+  const logins = S.reduce((a,x)=> a + x.s.logins, 0);
+  // pro Tag: wie viele haben geplant, und wie viel wurde erledigt
+  const perDay = days.map(d=>{ const ms = S.map(x=> x.s.recs.find(r=> r.iso===d)).filter(Boolean).map(dayMetrics); return { n: ms.length, rate: avg(ms.map(m=> m.rate)) }; });
+  // Dauerbrenner über alle
+  const moved = S.flatMap(x=> x.s.moved.filter(m=> m.n >= 2 && !m.done).map(m=> ({ ...m, who:x.u }))).sort((a,b)=> b.n - a.n).slice(0, 8);
+  const mat = { "11":0, "10":0, "01":0, "00":0 }; S.forEach(x=> Object.keys(mat).forEach(k=> mat[k] += x.s.mat[k]));
+  const wd = [1,2,3,4,5].map(n=>{ const xs = S.flatMap(x=> x.s.recs.filter(r=> r.iso >= since && dateOfIso(r.iso).getDay()===n).map(r=> dayMetrics(r).rate)); return { n, rate:avg(xs) }; });
+  // Wer braucht Aufmerksamkeit?
+  const att = [];
+  S.forEach(({u,s})=>{
+    const lastIso = s.recs[0] && s.recs[0].iso, gap = lastIso ? Math.round((dateOfIso(today) - dateOfIso(lastIso)) / 864e5) : null;
+    if(gap == null) att.push({ u, txt:'hat noch nie einen Tag geplant', v:'neu' });
+    else if(gap >= 5) att.push({ u, txt:`seit ${gap} Tagen kein Plan mehr`, v:`${gap} T.` });
+    else if(s.days >= 3 && s.rate != null && s.rate < .4) att.push({ u, txt:`erledigt nur ${pct(s.rate)} der Aufgaben`, v:pct(s.rate) });
+    const big = s.moved.find(m=> m.n >= 3 && !m.done); if(big) att.push({ u, txt:`schiebt «${big.text}» schon ${big.n}× vor sich her`, v:`${big.n}×` });
+  });
+  // Tabelle
+  const cols = [['name','Name'],['today','Heute'],['rate','Ø erledigt'],['frog','Frosch'],['days','Tage'],['streak','Serie'],['logins','Logins'],['last','Zuletzt']];
+  const key = { name:x=> (x.u.name||'').toLowerCase(), today:x=> x.s.today ? x.s.today.rate : -1, rate:x=> x.s.rate ?? -1, frog:x=> x.s.frogT ? x.s.frogE/x.s.frogT : -1,
+    days:x=> x.s.days, streak:x=> x.s.streak, logins:x=> x.s.logins, last:x=> x.s.last }[TRS.sort];
+  const rows = S.slice().sort((a,b)=>{ const A = key(a), B = key(b); return (A > B ? 1 : A < B ? -1 : 0) * TRS.dir; });
+  return head('Deine<br><span class="o">Teilnehmenden.</span>', `${users.length} Teilnehmende · Stand ${new Date(TRS.at).toLocaleTimeString('de-CH',{hour:'2-digit',minute:'2-digit'})} Uhr`) + (users.length ? `
+    <div class="kpis">
+      <div class="kpi"><b>${users.length}</b><span>Teilnehmende</span><small>${act7} aktiv in den letzten 7 Tagen</small></div>
+      <div class="kpi"><b>${planToday}</b><span>haben heute geplant</span><small>von ${users.length}</small></div>
+      <div class="kpi ${avg(rates)>=.7 ? 'good' : avg(rates)!=null && avg(rates)<.4 ? 'warn' : ''}"><b>${pct(avg(rates))}</b><span>Ø Aufgaben erledigt</span><small>im Zeitraum</small></div>
+      <div class="kpi"><b>${fT ? pct(fE/fT) : '–'}</b><span>Frosch gegessen 🐸</span><small>${fE} von ${fT} Tagen</small></div>
+    </div>
+    <div class="kpis k8">
+      <div class="kpi"><b>${totDays}</b><span>Tage geplant</span><small>Ø ${users.length ? (totDays/users.length).toFixed(1) : 0} pro Person</small></div>
+      <div class="kpi"><b>${pct(avg(bufs))}</b><span>Puffer eingehalten</span><small>höchstens 60 % verplant</small></div>
+      <div class="kpi"><b>${pct(avg(abends))}</b><span>Abend-Check gemacht</span><small>«Was lief gut?» ausgefüllt</small></div>
+      <div class="kpi"><b>${avg(tasks)!=null ? avg(tasks).toFixed(1) : '–'}</b><span>Aufgaben pro Tag</span><small>${logins} Anmeldungen insgesamt</small></div>
+    </div>
+    <div class="vcard"><div class="vct"><h3>📈 Nutzung pro Tag</h3><span class="vleg">Anzahl Personen mit Plan</span></div>
+      ${trChart(days, (d)=> perDay[days.indexOf(d)].n, v=> String(v))}</div>
+    <div class="vcard"><div class="vct"><h3>✅ Ø erledigt pro Tag</h3><span class="vleg">gelb = unter 50 %</span></div>
+      ${trChart(days, (d)=> perDay[days.indexOf(d)].rate, v=> pct(v), 1)}</div>
+    <div class="tgrid">
+      <div class="vcard"><h3>🐌 Am meisten aufgeschoben</h3><p class="vsub">Offene Aufgaben, die immer wieder auf morgen wandern</p>
+        ${moved.length ? `<div class="tlist">${moved.map(m=> `<div class="tlrow click" data-tuid="${escapeHtml(m.who.uid)}"><div class="tx">${escapeHtml(m.text)}<small>${escapeHtml(m.who.name||'Ohne Namen')}</small></div><span class="tv">${m.n}× verschoben</span></div>`).join('')}</div>` : '<p class="vsub" style="margin-top:12px">Zum Glück noch nichts 🎉</p>'}</div>
+      <div class="vcard"><h3>⚠️ Brauchen vielleicht Unterstützung</h3><p class="vsub">Lange nicht geplant, wenig erledigt oder ein Dauerbrenner</p>
+        ${att.length ? `<div class="tlist">${att.slice(0, 10).map(a=> `<div class="tlrow click" data-tuid="${escapeHtml(a.u.uid)}"><div class="tx">${escapeHtml(a.u.name||'Ohne Namen')}<small>${escapeHtml(a.txt)}</small></div><span class="tv">${escapeHtml(a.v)}</span></div>`).join('')}</div>` : '<p class="vsub" style="margin-top:12px">Alle sind gut unterwegs 💪</p>'}</div>
+      <div class="vcard"><h3>📊 Eisenhower: so wird sortiert</h3>${trMatrix(mat)}</div>
+      <div class="vcard"><h3>📅 Ø erledigt nach Wochentag</h3>${trWeekdays(wd)}</div>
+    </div>
+    <div class="vcard"><div class="vct"><h3>👥 Alle Teilnehmenden</h3><span class="vleg">Spalte anklicken zum Sortieren · Name anklicken für Details</span></div>
+      <div class="twrap"><table class="ttable"><thead><tr>${cols.map(([k,l])=> `<th data-sort="${k}" class="${TRS.sort===k?'on':''}">${l}${TRS.sort===k ? (TRS.dir>0 ? ' ▲' : ' ▼') : ''}</th>`).join('')}${cloud.scope==='alle' && TRS.ort==='alle' ? '<th>Standort</th>' : ''}</tr></thead><tbody>
+      ${rows.map(({u,s})=> `<tr class="click" data-tuid="${escapeHtml(u.uid)}"><td><b>${escapeHtml(u.name||'Ohne Namen')}</b><small>${escapeHtml(u.email||'')}</small></td>
+        <td>${s.today ? `<span class="trpill ${s.today.rate>=.8?'g':s.today.rate>=.5?'o':'r'}">${s.today.done}/${s.today.total}</span>` : '<span class="trpill">–</span>'}</td>
+        <td>${pct(s.rate)}</td><td>${s.frogT ? `🐸 ${s.frogE}/${s.frogT}` : '–'}</td><td>${s.days}</td><td>${s.streak ? s.streak + ' 🔥' : '–'}</td><td>${s.logins}</td><td>${fmtWhen(s.last)}</td>
+        ${cloud.scope==='alle' && TRS.ort==='alle' ? `<td>${escapeHtml(ortName(u.standort))}</td>` : ''}</tr>`).join('')}
+      </tbody></table></div></div>` : `<p class="trempty">${TRS.ort==='alle' ? 'Noch niemand hat sich angemeldet.' : 'An diesem Standort hat sich noch niemand angemeldet.'}</p>`);
+}
+function trDetail(u, since, head){
+  const s = trStats(u, since), today = todayIso(), days = []; for(let d = since; d <= today; d = addDays(d, 1)) days.push(d);
+  const byIso = {}; s.recs.forEach(r=> byIso[r.iso] = r);
+  const goods = s.recs.filter(r=> (r.good||'').trim()).slice(0, 6);
+  return `<button class="btn ghost sm tback" data-tback>← Alle Teilnehmenden</button>` +
+    head(escapeHtml(u.name || 'Ohne Namen'), `${escapeHtml(u.email || '')} · ${escapeHtml(ortName(u.standort))} · zuletzt aktiv ${fmtWhen(s.last)}`) + `
+    <div class="kpis">
+      <div class="kpi"><b>${s.days}</b><span>Tage geplant</span><small>${s.allDays} insgesamt</small></div>
+      <div class="kpi ${s.rate>=.7 ? 'good' : s.rate!=null && s.rate<.4 ? 'warn' : ''}"><b>${pct(s.rate)}</b><span>Ø Aufgaben erledigt</span><small>im Zeitraum</small></div>
+      <div class="kpi"><b>${s.frogT ? pct(s.frogE/s.frogT) : '–'}</b><span>Frosch gegessen 🐸</span><small>${s.frogE} von ${s.frogT} Tagen</small></div>
+      <div class="kpi"><b>${s.streak || 0}${s.streak ? ' 🔥' : ''}</b><span>Werktage am Stück</span><small>geplant (Serie)</small></div>
+    </div>
+    <div class="kpis k8">
+      <div class="kpi"><b>${s.logins}</b><span>Anmeldungen</span><small>an ${s.active} Tagen aktiv</small></div>
+      <div class="kpi"><b>${pct(s.buf)}</b><span>Puffer eingehalten</span><small>höchstens 60 % verplant</small></div>
+      <div class="kpi"><b>${pct(s.abend)}</b><span>Abend-Check gemacht</span></div>
+      <div class="kpi"><b>${s.tasks!=null ? s.tasks.toFixed(1) : '–'}</b><span>Aufgaben pro Tag</span><small>Ø ${s.mins ? minLabel(Math.round(s.mins)) : '–'} verplant</small></div>
+    </div>
+    <div class="vcard"><div class="vct"><h3>✅ Erledigt pro Tag</h3><span class="vleg">leer = kein Plan · gelb = unter 50 %</span></div>
+      ${trChart(days, d=> byIso[d] ? Math.max(.001, dayMetrics(byIso[d]).rate) : 0, v=> v < .01 ? '0 %' : pct(v), 1)}</div>
+    <div class="tgrid">
+      <div class="vcard"><h3>🐌 Am meisten aufgeschoben</h3>
+        ${s.moved.length ? `<div class="tlist">${s.moved.slice(0, 8).map(m=> `<div class="tlrow"><div class="tx">${escapeHtml(m.text)}<small>${m.done ? '✓ inzwischen erledigt' : 'noch offen'} · zuletzt ${chDate(m.iso)}</small></div><span class="tv">${m.n}×</span></div>`).join('')}</div>` : '<p class="vsub" style="margin-top:12px">Nichts aufgeschoben 🎉</p>'}</div>
+      <div class="vcard"><h3>💬 «Was lief gut?»</h3>
+        ${goods.length ? `<div class="goodlist">${goods.map(r=> `<div><small>${shortDay(r.iso)}, ${chDate(r.iso)}</small>${escapeHtml(r.good.trim())}</div>`).join('')}</div>` : '<p class="vsub" style="margin-top:12px">Noch keine Einträge.</p>'}</div>
+      <div class="vcard"><h3>📊 Eisenhower: so sortiert ${escapeHtml((u.name||'').split(' ')[0] || 'diese Person')}</h3>${trMatrix(s.mat)}</div>
+      <div class="vcard"><h3>📅 Ø erledigt nach Wochentag</h3>${trWeekdays(s.wd)}</div>
+    </div>
+    <div class="vcard"><h3>🗓 Alle Tage</h3>
+      ${s.recs.length ? `<div class="twrap"><table class="ttable"><thead><tr><th>Tag</th><th>Erledigt</th><th>Frosch</th><th>Geschafft</th><th>Was lief gut</th><th></th></tr></thead><tbody>
+      ${s.recs.map(r=>{ const m = dayMetrics(r); return `<tr><td><b>${shortDay(r.iso)}, ${chDate(r.iso)}</b></td>
+        <td><span class="trpill ${m.rate>=.8?'g':m.rate>=.5?'o':'r'}">${m.done}/${m.total}</span></td><td>${m.frog ? (m.eaten ? '🐸 ✓' : '🐸 offen') : '–'}</td>
+        <td>${m.minsDone ? minLabel(m.minsDone) : '–'}</td><td><small>${escapeHtml((r.good||'').trim().split('\n')[0] || '–')}</small></td>
+        <td><button class="btn ghost sm" data-tview="${r.iso}">📄 A4</button></td></tr>`; }).join('')}</tbody></table></div>` : '<p class="vsub" style="margin-top:12px">Noch keine Tage geplant.</p>'}</div>`;
+}
+function trBind(){
+  const box = $id('trWrap'); if(!box) return;
+  $id('trReload')?.addEventListener('click', ()=> trLoad(true));
+  $id('trOrt')?.addEventListener('change', e=>{ TRS.ort = e.target.value; renderTrainer(); });
+  $id('trRange')?.addEventListener('change', e=>{ TRS.range = +e.target.value; renderTrainer(); });
+  box.querySelector('[data-tback]')?.addEventListener('click', ()=>{ TRS.sel = null; renderTrainer(); window.scrollTo(0, 0); });
+  box.querySelectorAll('[data-tuid]').forEach(el=> el.addEventListener('click', ()=>{ TRS.sel = el.dataset.tuid; renderTrainer(); window.scrollTo(0, 0); }));
+  box.querySelectorAll('th[data-sort]').forEach(th=> th.addEventListener('click', ()=>{ const k = th.dataset.sort; TRS.dir = TRS.sort===k ? -TRS.dir : (k==='name' ? 1 : -1); TRS.sort = k; renderTrainer(); }));
+  box.querySelectorAll('[data-tview]').forEach(b=> b.addEventListener('click', ()=>{ const u = TRS.users.find(x=> x.uid===TRS.sel); const r = u && trRecs(u).find(x=> x.iso===b.dataset.tview); if(r) openView(recToData(r)); }));
 }
 
 // ---------- Beim Start: bekannte Speicherkarte wieder verbinden ----------
