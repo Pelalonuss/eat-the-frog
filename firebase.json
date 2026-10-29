@@ -10,7 +10,8 @@
       "docs/**",
       "README.md",
       "firestore.rules",
-      ".firebaserc"
+      ".firebaserc",
+      "tools/**"
     ],
     "headers": [
       {

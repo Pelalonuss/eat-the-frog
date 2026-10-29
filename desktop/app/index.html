@@ -5162,7 +5162,7 @@ function trOverview(users, since, head){
     </div>
     <div class="vcard"><div class="vct"><h3>👥 Alle Teilnehmenden</h3><span class="vleg">Spalte anklicken zum Sortieren · Name anklicken für Details</span></div>
       <div class="twrap"><table class="ttable"><thead><tr>${cols.map(([k,l])=> `<th data-sort="${k}" class="${TRS.sort===k?'on':''}">${l}${TRS.sort===k ? (TRS.dir>0 ? ' ▲' : ' ▼') : ''}</th>`).join('')}${cloud.scope==='alle' && TRS.ort==='alle' ? '<th>Standort</th>' : ''}</tr></thead><tbody>
-      ${rows.map(({u,s})=> `<tr class="click" data-tuid="${escapeHtml(u.uid)}"><td><b>${escapeHtml(u.name||'Ohne Namen')}</b><small>${escapeHtml(u.email||'')}</small></td>
+      ${rows.map(({u,s})=> `<tr class="click" data-tuid="${escapeHtml(u.uid)}"><td><b>${escapeHtml(u.name||'Ohne Namen')}</b>${u.demo ? ' <span class="trpill">🧪 Demo</span>' : ''}<small>${escapeHtml(u.email||'')}</small></td>
         <td>${s.today ? `<span class="trpill ${s.today.rate>=.8?'g':s.today.rate>=.5?'o':'r'}">${s.today.done}/${s.today.total}</span>` : '<span class="trpill">–</span>'}</td>
         <td>${pct(s.rate)}</td><td>${s.frogT ? `🐸 ${s.frogE}/${s.frogT}` : '–'}</td><td>${s.days}</td><td>${s.streak ? s.streak + ' 🔥' : '–'}</td><td>${s.logins}</td><td>${fmtWhen(s.last)}</td>
         ${cloud.scope==='alle' && TRS.ort==='alle' ? `<td>${escapeHtml(ortName(u.standort))}</td>` : ''}</tr>`).join('')}
@@ -5173,7 +5173,7 @@ function trDetail(u, since, head){
   const byIso = {}; s.recs.forEach(r=> byIso[r.iso] = r);
   const goods = s.recs.filter(r=> (r.good||'').trim()).slice(0, 6);
   return `<button class="btn ghost sm tback" data-tback>← Alle Teilnehmenden</button>` +
-    head(escapeHtml(u.name || 'Ohne Namen'), `${escapeHtml(u.email || '')} · ${escapeHtml(ortName(u.standort))} · zuletzt aktiv ${fmtWhen(s.last)}`) + `
+    head(escapeHtml(u.name || 'Ohne Namen'), `${u.demo ? '🧪 Demo-Person · ' : ''}${escapeHtml(u.email || '')} · ${escapeHtml(ortName(u.standort))} · zuletzt aktiv ${fmtWhen(s.last)}`) + `
     <div class="kpis">
       <div class="kpi"><b>${s.days}</b><span>Tage geplant</span><small>${s.allDays} insgesamt</small></div>
       <div class="kpi ${s.rate>=.7 ? 'good' : s.rate!=null && s.rate<.4 ? 'warn' : ''}"><b>${pct(s.rate)}</b><span>Ø Aufgaben erledigt</span><small>im Zeitraum</small></div>

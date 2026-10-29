@@ -1,6 +1,6 @@
 // Tagesplan als App: zuerst aus dem Internet laden (immer die neueste Version),
 // ohne Verbindung die zuletzt gespeicherte Version zeigen.
-const CACHE = 'tagesplan-v9';
+const CACHE = 'tagesplan-v10';
 self.addEventListener('install', ()=> self.skipWaiting());
 self.addEventListener('activate', e=> e.waitUntil(self.clients.claim()));
 self.addEventListener('fetch', e=>{
