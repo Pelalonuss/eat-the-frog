@@ -2763,6 +2763,9 @@ const SUBMITTED = (()=>{ try{
 const VIEW = !!SUBMITTED;
 const CLOUD_ON = !!(FIREBASE_CONFIG && FIREBASE_CONFIG.apiKey) && !VIEW;   // mit Konto (statt Speicherkarte)
 document.documentElement.classList.toggle('cloud', CLOUD_ON);
+// Online: alles liegt im Konto. Keine Speicherkarte zeigen (auch nicht kurz beim Laden) und den Hinweis auf dem A4-Blatt anpassen
+if(CLOUD_ON){ const c = document.getElementById('cardChip'); if(c){ c.classList.add('acct'); c.title = 'Dein Konto'; c.querySelector('.ct').textContent = 'Lädt …'; }
+  const s = document.getElementById('saveState'); if(s) s.textContent = '☁️ Wird automatisch in deinem Konto gespeichert.'; }
 function collect(){
   const data = { v:2, iso:planIso, abend:abendSeen, planned, tasks: tasks.map(({text,min,w,d,lever,snail,done,decided,tomorrow,moved,at})=>({text,min,w,d,lever,snail,done,decided:!!decided,tomorrow:tomorrow||"",moved:moved||0,at:at||""})), f:{} };
   FIELDS.forEach(id=> data.f[id] = document.getElementById(id).value);
@@ -5345,7 +5348,7 @@ function trBind(){
 //   dieselbe Sitzung. «Übergeben» schliesst die Sitzung ab. Abholen: tools/feedback.js (→ feedback/<Sitzung>/ mit
 //   NN_bild.jpg, NN_bemalt.jpg, BERICHT.md). In der App kann niemand fremdes Feedback lesen.
 // ===================================================================
-const APP_VERSION = 'v11 · 27.11.2026';
+const APP_VERSION = 'v12 · 27.11.2026';
 const FBK_PENS = [['Rot','#FF5A3C'],['Gelb','#FFD426'],['Türkis','#4DF2FF']];
 const FBK_TXT = {
   hilfe:'Mit der Maus (oder dem Finger) aufs Bild malen: Fehler einkreisen, Pfeil ziehen. Rechts schreibst du, was dir aufgefallen ist.',
