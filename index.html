@@ -3826,6 +3826,7 @@ function wzProg(){
     <span class="wbar"><i></i></span><span class="lb">${st.label}</span></li>`).join('');
 }
 function wzRender(){
+  if(wz === 1 && cardStepDone()) wz = nm() ? 2 : 0;   // Speicherkarten-Schritt gibt es online nicht (auch nicht über einen alten gemerkten Schritt oder einen Sprung)
   const st = WZ[wz];
   const card = $id('wzCard');
   const fresh = card.cloneNode(false); card.replaceWith(fresh);   // alte Klick-Handler weg
@@ -5348,7 +5349,7 @@ function trBind(){
 //   dieselbe Sitzung. «Übergeben» schliesst die Sitzung ab. Abholen: tools/feedback.js (→ feedback/<Sitzung>/ mit
 //   NN_bild.jpg, NN_bemalt.jpg, BERICHT.md). In der App kann niemand fremdes Feedback lesen.
 // ===================================================================
-const APP_VERSION = 'v12 · 27.11.2026';
+const APP_VERSION = 'v13 · 27.11.2026';
 const FBK_PENS = [['Rot','#FF5A3C'],['Gelb','#FFD426'],['Türkis','#4DF2FF']];
 const FBK_TXT = {
   hilfe:'Mit der Maus (oder dem Finger) aufs Bild malen: Fehler einkreisen, Pfeil ziehen. Rechts schreibst du, was dir aufgefallen ist.',
