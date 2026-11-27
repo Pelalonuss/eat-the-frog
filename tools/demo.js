@@ -1,6 +1,7 @@
 // Demo-Teilnehmende für die Trainer-Statistik (Doc-IDs beginnen mit «demo-», Feld demo:true)
 // node demo.js add   → anlegen / neu erzeugen
 // node demo.js del   → alle Demo-Teilnehmenden löschen
+// node demo.js json  → nur ausgeben (für den Test-Nachbau tools/fbmock)
 const { requireAuth } = require('firebase-tools/lib/requireAuth');
 const { Client } = require('firebase-tools/lib/apiv2');
 const { getGlobalDefaultAccount } = require('firebase-tools/lib/auth');
@@ -35,6 +36,8 @@ const POOL = [
 ];
 const GOOD = ['🐸 Frosch zuerst erledigt','⏰ Pünktlich angefangen','☕ Pausen gemacht','🎯 Fokus gehalten','✅ Mehr geschafft als gedacht','📵 Weniger am Handy',
   'Bewerbung endlich abgeschickt!','Gutes Gespräch mit dem Berater','Früh aufgestanden','Ruhig geblieben, obwohl viel los war'];
+
+const TAKE = ['Morgen früher anfangen','Handy während der Arbeit weglegen','Grosse Aufgaben in kleine Schritte teilen','Mehr Puffer einplanen','Pausen nicht vergessen','Frosch gleich am Morgen machen'];
 
 // Personen: Standort, wie zuverlässig, Tage ohne Aktivität am Ende, Anzahl Tage, Dauerbrenner
 const PEOPLE = [
@@ -77,7 +80,10 @@ function person(i, [name, ort, rate, idle, n, stuck, abend]){
     });
     const hours = pick([4,5,5.5,6,6,7,8]);
     const good = rnd() < abend ? pick(GOOD) + (rnd() < .3 ? '\n' + pick(GOOD) : '') : '';
-    h[iso] = { iso, day:WD[d.getDay()], name, hours, frog: frogT ? frogT.text : '', tasks, good: back === 0 ? '' : good, take:'', updated: new Date(d.getTime() + 8*3600e3).toISOString() };
+    // «Was nehme ich mit?» so, wie es die App am Abend schreibt (offene Aufgaben für morgen) + ab und zu ein eigener Satz
+    const open = tasks.filter(t=> !t.done && (t.w || t.d));
+    const take = good ? open.map((t, k)=> `${k===0 && t.w ? '🐸 Morgen als Frosch' : '→ Morgen'}: ${t.text} (${t.min} Min)`).concat(rnd() < .35 ? [pick(TAKE)] : []).join('\n') : '';
+    h[iso] = { iso, day:WD[d.getDay()], name, hours, frog: frogT ? frogT.text : '', tasks, good: back === 0 ? '' : good, take: back === 0 ? '' : take, updated: new Date(d.getTime() + 8*3600e3).toISOString() };
     active.push(iso); made++;
     carry = tasks.filter(t=> !t.done && (t.w || t.d));
     if(back === idle) plan = { iso, tasks, hours, frog: frogT ? frogT.text : '' };
@@ -101,6 +107,7 @@ function person(i, [name, ort, rate, idle, n, stuck, abend]){
   await requireAuth({ project:'eat-the-frog-26dd1', user:acc.user, tokens:acc.tokens });
   const c = new Client({ urlPrefix:'https://firestore.googleapis.com', apiVersion:'v1', auth:true });
   const mode = process.argv[2];
+  if(mode === 'json'){ console.log(JSON.stringify(PEOPLE.map((p, i)=> ({ id:'demo-' + (i+1), ...person(i, p) })))); return; }   // für den Test-Nachbau (tools/fbmock)
   if(mode === 'del'){
     const l = await c.request({ method:'GET', path:BASE + '/users', queryParams:{ pageSize:'300' } });
     const demo = (l.body.documents||[]).map(d=> d.name.split('/').pop()).filter(id=> id.startsWith('demo-'));

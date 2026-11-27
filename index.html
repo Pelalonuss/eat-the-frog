@@ -1353,6 +1353,7 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
   .tchart .tn2{ font-size:10.5px; font-weight:700; min-height:13px; white-space:nowrap; }
   .tchart .tl{ font-size:9.5px; color:var(--txt-soft); white-space:nowrap; text-align:center; line-height:1.25; min-height:24px; }
   .tchart .tc.we .tl{ opacity:.45; }
+  .tchart.many{ gap:2px; } .tchart.many .tl{ min-height:13px; overflow:visible; } .tchart.many .tb{ border-radius:3px 3px 1px 1px; }
   .tlist{ margin-top:12px; display:flex; flex-direction:column; gap:7px; }
   .tlrow{ display:flex; align-items:center; gap:12px; background:rgba(255,255,255,.04); border-radius:12px; padding:10px 12px; font-size:14px; }
   .tlrow .tx{ flex:1; min-width:0; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -1376,6 +1377,101 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
   .twrap{ overflow-x:auto; }
   .goodlist{ margin-top:12px; display:flex; flex-direction:column; gap:8px; }
   .goodlist div{ background:rgba(57,227,154,.07); border:1px solid rgba(57,227,154,.2); border-radius:12px; padding:10px 12px; font-size:14px; white-space:pre-line; }
+  .evlist{ margin-top:12px; display:flex; flex-direction:column; gap:8px; }
+  .evrow{ display:grid; grid-template-columns:170px 1fr 1fr; gap:14px; padding:12px 14px; border:1px solid var(--card-b); border-radius:14px; background:rgba(255,255,255,.025); cursor:pointer; }
+  .evrow:hover{ border-color:rgba(141,224,211,.45); }
+  .evwho b{ display:block; font-size:14px; } .evwho small{ color:var(--txt-soft); font-size:12px; }
+  .evcol{ font-size:13.5px; white-space:pre-line; padding-left:12px; border-left:3px solid rgba(57,227,154,.5); }
+  .evcol.take{ border-left-color:rgba(77,242,255,.5); }
+  .evl{ display:block; font-size:11px; font-weight:700; letter-spacing:.4px; text-transform:uppercase; color:var(--txt-soft); margin-bottom:3px; }
+  .evnone{ color:var(--txt-soft); }
+  @media (max-width:760px){ .evrow{ grid-template-columns:1fr; gap:8px; } }
+  /* ---- F2-Feedback ---- */
+  html.fbk-wait, html.fbk-wait *{ cursor:progress !important; }
+  .fbk{ position:fixed; inset:0; z-index:2147483000; display:flex; gap:18px; padding:18px; background:rgba(4,10,9,.82); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+    opacity:0; transition:opacity .18s ease; color:var(--txt); font-family:Inter,system-ui,sans-serif; }
+  .fbk.show{ opacity:1; }
+  .fbk-stage{ flex:1; min-width:0; display:flex; align-items:center; justify-content:center; }
+  .fbk-stage canvas{ display:block; max-width:100%; max-height:calc(100vh - 36px); border-radius:14px; box-shadow:0 0 0 2px rgba(141,224,211,.5), 0 24px 70px rgba(0,0,0,.6); cursor:crosshair; touch-action:none; background:#0a1311; }
+  .fbk-panel{ flex:none; width:min(360px, 34vw); display:flex; flex-direction:column; gap:12px; padding:22px; border-radius:22px; overflow:auto;
+    background:linear-gradient(180deg, rgba(19,179,160,.12), rgba(255,255,255,.03) 40%), #0f1a18; border:1px solid rgba(255,255,255,.12);
+    transform:scale(.94); transition:transform .22s cubic-bezier(.3,1.5,.5,1); }
+  .fbk.show .fbk-panel{ transform:none; }
+  .fbk-panel h2{ font-family:var(--display); font-weight:700; font-size:24px; line-height:1.15; letter-spacing:-.4px; }
+  .fbk-panel h2 .o{ color:var(--mint); }
+  .fbk-help{ font-size:13.5px; color:var(--txt-soft); line-height:1.45; }
+  .fbk-count{ font-size:13px; font-weight:700; color:var(--mint); background:rgba(141,224,211,.1); border-radius:10px; padding:7px 11px; }
+  .fbk-pens{ display:flex; gap:6px; }
+  .fbk-pen{ flex:1; display:flex; align-items:center; justify-content:center; gap:7px; font:inherit; font-size:13px; font-weight:600; color:var(--txt); cursor:pointer;
+    background:rgba(255,255,255,.05); border:1.5px solid rgba(255,255,255,.12); border-radius:12px; padding:9px 6px; }
+  .fbk-pen i{ width:13px; height:13px; border-radius:50%; box-shadow:0 0 0 2px rgba(0,0,0,.35); }
+  .fbk-pen.on{ border-color:var(--mint); background:rgba(141,224,211,.14); }
+  .fbk-pen.undo{ flex:none; width:44px; font-size:18px; }
+  .fbk-panel textarea{ flex:1; min-height:130px; resize:none; font:inherit; font-size:16px; line-height:1.45; color:var(--txt); background:rgba(255,255,255,.05);
+    border:1.5px solid rgba(255,255,255,.14); border-radius:14px; padding:12px 14px; outline:none; }
+  .fbk-panel textarea:focus{ border-color:var(--mint); box-shadow:0 0 0 3px rgba(141,224,211,.18); }
+  .fbk-panel textarea::placeholder{ color:rgba(157,178,173,.7); }
+  .fbk-panel .btn{ min-height:50px; } .fbk-panel .btn:disabled{ opacity:.5; pointer-events:none; }
+  .fbk-err{ font-size:13px; font-weight:600; color:#ffb0b2; background:rgba(229,72,77,.14); border-radius:10px; padding:8px 11px; }
+  .fbk-err.info{ color:var(--mint); background:rgba(141,224,211,.1); }
+  .fbk-cancel{ font:inherit; font-size:14px; font-weight:600; color:var(--txt-soft); background:none; border:none; padding:6px; cursor:pointer; text-decoration:underline; text-underline-offset:3px; }
+  .fbk-cancel:hover{ color:var(--txt); } .fbk-cancel:disabled{ opacity:.5; }
+  .fbk-foot{ font-size:11.5px; color:var(--txt-soft); text-align:center; }
+  .fbk-key{ font-size:12px; color:var(--txt-soft); }
+  @media (max-width:820px){ .fbk{ flex-direction:column; overflow:auto; padding:12px; gap:12px; } .fbk-stage{ flex:none; } .fbk-stage canvas{ max-height:50vh; } .fbk-panel{ width:auto; overflow:visible; } }
+
+  /* ---- Trainer-Bericht zum Drucken / als PDF (Kopie der Statistik, hell fürs Papier, im Stil der Website) ---- */
+  #trPrintBox{ display:none; }
+  @media print{
+    html.trprinting body > *:not(#trPrintBox){ display:none !important; }
+    html.trprinting, html.trprinting body{ background:#fff !important; }
+    html.trprinting body::before, html.trprinting body::after{ display:none !important; }
+    html.trprinting #trPrintBox{ display:block !important; }
+  }
+  #trPrintBox{ padding:5mm 6mm; color:#14201d; font-family:Inter,system-ui,sans-serif; font-size:11px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  #trPrintBox *{ animation:none !important; transition:none !important; }
+  .prhead{ display:flex; align-items:center; gap:16px; padding:16px 20px; border-radius:16px; color:#eef5f3;
+    background:radial-gradient(120% 160% at 100% 0%, rgba(19,179,160,.55), transparent 55%), radial-gradient(90% 120% at 0% 100%, rgba(57,227,154,.18), transparent 60%), #0a1311; }
+  .prlogo{ flex:none; width:58px; height:52px; background:var(--fredi) center/contain no-repeat; }
+  .preb{ font-family:var(--display); font-size:8px; font-weight:500; letter-spacing:2.4px; text-transform:uppercase; color:#8de0d3; }
+  .prhead h1{ font-family:var(--display); font-size:21px; font-weight:700; letter-spacing:-.3px; margin:5px 0 3px; line-height:1.15; }
+  .prhead p{ font-size:10px; color:#b9cbc6; margin:0; }
+  .prdate{ margin-left:auto; text-align:right; font-size:9px; color:#9db2ad; line-height:1.5; white-space:nowrap; } .prdate b{ color:#eef5f3; font-size:11px; }
+  .prfoot{ margin-top:14px; padding-top:8px; border-top:1px solid #e1e9e7; display:flex; justify-content:space-between; font-size:8.5px; color:#7c8a86; }
+  .prfoot b{ font-family:var(--display); font-weight:700; color:#0f9d8c; letter-spacing:.5px; }
+  #trPrintBox .kpis{ grid-template-columns:repeat(4,1fr); gap:8px; margin-top:12px; }
+  #trPrintBox .kpis.k8{ margin-top:8px; }
+  #trPrintBox .kpi{ background:#f2f8f6; border:1px solid #d9e8e4; border-radius:12px; padding:9px 12px; break-inside:avoid; }
+  #trPrintBox .kpi b{ font-size:21px; color:#0a6e62; } #trPrintBox .kpi.warn b{ color:#c2620c; } #trPrintBox .kpi.good b{ color:#0f9d8c; }
+  #trPrintBox .kpi span{ color:#45534f; font-size:9.5px; } #trPrintBox .kpi small{ color:#0f9d8c; font-size:8.5px; margin-top:3px; }
+  #trPrintBox .vcard{ background:#fff; border:1px solid #dbe7e3; border-radius:14px; padding:11px 14px; margin-top:9px; break-inside:avoid; }
+  #trPrintBox .vcard h3{ font-size:11px; color:#14201d; }
+  #trPrintBox .vsub, #trPrintBox .vleg, #trPrintBox .trempty{ color:#5f6e6a; font-size:9px; }
+  #trPrintBox .tgrid{ grid-template-columns:1fr 1fr; gap:9px; } #trPrintBox .tgrid .vcard{ margin-top:9px; }
+  #trPrintBox .tchart{ height:105px; margin-top:10px; } #trPrintBox .tchart .tn2{ font-size:7.5px; color:#14201d; min-height:10px; }
+  #trPrintBox .tchart .tl{ font-size:7px; color:#5f6e6a; min-height:18px; } #trPrintBox .tchart.many .tl{ min-height:10px; }
+  #trPrintBox .tchart .tb.zero{ background:#e4ebe9; } #trPrintBox .tchart .tb{ background:linear-gradient(180deg,#5cc9b8,#0f9d8c); } #trPrintBox .tchart .tb.lo{ background:linear-gradient(180deg,#f7c46a,#e0912a); }
+  #trPrintBox .tlist{ margin-top:8px; gap:5px; max-height:none; overflow:visible; }
+  #trPrintBox .tlrow{ background:#f5f8f7; color:#14201d; font-size:10px; padding:6px 10px; border-radius:9px; }
+  #trPrintBox .tlrow .tx{ white-space:normal; } #trPrintBox .tlrow .tx small{ color:#5f6e6a; font-size:8.5px; } #trPrintBox .tlrow .tv{ color:#b45309; }
+  #trPrintBox .mbar{ height:22px; margin-top:10px; } #trPrintBox .mbar div{ font-size:9px; }
+  #trPrintBox .mleg{ color:#45534f; font-size:9.5px; margin-top:8px; }
+  #trPrintBox .wdays{ height:86px; margin-top:10px; } #trPrintBox .wdays .wd{ color:#5f6e6a; font-size:9px; } #trPrintBox .wdays .wd b{ color:#14201d; font-size:9.5px; }
+  #trPrintBox .wdays .wb{ background:linear-gradient(180deg,#5cc9b8,#0f9d8c); }
+  #trPrintBox .goodlist{ margin-top:8px; gap:5px; } #trPrintBox .goodlist div{ background:#eef9f3; border-color:#cbeedc; color:#14201d; font-size:10px; padding:6px 10px; border-radius:9px; }
+  #trPrintBox .goodlist.take div{ background:#edf9fc; border-color:#c6ecf4; } #trPrintBox .goodlist small{ color:#5f6e6a; font-size:8.5px; }
+  #trPrintBox .evlist{ margin-top:8px; gap:5px; }
+  #trPrintBox .evrow{ grid-template-columns:110px 1fr 1fr; gap:10px; padding:7px 10px; background:#fff; border-color:#e1e9e7; border-radius:10px; break-inside:avoid; }
+  #trPrintBox .evwho b{ font-size:10.5px; } #trPrintBox .evwho small{ color:#5f6e6a; font-size:8.5px; } #trPrintBox .evcol{ font-size:10px; border-left-color:#39c98a; } #trPrintBox .evcol.take{ border-left-color:#2bbfd6; }
+  #trPrintBox .evl{ color:#5f6e6a; font-size:7.5px; } #trPrintBox .evnone{ color:#9aa7a3; }
+  #trPrintBox .twrap{ overflow:visible; }
+  #trPrintBox .ttable{ font-size:9.5px; margin-top:8px; } #trPrintBox .ttable thead{ display:table-header-group; } #trPrintBox .ttable tr{ break-inside:avoid; }
+  #trPrintBox .ttable th{ color:#0a6e62; font-size:7.5px; padding:5px 6px; border-bottom:1.5px solid #0f9d8c; }
+  #trPrintBox .ttable td{ padding:5px 6px; border-bottom:1px solid #e6ecea; } #trPrintBox .ttable td b{ font-size:10px; } #trPrintBox .ttable td small{ color:#5f6e6a; font-size:8.5px; }
+  #trPrintBox .trpill{ background:#eef1f0; color:#14201d; font-size:9px; padding:2px 8px; }
+  #trPrintBox .trpill.g{ background:#d9f4e7; color:#0a6e3a; } #trPrintBox .trpill.o{ background:#fdf0d5; color:#92400e; } #trPrintBox .trpill.r{ background:#fde2e2; color:#b91c1c; }
+  #trPrintBox .vcard.tall{ break-inside:auto; }
+  .goodlist.take div{ background:rgba(77,242,255,.06); border-color:rgba(77,242,255,.2); }
   .goodlist small{ display:block; color:var(--txt-soft); font-size:12px; margin-bottom:3px; }
   .tback{ margin-bottom:10px; }
   .tloading{ display:flex; align-items:center; gap:14px; margin-top:40px; color:var(--txt-soft); }
@@ -1776,7 +1872,7 @@ html.view input[type=text]:focus, html.view textarea:focus{ background:transpare
       <div class="acard rv" style="--d:3;--i:2"><div class="iso">L</div><h3>Länge</h3><p>Wie lange dauert jede Aufgabe? Lieber grosszügig schätzen.</p><span class="tm">⏱ 1 Min</span></div>
       <div class="acard rv" style="--d:4;--i:3"><div class="iso">P</div><h3>Puffer</h3><p>Nur 60 % fest verplanen. Der Rest ist für Pausen und Überraschungen.</p><span class="tm">⏱ 1 Min</span></div>
       <div class="acard rv" style="--d:5;--i:4"><div class="iso">E</div><h3>Entscheiden</h3><p>Wichtig? Dringend? Das Board sortiert, du legst die Reihenfolge fest.</p><span class="tm">⏱ 2 Min</span></div>
-      <div class="acard rv" style="--d:6;--i:5"><div class="iso">N</div><h3>Nachkontrolle</h3><p>Abends kurz zurückschauen: Was lief gut? Was nehme ich mit?</p><span class="tm">⏱ 3 Min</span></div>
+      <div class="acard rv" style="--d:6;--i:5"><div class="iso">N</div><h3>Nachkontrolle</h3><p>Abends kurz zurückschauen: Was lief heute gut? Was nehme ich mit?</p><span class="tm">⏱ 3 Min</span></div>
     </div>
     <div class="trio">
       <div class="tcard frogc rv" style="--d:6">
@@ -3009,8 +3105,8 @@ function mailBody(name, fname, data, opts={}){
   if(st.frog) b += `- Frosch: ${st.frog}${st.eaten?' (erledigt)':' (noch offen)'}\n`;
   b += `- Erledigt: ${st.done} von ${st.act.length} Aufgaben\n`;
   if(st.sum) b += `- Verplant: ${st.sum} Min${hours?` von ${Math.round(hoursOf(hours)*60)||'?'} Min`:''}\n`;
-  if(f('goodIn')) b += `\nWas lief gut:\n${f('goodIn')}\n`;
-  if(f('takeIn')) b += `\nWas nehme ich mit:\n${f('takeIn')}\n`;
+  if(f('goodIn')) b += `\nWas lief heute gut?\n${f('goodIn')}\n`;
+  if(f('takeIn')) b += `\nWas nehme ich mit?\n${f('takeIn')}\n`;
   b += `\nFreundliche Grüsse\n${name}`;
   if(opts.raw) return b;                       // in der Mail-Datei (.eml) gehen Umlaute problemlos
   b = asciiMail(b);                           // in Mail-Links (mailto) nur «sichere» Zeichen
@@ -3290,6 +3386,7 @@ document.querySelector('.tabs')?.addEventListener('keydown', e=>{
   i = e.key==='Home' ? 0 : e.key==='End' ? NAV_TABS.length-1 : (i + (e.key==='ArrowRight'?1:-1) + NAV_TABS.length) % NAV_TABS.length;
   goTab(NAV_TABS[i]); document.querySelector(`.tab[data-tab="${NAV_TABS[i]}"]`).focus();
 });
+addEventListener('popstate', e=>{ if(currentTab !== 'trainer') return; const t = (e.state && e.state.tr) || null; if(t !== TRS.sel){ TRS.sel = t; renderTrainer(); window.scrollTo(0, 0); } });
 addEventListener('hashchange', ()=>{ const h = location.hash.slice(1); if(!h.startsWith('view=')) goTab(h); });
 // Obere Leiste: passt nicht alles drauf? Dann Stufe für Stufe kompakter machen.
 function fitNav(){
@@ -3357,7 +3454,7 @@ function renderSend(){
       <div class="pr">${st.done}/${st.act.length}</div></div>
     ${st.frog ? `<div class="pv-frog"><span>🐸</span><span class="t">${escapeHtml(st.frog)}</span><span class="s${st.eaten?'':' open'}">${st.eaten?'✓ gegessen':'offen'}</span></div>` : ''}
     <div class="pv-q"><div class="a"><b>${q["11"]}</b>Sofort</div><div class="b"><b>${q["10"]}</b>Einplanen</div><div class="c"><b>${q["01"]}</b>Delegieren</div><div class="d"><b>${q["00"]}</b>Weglassen</div></div>
-    <div><div class="pv-l">Was lief gut</div><div class="pv-t q">${good ? '«'+escapeHtml(good)+'»' : '<span class="pv-empty">noch leer</span>'}</div></div>
+    <div><div class="pv-l">Was lief heute gut?</div><div class="pv-t q">${good ? '«'+escapeHtml(good)+'»' : '<span class="pv-empty">noch leer</span>'}</div></div>
     <div><div class="pv-l">Nimmt mit</div><div class="pv-t">${take ? escapeHtml(take) : '<span class="pv-empty">noch leer</span>'}</div></div>`;
 }
 
@@ -4042,7 +4139,7 @@ const RUNDGANG = [
   { tab:'heute', sel:'.tab[data-tab="heute"]', text:'<b>Mein Tag:</b> Hier arbeitest du deinen Plan ab. Zuerst den Frosch 🐸, dann eine Aufgabe nach der anderen.' },
   { tab:'heute', sel:'#hList .hcheck', text:'Erledigt? Einfach auf den <b>Kreis</b> klicken.' },
   { tab:'heute', sel:'#hAdd', text:'Kommt etwas dazu? Hier <b>nachtragen</b>.' },
-  { tab:'abend', sel:'.tab[data-tab="abend"]', text:'<b>Abend:</b> Am Abend schaust du kurz zurück. Was lief gut? Was hast du geschafft?' },
+  { tab:'abend', sel:'.tab[data-tab="abend"]', text:'<b>Abend:</b> Am Abend schaust du kurz zurück. Was lief heute gut? Was nehme ich mit?' },
   { tab:'abend', sel:'#aOpen', text:'<b>Was du nicht geschafft hast, kommt automatisch auf morgen.</b> Ausser Aufgaben bei «Weglassen», die hast du ja bewusst weggelassen.' },
   ...(CLOUD_ON ? [] : [{ tab:'abend', sel:'#sendBtn', text:'Hier schickst du deinen Plan an <b>'+TRAINER_NAME+'</b>. Dein Plan hängt schon als PDF an einer fertigen Mail, du drückst nur noch «Senden».' }]),
   { tab:'abend', sel:'#closeDayBtn', text:'Und zum Schluss: <b>«Tag abschliessen»</b>. Dann ist dein Tag gespeichert.' },
@@ -4338,8 +4435,8 @@ function showDay(iso){
     <div class="dsum"><div><b>${m.done}/${m.total}</b>erledigt</div><div><b>${m.frog ? (m.eaten?'🐸 ✓':'🐸 –') : '–'}</b>Frosch</div><div><b>${m.minsDone ? minLabel(m.minsDone) : '–'}</b>geschafft</div></div>
     <ul>${(r.tasks||[]).map(t=>{ const k = m.key(t); return `<li class="${t.done?'dn':''}"><span class="st">${t.done?'✓':''}</span><span class="tx">${r.frog && t.text.trim().toLowerCase()===r.frog.toLowerCase()?'🐸 ':''}${t.lever?'⚡ ':''}${escapeHtml(t.text)}</span>
       <span class="tg k${k}">${t.decided ? QLABEL[k] : 'unsortiert'}</span></li>`; }).join('')}</ul>
-    ${(r.good||'').trim() ? `<div class="dl">Was lief gut</div><div class="dt2">${escapeHtml(r.good)}</div>` : ''}
-    ${(r.take||'').trim() ? `<div class="dl">Mitgenommen</div><div class="dt2">${escapeHtml(r.take)}</div>` : ''}
+    ${(r.good||'').trim() ? `<div class="dl">Was lief heute gut?</div><div class="dt2">${escapeHtml(r.good)}</div>` : ''}
+    ${(r.take||'').trim() ? `<div class="dl">Was nehme ich mit?</div><div class="dt2">${escapeHtml(r.take)}</div>` : ''}
     <div class="ddbtns">${CLOUD_ON ? '' : `<button class="btn send" data-dsend>📤 An ${escapeHtml(TRAINER_NAME)} senden</button>`}<button class="btn" data-dprint>🖨 Drucken / als PDF</button></div>
     <div class="mbtns"><button class="btn danger" data-del>🗑 Tag löschen</button><button class="btn ghost" data-a4>📄 Als A4 ansehen</button><button class="btn ghost" data-close>Schliessen</button></div></div>`;
   document.body.appendChild(bg); requestAnimationFrame(()=> bg.classList.add('show'));
@@ -4772,8 +4869,11 @@ function cardGate(){
 //   Jede Person sieht nur ihre eigenen Pläne, Trainerinnen sehen alle.
 // ===================================================================
 const UIDKEY = 'alpen-cloud-uid';
-const FB_BASE = 'https://www.gstatic.com/firebasejs/13.0.0/';
+// Nur zum Testen auf dem eigenen Computer (localhost + ?fbmock): Firebase-Nachbau aus tools/fbmock statt echter Datenbank
+const FB_BASE = (/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && /[?&]fbmock\b/.test(location.search)) ? new URL('tools/fbmock/', location.href).href : 'https://www.gstatic.com/firebasejs/13.0.0/';
 const cloud = { ready:false, failed:false, user:null, state:'loading', trainer:false, scope:'', standort:'', stats:{}, at:null, mode:'login', err:'', ok:'', busy:false, pendingName:'', pendingOrt:'' };
+// Standort-Zugang (Trainer-Konto eines Standorts, von mehreren genutzt) → heisst überall «Admin» statt Personenname
+const sharedAdmin = ()=> cloud.trainer && !!cloud.scope && cloud.scope !== 'alle';
 const STANDORTE = [['olten','Olten'],['solothurn','Solothurn'],['brugg','Brugg'],['wohlen','Wohlen']];
 const ortName = k=> (STANDORTE.find(x=> x[0]===k) || [0, k ? k : 'ohne Standort'])[1];
 let fb = null;
@@ -4795,7 +4895,8 @@ const CloudAPI = {
   async listUsers(scope){   // Trainer eines Standorts sehen nur ihren Standort, die Leitung («alle») alle
     const c = fb.S.collection(fb.db, 'users');
     const q = await fb.S.getDocs(scope && scope !== 'alle' ? fb.S.query(c, fb.S.where('standort', '==', scope)) : c);
-    return q.docs.map(d=> ({ uid:d.id, ...d.data() })); }
+    return q.docs.map(d=> ({ uid:d.id, ...d.data() })); },
+  addFeedback: data=> fb.S.addDoc(fb.S.collection(fb.db, 'feedback'), data)   // F2-Feedback: nur schreiben, lesen kann es niemand in der App
 };
 function openView(data){ window.open(location.href.split('#')[0] + '#view=' + b64u(JSON.stringify(data)), '_blank'); }
 const appKeys = ()=>{ try{ return Object.keys(localStorage).filter(k=> k.startsWith('alpen-') && k!==UIDKEY); }catch(e){ return []; } };
@@ -4836,6 +4937,7 @@ async function cloudOnUser(u){
   const ti = await CloudAPI.trainerInfo(u.uid);
   cloud.trainer = !!ti; cloud.scope = ti ? (ti.standort || 'alle') : '';
   if(cloud.trainer){ try{ localStorage.setItem('alpen-prolog-done','1'); }catch(e){} }
+  if(sharedAdmin() && nm() !== 'Admin') setField('nameIn', 'Admin');   // Standort-Zugang wird von mehreren genutzt: kein Personenname
   await cloudWrite();                               // erster Abgleich: Pläne von vorher landen im Konto
   updateCardUI(); trainerTab();
   if(cloud.trainer){ goTab('trainer'); toast(`👋 Hallo! Trainer-Bereich: ${cloud.scope==='alle' ? 'alle Standorte' : ortName(cloud.scope)}`); return; }
@@ -4875,7 +4977,7 @@ function cloudChip(chip){
   chip = chip || $id('cardChip'); if(!chip) return;
   requestAnimationFrame(fitNav);
   chip.style.display = VIEW ? 'none' : '';
-  const first = (nm() || (cloud.user && cloud.user.displayName) || '').split(' ')[0];
+  const first = sharedAdmin() ? 'Admin' : (nm() || (cloud.user && cloud.user.displayName) || '').split(' ')[0];   // Trainer-Konto wird von mehreren genutzt
   chip.className = 'cardchip acct ' + ({ in:'ok', saving:'saving', offline:'warn', error:'warn' }[cloud.state] || '');
   if(!chip.querySelector('.av')) chip.insertAdjacentHTML('afterbegin', '<span class="av">👤</span>');
   chip.querySelector('.ct').textContent = !cloud.user ? 'Anmelden' : ({ in:(first || 'Konto') + ' ✓', saving:'Speichert …', offline:'Offline', error:'Nicht gespeichert!', loading:'Lädt …' }[cloud.state] || 'Konto');
@@ -4970,6 +5072,7 @@ document.addEventListener('click', e=>{
   if(a==='logout') cloudLogout();
   if(a==='logout-now') cloudLogout(true);
   if(a==='trainer') goTab('trainer');
+  if(a==='feedback') setTimeout(fbkOpen, 320);   // erst wenn das Konto-Fenster zu ist, sonst ist es auf dem Bild
   if(a==='ort') askStandort(true);
 });
 async function cloudLogout(now){
@@ -4985,7 +5088,7 @@ async function cloudLogout(now){
 function openAccount(){
   if(!cloud.user){ gateSkip = false; cardGate(); return; }
   document.querySelectorAll('.modal.acctm').forEach(m=> m.closest('.modal-bg').remove());
-  const u = cloud.user, name = nm() || u.displayName || '';
+  const u = cloud.user, name = sharedAdmin() ? 'Admin' : (nm() || u.displayName || '');
   const bg = document.createElement('div'); bg.className = 'modal-bg no-print';
   const st = { in:`<b>✓ Alles ist gespeichert</b>${cloud.at ? ' (zuletzt ' + cloud.at.toLocaleTimeString('de-CH',{hour:'2-digit',minute:'2-digit'}) + ' Uhr)' : ''}. Deine Pläne sind in deinem Konto, an jedem Computer.`,
     saving:'Speichert gerade …', offline:'📡 Gerade keine Verbindung. Wird gespeichert, sobald du wieder Internet hast.', error:'⚠ Speichern hat nicht geklappt. <button class="linkbtn" data-acct="retry">Nochmal</button>' }[cloud.state] || '';
@@ -4995,9 +5098,10 @@ function openAccount(){
     ${cloud.trainer ? `<p class="acctok">👩‍🏫 <b>Trainer-Zugang</b> · ${cloud.scope==='alle' ? 'alle Standorte' : 'Standort ' + ortName(cloud.scope)}</p>`
       : `<p class="acctok">📍 Standort: <b>${escapeHtml(ortName(cloud.standort))}</b> <button class="linkbtn" data-acct="ort">ändern</button></p>`}
     <p class="acctok">🔒 Server in Zürich. Deine Pläne sehen nur <b>du</b> und <b>deine Trainerin</b>.</p>
+    <p class="acctok">📝 Etwas stimmt nicht oder du hast eine Idee? <button class="linkbtn" data-acct="feedback">Feedback geben</button> <span class="fbk-key">oder Taste F2</span></p>
     <div class="mbtns">${cloud.trainer ? '<button class="btn" data-acct="trainer">👩‍🏫 Trainer-Bereich</button>' : ''}<button class="btn ghost" data-acct="logout">Abmelden</button><button class="btn ${cloud.trainer ? 'ghost' : ''}" data-close>Schliessen</button></div></div>`;
   document.body.appendChild(bg); requestAnimationFrame(()=> bg.classList.add('show'));
-  bg.addEventListener('click', e=>{ if(e.target===bg || e.target.hasAttribute('data-close') || e.target.closest('[data-acct="trainer"],[data-acct="ort"]')){ bg.classList.remove('show'); setTimeout(()=> bg.remove(), 250); } });
+  bg.addEventListener('click', e=>{ if(e.target===bg || e.target.hasAttribute('data-close') || e.target.closest('[data-acct="trainer"],[data-acct="ort"],[data-acct="feedback"]')){ bg.classList.remove('show'); setTimeout(()=> bg.remove(), 250); } });
 }
 
 // ---------- Standort wählen (einmal, dann im Konto gespeichert) ----------
@@ -5033,9 +5137,11 @@ function trRecs(u){
   return Object.values(u.history||{}).filter(r=> r && r.iso && (r.tasks||[]).some(t=> (t.text||'').trim()))
     .map(r=> ({ ...r, tasks: r.tasks.filter(t=> (t.text||'').trim()) })).sort((a,b)=> b.iso.localeCompare(a.iso));
 }
+// Gehört ein Tag in den Zeitraum? Bei «Letzte 24 Std.» zählt heute und gestern nur, wenn er in den letzten 24 Std. bearbeitet wurde
+function trIn(r, since){ return r.iso >= since && (TRS.range !== 1 || r.iso === todayIso() || (!!r.updated && Date.now() - new Date(r.updated) < 864e5)); }
 // Kennzahlen einer Person für einen Zeitraum
 function trStats(u, since){
-  const all = trRecs(u), rs = all.filter(r=> r.iso >= since), ms = rs.map(dayMetrics), today = todayIso();
+  const all = trRecs(u), rs = all.filter(r=> trIn(r, since)), ms = rs.map(dayMetrics), today = todayIso();
   const frogDays = ms.filter(m=> m.frog), buf = ms.filter(m=> m.bufOk !== null);
   // Arbeitstage-Serie: wie viele Werktage am Stück geplant (bis heute bzw. gestern)
   const have = new Set(all.map(r=> r.iso)); let streak = 0, d = today;
@@ -5052,7 +5158,7 @@ function trStats(u, since){
     days: rs.length, allDays: all.length, rate: avg(ms.map(m=> m.rate)),
     frogT: frogDays.length, frogE: frogDays.filter(m=> m.eaten).length,
     buf: buf.length ? buf.filter(m=> m.bufOk).length / buf.length : null,
-    abend: rs.length ? rs.filter(r=> (r.good||'').trim()).length / rs.length : null,
+    abend: rs.length ? rs.filter(r=> (r.good||'').trim() || (r.take||'').trim()).length / rs.length : null,
     tasks: avg(rs.map(r=> r.tasks.length)), mins: avg(ms.map(m=> m.planned)),
     streak, moved: Object.values(moved).sort((a,b)=> b.n - a.n), mat, wd,
     today: todayRec ? dayMetrics(todayRec) : null,
@@ -5077,11 +5183,12 @@ function renderTrainer(){
       <h2 class="big md">${title}</h2>${sub ? `<p class="vsub">${sub}</p>` : ''}</div>
       <div class="trtools">
         ${cloud.scope==='alle' && !TRS.sel ? `<select id="trOrt"><option value="alle">Alle Standorte</option>${STANDORTE.map(([k,n])=> `<option value="${k}" ${TRS.ort===k?'selected':''}>${n}</option>`).join('')}</select>` : ''}
-        <select id="trRange">${[[7,'Letzte 7 Tage'],[30,'Letzte 30 Tage'],[90,'Letzte 90 Tage']].map(([v,l])=> `<option value="${v}" ${TRS.range===v?'selected':''}>${l}</option>`).join('')}</select>
+        <select id="trRange">${[[1,'Letzte 24 Std.'],[7,'Letzte 7 Tage'],[30,'Letzte 30 Tage'],[90,'Letzte 90 Tage']].map(([v,l])=> `<option value="${v}" ${TRS.range===v?'selected':''}>${l}</option>`).join('')}</select>
+        <button class="btn dark sm" id="trPrint" title="Diese Ansicht als schönen Bericht drucken oder als PDF speichern">🖨 Drucken / PDF</button>
         <button class="btn dark sm" id="trReload">🔄 Aktualisieren</button></div></div>`;
   if(TRS.loading && !TRS.users){ box.innerHTML = head('Deine<br><span class="o">Teilnehmenden.</span>') + `<div class="tloading"><div class="spin"></div>Daten werden geladen …</div>`; trBind(); return; }
   if(TRS.err){ box.innerHTML = head('Deine<br><span class="o">Teilnehmenden.</span>') + `<div class="lerr" style="margin-top:20px">${escapeHtml(TRS.err)}</div>`; trBind(); return; }
-  const since = addDays(todayIso(), -(TRS.range-1));
+  const since = addDays(todayIso(), -(TRS.range === 1 ? 1 : TRS.range-1));
   const users = TRS.users.filter(u=> TRS.ort==='alle' || u.standort===TRS.ort);
   const sel = TRS.sel && users.find(u=> u.uid===TRS.sel);
   box.innerHTML = sel ? trDetail(sel, since, head) : trOverview(users, since, head);
@@ -5090,10 +5197,12 @@ function renderTrainer(){
 // Balken pro Tag (Wert 0..1 oder Anzahl)
 function trChart(days, val, label, max){
   const vals = days.map(val), mx = max || Math.max(1, ...vals.map(v=> v||0));
-  return `<div class="tchart">${days.map((d,i)=>{ const v = vals[i];
-    return `<div class="tc ${isWe(d)?'we':''}" title="${shortDay(d)}, ${chDate(d)}: ${label(v)}"><span class="tn2">${v ? label(v) : ''}</span>
+  // Viele Tage (90): keine Zahlen über den Balken (sonst überlappen sie), Wert steht im Tooltip; Achse nur montags
+  const many = days.length > 31;
+  return `<div class="tchart ${many ? 'many' : ''}">${days.map((d,i)=>{ const v = vals[i];
+    return `<div class="tc ${isWe(d)?'we':''}" title="${shortDay(d)}, ${chDate(d)}: ${label(v)}">${many ? '' : `<span class="tn2">${v ? label(v) : ''}</span>`}
       <div class="tb ${!v ? 'zero' : (max===1 && v<.5) ? 'lo' : ''}" style="height:${v ? Math.max(4, v/mx*100) : 3}%"></div>
-      <span class="tl">${days.length<=31 || i%3===0 ? WD2[dateOfIso(d).getDay()] + '<br>' + dateOfIso(d).getDate() + '.' : ''}</span></div>`; }).join('')}</div>`;
+      <span class="tl">${!many ? WD2[dateOfIso(d).getDay()] + '<br>' + dateOfIso(d).getDate() + '.' : dateOfIso(d).getDay()===1 ? dateOfIso(d).getDate() + '.' + (dateOfIso(d).getMonth()+1) + '.' : ''}</span></div>`; }).join('')}</div>`;
 }
 function trMatrix(mat){
   const tot = Object.values(mat).reduce((a,b)=> a+b, 0);
@@ -5116,11 +5225,14 @@ function trOverview(users, since, head){
   const totDays = S.reduce((a,x)=> a + x.s.days, 0), tasks = S.map(x=> x.s.tasks).filter(x=> x!=null);
   const logins = S.reduce((a,x)=> a + x.s.logins, 0);
   // pro Tag: wie viele haben geplant, und wie viel wurde erledigt
-  const perDay = days.map(d=>{ const ms = S.map(x=> x.s.recs.find(r=> r.iso===d)).filter(Boolean).map(dayMetrics); return { n: ms.length, rate: avg(ms.map(m=> m.rate)) }; });
+  const perDay = days.map(d=>{ const ms = S.map(x=> x.s.recs.find(r=> r.iso===d && trIn(r, since))).filter(Boolean).map(dayMetrics); return { n: ms.length, rate: avg(ms.map(m=> m.rate)) }; });
   // Dauerbrenner über alle
   const moved = S.flatMap(x=> x.s.moved.filter(m=> m.n >= 2 && !m.done).map(m=> ({ ...m, who:x.u }))).sort((a,b)=> b.n - a.n).slice(0, 8);
   const mat = { "11":0, "10":0, "01":0, "00":0 }; S.forEach(x=> Object.keys(mat).forEach(k=> mat[k] += x.s.mat[k]));
-  const wd = [1,2,3,4,5].map(n=>{ const xs = S.flatMap(x=> x.s.recs.filter(r=> r.iso >= since && dateOfIso(r.iso).getDay()===n).map(r=> dayMetrics(r).rate)); return { n, rate:avg(xs) }; });
+  const wd = [1,2,3,4,5].map(n=>{ const xs = S.flatMap(x=> x.s.recs.filter(r=> trIn(r, since) && dateOfIso(r.iso).getDay()===n).map(r=> dayMetrics(r).rate)); return { n, rate:avg(xs) }; });
+  // Abend-Check: neueste Einträge (Was lief heute gut? / Was nehme ich mit?) über alle
+  const evening = S.flatMap(x=> x.s.recs.filter(r=> trIn(r, since) && ((r.good||'').trim() || (r.take||'').trim())).map(r=> ({ u:x.u, r })))
+    .sort((a,b)=> b.r.iso.localeCompare(a.r.iso) || (b.r.updated||'').localeCompare(a.r.updated||'')).slice(0, 12);
   // Wer braucht Aufmerksamkeit?
   const att = [];
   S.forEach(({u,s})=>{
@@ -5145,7 +5257,7 @@ function trOverview(users, since, head){
     <div class="kpis k8">
       <div class="kpi"><b>${totDays}</b><span>Tage geplant</span><small>Ø ${users.length ? (totDays/users.length).toFixed(1) : 0} pro Person</small></div>
       <div class="kpi"><b>${pct(avg(bufs))}</b><span>Puffer eingehalten</span><small>höchstens 60 % verplant</small></div>
-      <div class="kpi"><b>${pct(avg(abends))}</b><span>Abend-Check gemacht</span><small>«Was lief gut?» ausgefüllt</small></div>
+      <div class="kpi"><b>${pct(avg(abends))}</b><span>Abend-Check gemacht</span><small>«Was lief heute gut?» oder «Was nehme ich mit?»</small></div>
       <div class="kpi"><b>${avg(tasks)!=null ? avg(tasks).toFixed(1) : '–'}</b><span>Aufgaben pro Tag</span><small>${logins} Anmeldungen insgesamt</small></div>
     </div>
     <div class="vcard"><div class="vct"><h3>📈 Nutzung pro Tag</h3><span class="vleg">Anzahl Personen mit Plan</span></div>
@@ -5160,6 +5272,10 @@ function trOverview(users, since, head){
       <div class="vcard"><h3>📊 Eisenhower: so wird sortiert</h3>${trMatrix(mat)}</div>
       <div class="vcard"><h3>📅 Ø erledigt nach Wochentag</h3>${trWeekdays(wd)}</div>
     </div>
+    <div class="vcard"><div class="vct"><h3>🌙 Aus dem Abend-Check</h3><span class="vleg">die neuesten Einträge im Zeitraum · anklicken für Details</span></div>
+      ${evening.length ? `<div class="evlist">${evening.map(({u,r})=> `<div class="evrow click" data-tuid="${escapeHtml(u.uid)}"><div class="evwho"><b>${escapeHtml(u.name||'Ohne Namen')}</b><small>${shortDay(r.iso)}, ${chDate(r.iso)}</small></div>
+        <div class="evcol"><span class="evl">Was lief heute gut?</span>${(r.good||'').trim() ? escapeHtml(r.good.trim()) : '<span class="evnone">–</span>'}</div>
+        <div class="evcol take"><span class="evl">Was nehme ich mit?</span>${(r.take||'').trim() ? escapeHtml(r.take.trim()) : '<span class="evnone">–</span>'}</div></div>`).join('')}</div>` : '<p class="vsub" style="margin-top:12px">Im Zeitraum hat noch niemand den Abend-Check ausgefüllt.</p>'}</div>
     <div class="vcard"><div class="vct"><h3>👥 Alle Teilnehmenden</h3><span class="vleg">Spalte anklicken zum Sortieren · Name anklicken für Details</span></div>
       <div class="twrap"><table class="ttable"><thead><tr>${cols.map(([k,l])=> `<th data-sort="${k}" class="${TRS.sort===k?'on':''}">${l}${TRS.sort===k ? (TRS.dir>0 ? ' ▲' : ' ▼') : ''}</th>`).join('')}${cloud.scope==='alle' && TRS.ort==='alle' ? '<th>Standort</th>' : ''}</tr></thead><tbody>
       ${rows.map(({u,s})=> `<tr class="click" data-tuid="${escapeHtml(u.uid)}"><td><b>${escapeHtml(u.name||'Ohne Namen')}</b>${u.demo ? ' <span class="trpill">🧪 Demo</span>' : ''}<small>${escapeHtml(u.email||'')}</small></td>
@@ -5171,7 +5287,8 @@ function trOverview(users, since, head){
 function trDetail(u, since, head){
   const s = trStats(u, since), today = todayIso(), days = []; for(let d = since; d <= today; d = addDays(d, 1)) days.push(d);
   const byIso = {}; s.recs.forEach(r=> byIso[r.iso] = r);
-  const goods = s.recs.filter(r=> (r.good||'').trim()).slice(0, 6);
+  const goods = s.recs.filter(r=> trIn(r, since) && (r.good||'').trim()).slice(0, 8);
+  const takes = s.recs.filter(r=> trIn(r, since) && (r.take||'').trim()).slice(0, 8);
   return `<button class="btn ghost sm tback" data-tback>← Alle Teilnehmenden</button>` +
     head(escapeHtml(u.name || 'Ohne Namen'), `${u.demo ? '🧪 Demo-Person · ' : ''}${escapeHtml(u.email || '')} · ${escapeHtml(ortName(u.standort))} · zuletzt aktiv ${fmtWhen(s.last)}`) + `
     <div class="kpis">
@@ -5187,31 +5304,229 @@ function trDetail(u, since, head){
       <div class="kpi"><b>${s.tasks!=null ? s.tasks.toFixed(1) : '–'}</b><span>Aufgaben pro Tag</span><small>Ø ${s.mins ? minLabel(Math.round(s.mins)) : '–'} verplant</small></div>
     </div>
     <div class="vcard"><div class="vct"><h3>✅ Erledigt pro Tag</h3><span class="vleg">leer = kein Plan · gelb = unter 50 %</span></div>
-      ${trChart(days, d=> byIso[d] ? Math.max(.001, dayMetrics(byIso[d]).rate) : 0, v=> v < .01 ? '0 %' : pct(v), 1)}</div>
+      ${trChart(days, d=> byIso[d] && trIn(byIso[d], since) ? Math.max(.001, dayMetrics(byIso[d]).rate) : 0, v=> v < .01 ? '0 %' : pct(v), 1)}</div>
+    <div class="tgrid">
+      <div class="vcard"><h3>💬 «Was lief heute gut?»</h3>
+        ${goods.length ? `<div class="goodlist">${goods.map(r=> `<div><small>${shortDay(r.iso)}, ${chDate(r.iso)}</small>${escapeHtml(r.good.trim())}</div>`).join('')}</div>` : '<p class="vsub" style="margin-top:12px">Noch keine Einträge.</p>'}</div>
+      <div class="vcard"><h3>🎒 «Was nehme ich mit?»</h3>
+        ${takes.length ? `<div class="goodlist take">${takes.map(r=> `<div><small>${shortDay(r.iso)}, ${chDate(r.iso)}</small>${escapeHtml(r.take.trim())}</div>`).join('')}</div>` : '<p class="vsub" style="margin-top:12px">Noch keine Einträge.</p>'}</div>
+    </div>
     <div class="tgrid">
       <div class="vcard"><h3>🐌 Am meisten aufgeschoben</h3>
         ${s.moved.length ? `<div class="tlist">${s.moved.slice(0, 8).map(m=> `<div class="tlrow"><div class="tx">${escapeHtml(m.text)}<small>${m.done ? '✓ inzwischen erledigt' : 'noch offen'} · zuletzt ${chDate(m.iso)}</small></div><span class="tv">${m.n}×</span></div>`).join('')}</div>` : '<p class="vsub" style="margin-top:12px">Nichts aufgeschoben 🎉</p>'}</div>
-      <div class="vcard"><h3>💬 «Was lief gut?»</h3>
-        ${goods.length ? `<div class="goodlist">${goods.map(r=> `<div><small>${shortDay(r.iso)}, ${chDate(r.iso)}</small>${escapeHtml(r.good.trim())}</div>`).join('')}</div>` : '<p class="vsub" style="margin-top:12px">Noch keine Einträge.</p>'}</div>
-      <div class="vcard"><h3>📊 Eisenhower: so sortiert ${escapeHtml((u.name||'').split(' ')[0] || 'diese Person')}</h3>${trMatrix(s.mat)}</div>
-      <div class="vcard"><h3>📅 Ø erledigt nach Wochentag</h3>${trWeekdays(s.wd)}</div>
+      <div class="tcol">
+        <div class="vcard"><h3>📊 Eisenhower: so sortiert ${escapeHtml((u.name||'').split(' ')[0] || 'diese Person')}</h3>${trMatrix(s.mat)}</div>
+        <div class="vcard"><h3>📅 Ø erledigt nach Wochentag</h3>${trWeekdays(s.wd)}</div>
+      </div>
     </div>
     <div class="vcard"><h3>🗓 Alle Tage</h3>
-      ${s.recs.length ? `<div class="twrap"><table class="ttable"><thead><tr><th>Tag</th><th>Erledigt</th><th>Frosch</th><th>Geschafft</th><th>Was lief gut</th><th></th></tr></thead><tbody>
+      ${s.recs.length ? `<div class="twrap"><table class="ttable"><thead><tr><th>Tag</th><th>Erledigt</th><th>Frosch</th><th>Geschafft</th><th>Was lief heute gut?</th><th>Was nehme ich mit?</th><th></th></tr></thead><tbody>
       ${s.recs.map(r=>{ const m = dayMetrics(r); return `<tr><td><b>${shortDay(r.iso)}, ${chDate(r.iso)}</b></td>
         <td><span class="trpill ${m.rate>=.8?'g':m.rate>=.5?'o':'r'}">${m.done}/${m.total}</span></td><td>${m.frog ? (m.eaten ? '🐸 ✓' : '🐸 offen') : '–'}</td>
-        <td>${m.minsDone ? minLabel(m.minsDone) : '–'}</td><td><small>${escapeHtml((r.good||'').trim().split('\n')[0] || '–')}</small></td>
+        <td>${m.minsDone ? minLabel(m.minsDone) : '–'}</td><td><small>${escapeHtml((r.good||'').trim().split('\n')[0] || '–')}</small></td><td><small>${escapeHtml((r.take||'').trim().split('\n')[0] || '–')}</small></td>
         <td><button class="btn ghost sm" data-tview="${r.iso}">📄 A4</button></td></tr>`; }).join('')}</tbody></table></div>` : '<p class="vsub" style="margin-top:12px">Noch keine Tage geplant.</p>'}</div>`;
 }
 function trBind(){
   const box = $id('trWrap'); if(!box) return;
   $id('trReload')?.addEventListener('click', ()=> trLoad(true));
+  $id('trPrint')?.addEventListener('click', trPrint);
   $id('trOrt')?.addEventListener('change', e=>{ TRS.ort = e.target.value; renderTrainer(); });
   $id('trRange')?.addEventListener('change', e=>{ TRS.range = +e.target.value; renderTrainer(); });
-  box.querySelector('[data-tback]')?.addEventListener('click', ()=>{ TRS.sel = null; renderTrainer(); window.scrollTo(0, 0); });
-  box.querySelectorAll('[data-tuid]').forEach(el=> el.addEventListener('click', ()=>{ TRS.sel = el.dataset.tuid; renderTrainer(); window.scrollTo(0, 0); }));
+  box.querySelector('[data-tback]')?.addEventListener('click', ()=>{ if(history.state && history.state.tr) history.back(); else { TRS.sel = null; renderTrainer(); window.scrollTo(0, 0); } });
+  // Person öffnen = eigener Schritt im Browser-Verlauf, damit «Zurück» im Browser zur Übersicht führt (nicht aus der Seite)
+  box.querySelectorAll('[data-tuid]').forEach(el=> el.addEventListener('click', ()=>{ TRS.sel = el.dataset.tuid; try{ history.pushState({ tr:TRS.sel }, '', location.href); }catch(e){} renderTrainer(); window.scrollTo(0, 0); }));
   box.querySelectorAll('th[data-sort]').forEach(th=> th.addEventListener('click', ()=>{ const k = th.dataset.sort; TRS.dir = TRS.sort===k ? -TRS.dir : (k==='name' ? 1 : -1); TRS.sort = k; renderTrainer(); }));
   box.querySelectorAll('[data-tview]').forEach(b=> b.addEventListener('click', ()=>{ const u = TRS.users.find(x=> x.uid===TRS.sel); const r = u && trRecs(u).find(x=> x.iso===b.dataset.tview); if(r) openView(recToData(r)); }));
+}
+
+// ===================================================================
+//   F2-FEEDBACK: F2 friert die Seite als Bild ein, man malt drauf (einkreisen, Pfeile) und schreibt eine Notiz.
+//   «Speichern & weiterarbeiten» legt die Notiz online ab (Firestore «feedback»), die nächste F2-Notiz kommt in
+//   dieselbe Sitzung. «Übergeben» schliesst die Sitzung ab. Abholen: tools/feedback.js (→ feedback/<Sitzung>/ mit
+//   NN_bild.jpg, NN_bemalt.jpg, BERICHT.md). In der App kann niemand fremdes Feedback lesen.
+// ===================================================================
+const APP_VERSION = 'v11 · 27.11.2026';
+const FBK_PENS = [['Rot','#FF5A3C'],['Gelb','#FFD426'],['Türkis','#4DF2FF']];
+const FBK_TXT = {
+  hilfe:'Mit der Maus (oder dem Finger) aufs Bild malen: Fehler einkreisen, Pfeil ziehen. Rechts schreibst du, was dir aufgefallen ist.',
+  gesammelt:'Schon gesammelt: %d', notiz:'z.B. «Der Knopf Weiter reagiert nicht» oder «Hier wäre eine Erklärung gut»',
+  weiter:'💾 Speichern & weiterarbeiten', uebergeben:'📨 Übergeben', abbrechen:'Abbrechen',
+  gespeichert:'📝 Notiz %d gespeichert. Mit F2 kannst du die nächste machen.', leer:'Nichts zum Übergeben',
+  fertig:'🐸 %d Notizen übergeben. Danke!', fertigChat:'🐸 %d Notizen übergeben. Im Chat einfach «mein Feedback ist fertig» einfügen.',
+  login:'Bitte zuerst anmelden, dann geht Feedback mit F2.', fehler:'Speichern hat nicht geklappt. Bist du mit dem Internet verbunden?',
+  speichert:'Speichert …', bild:'Bild wird gemacht …'
+};
+// Fehlermeldungen der Seite mitschreiben (wie das Godot-Protokoll), ohne Doppelte, die letzten 30
+const FBK_LOG = [];
+(function(){
+  const push = t=>{ t = String(t).replace(/\s+/g, ' ').slice(0, 400); if(!FBK_LOG.includes(t)){ FBK_LOG.push(t); if(FBK_LOG.length > 30) FBK_LOG.shift(); } };
+  addEventListener('error', e=>{ if(e.message) push('ERROR ' + e.message + (e.filename ? '  at: ' + e.filename.split('/').pop() + ':' + e.lineno : '')); });
+  addEventListener('unhandledrejection', e=> push('ERROR (Promise) ' + ((e.reason && (e.reason.message || e.reason)) || '')));
+  ['error','warn'].forEach(k=>{ const o = console[k]; console[k] = function(...a){
+    try{ push((k==='error' ? 'ERROR ' : 'WARNING ') + a.map(x=> x && x.message ? x.message : (x && typeof x==='object') ? JSON.stringify(x).slice(0, 200) : String(x)).join(' ')); }catch(_){}
+    return o.apply(this, a); }; });
+})();
+const fbk = { open:false, busy:false, img:null, strokes:[], pen:FBK_PENS[0][1], sitzung:'', n:0, back:null };
+try{ const s = JSON.parse(localStorage.getItem('alpen-fbk') || 'null'); if(s){ fbk.sitzung = s.sitzung || ''; fbk.n = s.n || 0; } }catch(e){}
+const fbkPersist = ()=>{ try{ localStorage.setItem('alpen-fbk', JSON.stringify({ sitzung:fbk.sitzung, n:fbk.n })); }catch(e){} };
+async function loadH2C(){ await loadScript(LIBS.h2c); return window.html2canvas; }   // dieselbe Bibliothek wie beim A4-PDF
+async function fbkShot(){   // sichtbarer Bildschirm-Ausschnitt als Bild
+  const h2c = await loadH2C();
+  return h2c(document.body, { x:scrollX, y:scrollY, width:innerWidth, height:innerHeight, windowWidth:document.documentElement.clientWidth, windowHeight:innerHeight,
+    scale:Math.min(devicePixelRatio || 1, 1.5), backgroundColor:'#0a1311', useCORS:true, logging:false, 
+    onclone: doc=>{ const s = doc.createElement('style'); s.textContent = 'body::before,body::after,body > html2canvaspseudoelement{display:none!important} *{animation:none!important;transition:none!important}'; doc.head.appendChild(s); },   // verschwommene Deko-Kreise kann html2canvas nicht, sie würden als Flecken erscheinen
+    ignoreElements: el=> el.id==='fbkWrap' || el.classList.contains('toast') });
+}
+function fbkStamp(){ const d = new Date(), p = n=> String(n).padStart(2, '0'); return `${todayIso()}_${p(d.getHours())}-${p(d.getMinutes())}-${p(d.getSeconds())}`; }
+function fbkWho(){ return sharedAdmin() ? 'Admin ' + ortName(cloud.scope) : (nm() || (cloud.user && cloud.user.displayName) || ''); }
+function fbkZustand(){
+  const p = ['Bereich: ' + currentTab + (currentTab==='planen' ? ' (Schritt ' + wz + ')' : '')];
+  if(currentTab==='trainer'){ const s = TRS.sel && TRS.users && TRS.users.find(u=> u.uid===TRS.sel);
+    p.push('Trainer-Ansicht: ' + (s ? 'Person «' + (s.name || '') + '»' : 'Übersicht') + ', Zeitraum ' + (TRS.range===1 ? '24 Std.' : TRS.range + ' Tage') + ', Standort-Filter ' + (TRS.ort || '–')); }
+  p.push('Konto: ' + (cloud.trainer ? 'Trainer-Zugang (' + cloud.scope + ')' : 'Teilnehmer/in (' + (cloud.standort || 'kein Standort') + ')') + ', Speicherstand ' + cloud.state);
+  try{ p.push('Heute: ' + real().length + ' Aufgaben, ' + real().filter(t=> t.done).length + ' erledigt, Frosch «' + ($id('focusInput').value || '–') + '»' + (PRACTICE ? ', ÜBUNGSRUNDE läuft' : '')); }catch(e){}
+  p.push('Fenster ' + innerWidth + '×' + innerHeight + ', gescrollt ' + Math.round(scrollY) + ' px, Pixelfaktor ' + (devicePixelRatio || 1));
+  p.push('Browser: ' + navigator.userAgent);
+  p.push('Zeit: ' + new Date().toLocaleString('de-CH') + ' · App ' + APP_VERSION);
+  return p.join('\n');
+}
+async function fbkOpen(){
+  if(fbk.open || fbk.busy || VIEW) return;
+  if(!CLOUD_ON || !cloud.user){ toast(FBK_TXT.login); return; }
+  fbk.busy = true; document.documentElement.classList.add('fbk-wait');
+  let cv = null; try{ cv = await fbkShot(); }catch(e){ console.warn('F2-Bild ging nicht', e); }
+  fbk.busy = false; document.documentElement.classList.remove('fbk-wait');
+  if(!cv || !cv.width){ cv = document.createElement('canvas'); cv.width = 1280; cv.height = 720; const g = cv.getContext('2d');
+    g.fillStyle = '#0a1311'; g.fillRect(0, 0, 1280, 720); g.fillStyle = '#9db2ad'; g.font = '30px sans-serif'; g.textAlign = 'center';
+    g.fillText('Kein Bild möglich: bitte in der Notiz beschreiben, wo es war.', 640, 360); }
+  fbk.img = cv; fbk.strokes = []; fbk.open = true; fbk.back = document.activeElement;
+  fbkBuild();
+}
+function fbkBuild(){
+  document.getElementById('fbkWrap')?.remove();
+  const w = document.createElement('div'); w.id = 'fbkWrap'; w.className = 'fbk no-print'; w.setAttribute('role', 'dialog'); w.setAttribute('aria-modal', 'true'); w.setAttribute('aria-label', 'Feedback');
+  w.innerHTML = `<div class="fbk-stage"><canvas id="fbkCanvas" aria-label="Bild der Seite zum Bemalen"></canvas></div>
+    <aside class="fbk-panel">
+      <div class="eyebrow">F2 · Feedback</div>
+      <h2>Was ist dir <span class="o">aufgefallen?</span></h2>
+      <p class="fbk-help">${FBK_TXT.hilfe}</p>
+      ${fbk.n ? `<p class="fbk-count">${FBK_TXT.gesammelt.replace('%d', fbk.n)}</p>` : ''}
+      <div class="fbk-pens">${FBK_PENS.map(([n,c],i)=> `<button type="button" class="fbk-pen ${i===FBK_PENS.findIndex(p=> p[1]===fbk.pen) ? 'on' : ''}" data-pen="${c}" aria-pressed="${c===fbk.pen}"><i style="background:${c}"></i>${n}</button>`).join('')}
+        <button type="button" class="fbk-pen undo" data-undo title="Letzten Strich weg" aria-label="Letzten Strich weg">↩</button></div>
+      <textarea id="fbkNote" placeholder="${FBK_TXT.notiz}"></textarea>
+      <p class="fbk-err" id="fbkErr" hidden></p>
+      <button type="button" class="btn wide" data-fbk="weiter">${FBK_TXT.weiter}</button>
+      <button type="button" class="btn dark wide" data-fbk="uebergeben">${FBK_TXT.uebergeben}</button>
+      <button type="button" class="fbk-cancel" data-fbk="abbrechen">${FBK_TXT.abbrechen}</button>
+      <p class="fbk-foot">«Übergeben» = du bist fertig mit Feedback · Esc = schliessen</p>
+    </aside>`;
+  document.body.appendChild(w);
+  const cv = $id('fbkCanvas'); cv.width = fbk.img.width; cv.height = fbk.img.height; fbkDraw();
+  // malen (Maus, Finger, Stift): Striche in Bild-Pixeln merken
+  const pt = e=>{ const r = cv.getBoundingClientRect(); return [ (e.clientX - r.left) * cv.width / r.width, (e.clientY - r.top) * cv.height / r.height, cv.width / r.width ]; };
+  cv.addEventListener('pointerdown', e=>{ e.preventDefault(); cv.setPointerCapture(e.pointerId); const [x,y,s] = pt(e); fbk.strokes.push({ c:fbk.pen, w:4.5*s, p:[[x,y]] }); fbkDraw(); });
+  cv.addEventListener('pointermove', e=>{ if(!cv.hasPointerCapture(e.pointerId) || !fbk.strokes.length) return; const [x,y] = pt(e); fbk.strokes[fbk.strokes.length-1].p.push([x,y]); fbkDraw(); });
+  const up = e=>{ try{ cv.releasePointerCapture(e.pointerId); }catch(_){} };
+  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+  w.addEventListener('click', e=>{
+    const pen = e.target.closest('[data-pen]');
+    if(pen){ fbk.pen = pen.dataset.pen; w.querySelectorAll('[data-pen]').forEach(b=>{ const on = b===pen; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); }); return; }
+    if(e.target.closest('[data-undo]')){ fbk.strokes.pop(); fbkDraw(); return; }
+    const a = e.target.closest('[data-fbk]'); if(!a) return;
+    ({ weiter:fbkSaveGo, uebergeben:fbkHandover, abbrechen:fbkClose })[a.dataset.fbk]();
+  });
+  requestAnimationFrame(()=> w.classList.add('show'));
+  setTimeout(()=> $id('fbkNote')?.focus(), 60);
+}
+function fbkDraw(){
+  const cv = $id('fbkCanvas'); if(!cv) return; const g = cv.getContext('2d');
+  g.drawImage(fbk.img, 0, 0);
+  g.lineCap = 'round'; g.lineJoin = 'round';
+  fbk.strokes.forEach(st=>{ g.strokeStyle = st.c; g.fillStyle = st.c; g.lineWidth = st.w;
+    if(st.p.length === 1){ g.beginPath(); g.arc(st.p[0][0], st.p[0][1], st.w/2, 0, Math.PI*2); g.fill(); return; }
+    g.beginPath(); g.moveTo(st.p[0][0], st.p[0][1]); st.p.slice(1).forEach(([x,y])=> g.lineTo(x, y)); g.stroke(); });
+}
+function fbkJpeg(cv, maxW, q){
+  const s = Math.min(1, maxW / cv.width), c = document.createElement('canvas');
+  c.width = Math.round(cv.width * s); c.height = Math.round(cv.height * s);
+  c.getContext('2d').drawImage(cv, 0, 0, c.width, c.height); return c.toDataURL('image/jpeg', q);
+}
+const fbkTimeout = (p, ms)=> Promise.race([p, new Promise((_, no)=> setTimeout(()=> no(new Error('Zeitüberschreitung')), ms))]);
+function fbkBase(){ return { uid:cloud.user.uid, name:fbkWho(), email:cloud.user.email || '', rolle:cloud.trainer ? 'trainer' : 'teilnehmer',
+  standort:cloud.trainer ? cloud.scope : (cloud.standort || ''), sitzung:fbk.sitzung, erstellt:new Date().toISOString() }; }
+async function fbkSaveEntry(){
+  if(!fbk.sitzung){ fbk.sitzung = fbkStamp(); fbk.n = 0; }
+  // beide Bilder zusammen unter ~850 KB (ein Firestore-Eintrag darf höchstens 1 MB gross sein)
+  let w = 1600, q = .82, bild, bemalt;
+  for(let k = 0; k < 7; k++){ bild = fbkJpeg(fbk.img, w, q); bemalt = fbkJpeg($id('fbkCanvas'), w, q); if(bild.length + bemalt.length < 850000) break; w = Math.round(w * .82); q = Math.max(.5, q - .07); }
+  const nr = fbk.n + 1;
+  await fbkTimeout(CloudAPI.addFeedback({ ...fbkBase(), typ:'notiz', nr, notiz:$id('fbkNote').value.trim(), bild, bemalt, striche:fbk.strokes.length,
+    zustand:fbkZustand(), fehler:FBK_LOG.slice(-20) }), 20000);
+  fbk.n = nr; fbkPersist();
+}
+function fbkBusy(on, txt){
+  const w = $id('fbkWrap'); if(!w) return;
+  w.querySelectorAll('[data-fbk]').forEach(b=> b.disabled = on);
+  const err = $id('fbkErr'); err.hidden = !txt; err.textContent = txt || ''; err.classList.toggle('info', !!on);
+}
+async function fbkSaveGo(){
+  fbkBusy(true, FBK_TXT.speichert);
+  try{ await fbkSaveEntry(); }catch(e){ console.warn('F2 speichern', e); fbkBusy(false, FBK_TXT.fehler); return; }
+  fbkClose(); toast(FBK_TXT.gespeichert.replace('%d', fbk.n));
+}
+async function fbkHandover(){
+  const lead = cloud.scope === 'alle';
+  if(lead){ try{ navigator.clipboard.writeText('mein Feedback ist fertig').catch(()=>{}); }catch(e){} }   // sofort, solange der Klick noch «frisch» ist
+  fbkBusy(true, FBK_TXT.speichert);
+  try{
+    if($id('fbkNote').value.trim() || fbk.strokes.length) await fbkSaveEntry();
+    const n = fbk.n;
+    if(!n){ fbkClose(); toast(FBK_TXT.leer); return; }
+    await fbkTimeout(CloudAPI.addFeedback({ ...fbkBase(), typ:'uebergeben', anzahl:n }), 20000);
+    fbk.sitzung = ''; fbk.n = 0; fbkPersist();
+    fbkClose(); toast((lead ? FBK_TXT.fertigChat : FBK_TXT.fertig).replace('%d', n));
+  }catch(e){ console.warn('F2 übergeben', e); fbkBusy(false, FBK_TXT.fehler); }
+}
+function fbkClose(){
+  fbk.open = false;
+  const w = $id('fbkWrap'); if(w){ w.classList.remove('show'); setTimeout(()=> w.remove(), 200); }
+  try{ fbk.back && fbk.back.focus && fbk.back.focus(); }catch(e){}
+}
+// F2 öffnet, Esc schliesst F2 zuerst (vor allen anderen Fenstern)
+addEventListener('keydown', e=>{
+  if(e.key === 'F2'){ e.preventDefault(); if(!e.repeat && !fbk.open) fbkOpen(); return; }
+  if(e.key === 'Escape' && fbk.open){ e.preventDefault(); e.stopImmediatePropagation(); fbkClose(); }
+}, true);
+
+// Trainer-Bericht drucken / als PDF:die aktuelle Ansicht (Übersicht oder eine Person) als helles A4-Dokument mit eigenem Kopf
+function trPrint(){
+  const src = $id('trWrap'); if(!src || !TRS.users) return;
+  const sel = TRS.sel && TRS.users.find(u=> u.uid===TRS.sel);
+  const today = todayIso(), since = addDays(today, -(TRS.range === 1 ? 1 : TRS.range-1));
+  const rangeTxt = { 1:'Letzte 24 Stunden', 7:'Letzte 7 Tage', 30:'Letzte 30 Tage', 90:'Letzte 90 Tage' }[TRS.range] || '';
+  const ortTxt = cloud.scope==='alle' ? (TRS.ort==='alle' ? 'Alle Standorte' : 'Standort ' + ortName(TRS.ort)) : 'Standort ' + ortName(cloud.scope);
+  const clone = src.cloneNode(true);
+  const sub = sel ? (clone.querySelector('.vhead .vsub')?.textContent || '') : '';
+  clone.querySelectorAll('.vhead, .tback, .trtools, [data-tview]').forEach(e=> e.remove());
+  clone.querySelectorAll('.ttable th:last-child:empty, .ttable td:last-child:empty').forEach(e=> e.remove());
+  clone.querySelectorAll('.vcard').forEach(c=>{ if(c.querySelector('.ttable, .evlist')) c.classList.add('tall'); });
+  clone.querySelectorAll('[id]').forEach(e=> e.removeAttribute('id'));
+  const now = new Date(), when = now.toLocaleDateString('de-CH', { day:'2-digit', month:'2-digit', year:'numeric' }) + ', ' + now.toLocaleTimeString('de-CH', { hour:'2-digit', minute:'2-digit' }) + ' Uhr';
+  const title = sel ? (sel.name || 'Ohne Namen') : 'Alle Teilnehmenden';
+  let box = $id('trPrintBox'); if(!box){ box = document.createElement('div'); box.id = 'trPrintBox'; document.body.appendChild(box); }
+  box.innerHTML = `<header class="prhead"><div class="prlogo"></div>
+      <div><div class="preb">Eat the Frog · ${sel ? 'Persönlicher Bericht' : 'Trainer-Bericht'}</div><h1>${escapeHtml(title)}</h1>
+      <p>${escapeHtml(sel ? sub : ortTxt + ' · ' + TRS.users.filter(u=> TRS.ort==='alle' || u.standort===TRS.ort).length + ' Teilnehmende')}</p>
+      <p><b style="color:#8de0d3">${rangeTxt}</b> · ${chDate(since)} bis ${chDate(today)}</p></div>
+      <div class="prdate">Erstellt am<br><b>${when}</b></div></header>
+    ${clone.innerHTML}
+    <footer class="prfoot"><span><b>EAT THE FROG</b> · eatthefrog.web.app</span><span>Visio Coaching · ${escapeHtml(ortTxt)} · vertraulich</span></footer>`;
+  const oldTitle = document.title;
+  document.title = `Eat the Frog – ${title} – ${chDate(today)}`;          // = Dateiname beim «Als PDF speichern»
+  document.documentElement.classList.add('trprinting');
+  const done = ()=>{ removeEventListener('afterprint', done); document.documentElement.classList.remove('trprinting'); document.title = oldTitle; };
+  addEventListener('afterprint', done);
+  setTimeout(()=> window.print(), 80);
 }
 
 // ---------- Beim Start: bekannte Speicherkarte wieder verbinden ----------
